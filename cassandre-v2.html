@@ -19,6 +19,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<!-- Tilda stylesheets for the shared header/footer (same bundle as homepage) -->
+<link rel="stylesheet" href="/css/tilda-grid-3.0.min.css" type="text/css" media="all">
+<link rel="stylesheet" href="/css/tilda-blocks-page121413356.min.css?t=1776697778" type="text/css" media="all">
+<link rel="stylesheet" href="/css/tilda-animation-2.0.min.css" type="text/css" media="all">
+<link rel="stylesheet" href="/css/tilda-popup-1.1.min.css" type="text/css" media="all">
+<link rel="stylesheet" href="/css/tilda-forms-1.0.min.css" type="text/css" media="all">
+<link rel="stylesheet" type="text/css" href="/css/custom.css?t=1776697778">
+
 <style>
   :root{
     --bg:#181818; --fg:#eeeeee; --muted:#737373; --card:#222222;
@@ -38,11 +46,16 @@
   html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
   html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
 
-  /* LANG SWITCHER (floating) */
-  .lang-switch{position:fixed;top:18px;right:20px;z-index:100;display:flex;gap:2px;background:rgba(17,17,17,0.85);border:1px solid #333;border-radius:999px;padding:4px;backdrop-filter:blur(10px)}
-  .lang-switch button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600;transition:color 0.15s,background 0.15s}
-  .lang-switch button:hover{color:#fff}
-  .lang-switch button.active{background:var(--gold);color:#000}
+  /* Hide main Tilda menu's 'more' indicator if present, and ensure header
+     stacks above our content */
+  header#t-header{position:relative;z-index:10}
+  /* Placeholder style for fetched header/footer before they arrive */
+  #t-header-slot,#t-footer-slot{min-height:0}
+  /* Local fallback lang pill — hidden once the main header mounts */
+  .lang-switch-fallback{position:fixed;top:18px;right:20px;z-index:90;display:flex;gap:2px;background:rgba(17,17,17,0.85);border:1px solid #333;border-radius:999px;padding:4px;backdrop-filter:blur(10px)}
+  .lang-switch-fallback button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600}
+  .lang-switch-fallback button.active{background:var(--gold);color:#000}
+  body.has-mainnav .lang-switch-fallback{display:none}
 
   /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
   .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#181818}
@@ -174,8 +187,11 @@
 </head>
 <body>
 
-<!-- LANG SWITCH (floating, stand-alone) -->
-<div class="lang-switch" role="tablist">
+<!-- Slot: main site header is injected here at load time -->
+<div id="t-header-slot"></div>
+
+<!-- Fallback lang pill (shown only if main header fails to load) -->
+<div class="lang-switch-fallback lang-switch" role="tablist">
   <button data-setlang="en" class="active">EN</button>
   <button data-setlang="gr">GR</button>
   <button data-setlang="ru">RU</button>
@@ -496,29 +512,83 @@
   </div>
 </section>
 
-<!-- Footer will be added post-deploy from main citf.cy -->
+<!-- Slot: main site footer injected here -->
+<div id="t-footer-slot"></div>
 
 <script>
-(function(){
+// ----- i18n core -----
+window.__citfSetLang = (function(){
   var LS='citf_lang', valid=['en','ru','gr'];
   function setLang(l){
-    if(!valid.indexOf(l)+1)l='en';
+    if(valid.indexOf(l)<0)l='en';
     document.documentElement.setAttribute('data-lang',l);
     try{localStorage.setItem(LS,l)}catch(e){}
-    document.querySelectorAll('.lang-switch button').forEach(function(b){
+    document.querySelectorAll('.lang-switch button, .lang-switch-fallback button').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-setlang')===l);
     });
     document.documentElement.lang = l==='gr'?'el':l;
   }
-  // URL ?lang= overrides, else localStorage, else browser lang fallback to EN
   var url=new URL(location.href), q=url.searchParams.get('lang');
   var saved; try{saved=localStorage.getItem(LS)}catch(e){}
   var browser=(navigator.language||'').toLowerCase();
   var initial = q||saved||(browser.indexOf('ru')===0?'ru':browser.indexOf('el')===0?'gr':'en');
   setLang(initial);
-  document.querySelectorAll('.lang-switch button').forEach(function(b){
+  document.querySelectorAll('.lang-switch-fallback button').forEach(function(b){
     b.addEventListener('click',function(){setLang(b.getAttribute('data-setlang'))});
   });
+  return setLang;
+})();
+
+// ----- Pull header + footer from homepage (so they stay in sync site-wide) -----
+(async function mountChrome(){
+  try{
+    var r = await fetch('/', {credentials:'same-origin'});
+    if(!r.ok) throw new Error('home '+r.status);
+    var html = await r.text();
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    var header = doc.getElementById('t-header');
+    var footer = doc.getElementById('t-footer');
+    if(header){
+      document.getElementById('t-header-slot').replaceWith(header);
+    }
+    if(footer){
+      document.getElementById('t-footer-slot').replaceWith(footer);
+    }
+
+    // Run inline <script>s the header/footer brought with them (DOMParser neutralizes them).
+    [header, footer].forEach(function(root){
+      if(!root) return;
+      root.querySelectorAll('script').forEach(function(old){
+        var s = document.createElement('script');
+        for(var i=0;i<old.attributes.length;i++){
+          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
+        }
+        s.text = old.textContent;
+        old.parentNode.replaceChild(s, old);
+      });
+    });
+
+    document.body.classList.add('has-mainnav');
+
+    // Hijack Tilda language-switcher: intercept its clicks so we stay on this
+    // page and just swap the copy, instead of redirecting to /ru/ or /gr/.
+    document.querySelectorAll('[data-tilda-lang], [data-lang-switcher] a, a[href="/ru/"], a[href="/gr/"], a[href="/"]').forEach(function(a){
+      var href = a.getAttribute('href')||'';
+      var ls = a.getAttribute('data-tilda-lang');
+      var target = ls || (href==='/ru/'?'ru':href==='/gr/'?'gr':href==='/'?'en':null);
+      if(!target) return;
+      // Only rewrite if this looks like a lang link (3-letter or path-prefix match).
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        window.__citfSetLang(target);
+        var u = new URL(location.href);
+        if(target==='en') u.searchParams.delete('lang'); else u.searchParams.set('lang', target);
+        history.replaceState(null, '', u.toString());
+      });
+    });
+  }catch(err){
+    console.warn('[citf] header/footer mount failed:', err);
+  }
 })();
 </script>
 </body>
