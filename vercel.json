@@ -388,15 +388,7 @@
     },
     {
       "source": "/2026/cassandre-fanny-ardant",
-      "destination": "/page114945796.html"
-    },
-    {
-      "source": "/2026/cassandre-fanny-ardant-ru",
-      "destination": "/page118106096.html"
-    },
-    {
-      "source": "/2026/cassandre-fanny-ardant-gr",
-      "destination": "/page118110576.html"
+      "destination": "/cassandre-v2.html"
     },
     {
       "source": "/ru/about",
@@ -408,6 +400,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/2026/cassandre-fanny-ardant-ru",
+      "destination": "/2026/cassandre-fanny-ardant?lang=ru",
+      "permanent": true
+    },
+    {
+      "source": "/2026/cassandre-fanny-ardant-gr",
+      "destination": "/2026/cassandre-fanny-ardant?lang=gr",
+      "permanent": true
+    },
     {
       "source": "/berengaria-open-talk-with-malkovich",
       "destination": "/thoc-open-talk-with-malkovich",
