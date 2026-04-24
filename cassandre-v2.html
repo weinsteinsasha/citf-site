@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASSANDRE — Fanny Ardant · CITF 2026</title>
+<meta name="description" content="2 October 2026 · Pattihio Theatre, Limassol. A spoken opera for an actress and symphony orchestra.">
+<meta property="og:title" content="CASSANDRE — Fanny Ardant · CITF 2026">
+<meta property="og:description" content="2 October 2026 · Pattihio Theatre, Limassol. A spoken opera for an actress and symphony orchestra.">
+<meta property="og:image" content="/images/tild3663-3962-4066-a531-393833626334__cassandre_og.jpg">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://citf.cy/2026/cassandre-fanny-ardant">
+<link rel="alternate" hreflang="en" href="https://citf.cy/2026/cassandre-fanny-ardant">
+<link rel="alternate" hreflang="ru" href="https://citf.cy/2026/cassandre-fanny-ardant?lang=ru">
+<link rel="alternate" hreflang="el" href="https://citf.cy/2026/cassandre-fanny-ardant?lang=gr">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/tild3263-3138-4466-b765-656662383533__fav.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#181818; --fg:#eeeeee; --muted:#737373; --card:#222222;
+    --gold:#FFA806; --coral:#FF8562;
+    --font-en:'Syne',Arial,sans-serif;
+    --font-ru:'Unbounded','Syne',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg);font-family:var(--font-en);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased}
+  html[data-lang=ru] body{font-family:var(--font-ru)}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+
+  /* i18n: hide only inactive languages; active lang keeps its native display */
+  html[data-lang=en] [data-ru],html[data-lang=en] [data-gr],
+  html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
+  html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
+
+  /* LANG SWITCHER (floating) */
+  .lang-switch{position:fixed;top:18px;right:20px;z-index:100;display:flex;gap:2px;background:rgba(17,17,17,0.85);border:1px solid #333;border-radius:999px;padding:4px;backdrop-filter:blur(10px)}
+  .lang-switch button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600;transition:color 0.15s,background 0.15s}
+  .lang-switch button:hover{color:#fff}
+  .lang-switch button.active{background:var(--gold);color:#000}
+
+  /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
+  .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#181818}
+  .hero-photo{position:relative;overflow:hidden;background:#111}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:right center;display:block}
+  .hero-content-wrap{display:flex;flex-direction:column;justify-content:flex-end;padding:100px 48px 64px;min-height:100vh}
+  .hero-content{max-width:640px}
+  .hero-kicker{display:inline-block;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:700}
+  .hero h1{font-family:var(--font-en);font-weight:800;font-size:clamp(40px,4.2vw,72px);line-height:0.95;letter-spacing:-0.035em;margin-bottom:28px}
+  .hero h1 .h1-main{display:block;white-space:nowrap}
+  .hero h1 .h1-sub{display:block;color:var(--gold);font-size:0.7em;margin-top:8px;line-height:1.05}
+  html[data-lang=ru] .hero h1{font-family:var(--font-ru);font-size:clamp(32px,3.5vw,54px)}
+  html[data-lang=gr] .hero h1{font-size:clamp(36px,3.8vw,64px)}
+  @media(max-width:960px){
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-photo{height:62vh;min-height:440px;order:-1}
+    .hero-photo img{object-position:center 22%}
+    .hero-content-wrap{padding:40px 20px 52px;min-height:auto}
+    .hero h1{font-size:clamp(38px,8.5vw,64px)}
+    html[data-lang=ru] .hero h1{font-size:clamp(30px,7vw,52px)}
+    html[data-lang=gr] .hero h1{font-size:clamp(34px,7.5vw,56px)}
+  }
+  .hero-sub{font-size:clamp(18px,2.2vw,28px);max-width:740px;line-height:1.3;color:#ddd;font-weight:400;margin-bottom:40px}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:18px 36px;margin-bottom:44px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.12);border-bottom:1px solid rgba(255,255,255,0.12)}
+  .hero-meta > div{min-width:140px}
+  .hero-meta-label{font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+  .hero-meta-val{font-size:17px;font-weight:600}
+  .hero-meta-val.gold{color:var(--gold)}
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:18px 32px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;transition:transform 0.15s ease,background 0.15s ease}
+  .btn-primary{background:var(--gold);color:#000}
+  .btn-primary:hover{transform:translateY(-2px);background:#ffbd38}
+  .btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,0.3)}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .btn-price{font-size:12px;color:rgba(0,0,0,0.55);margin-left:6px;letter-spacing:0.05em;text-transform:none;font-weight:500}
+
+  /* SECTIONS */
+  section.wrap{padding:110px 32px;max-width:1280px;margin:0 auto}
+  .section-kicker{display:inline-block;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);padding:6px 12px;border:1px solid var(--gold);border-radius:999px;margin-bottom:20px;font-weight:600}
+  .section-title{font-size:clamp(34px,4.5vw,60px);line-height:1.05;font-weight:700;letter-spacing:-0.015em;margin-bottom:28px;max-width:900px}
+  .section-lead{font-size:clamp(17px,1.6vw,21px);line-height:1.55;max-width:760px;color:#ccc;margin-bottom:20px}
+
+  /* PITCH (3-up) */
+  .pitch{background:#0d0d0d;padding:100px 32px;border-top:1px solid #222;border-bottom:1px solid #222}
+  .pitch-inner{max-width:1280px;margin:0 auto}
+  .pitch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:48px;margin-top:48px}
+  .pitch-card{border-top:2px solid var(--gold);padding-top:24px}
+  .pitch-num{font-size:14px;letter-spacing:0.2em;color:var(--gold);font-weight:700;margin-bottom:12px}
+  .pitch-card h3{font-size:26px;font-weight:700;line-height:1.15;margin-bottom:14px}
+  .pitch-card p{font-size:15px;line-height:1.55;color:#bbb}
+
+  /* STORY */
+  .story-blocks{display:grid;grid-template-columns:repeat(2,1fr);gap:44px 64px;margin-top:40px}
+  .story-block h3{font-size:22px;font-weight:700;margin-bottom:12px;color:var(--gold);letter-spacing:-0.005em}
+  .story-block p{font-size:16px;line-height:1.6;color:#ccc}
+  .pullquote{font-size:clamp(22px,2.6vw,36px);line-height:1.25;font-weight:500;color:#fff;border-left:3px solid var(--gold);padding:12px 0 12px 28px;margin:60px 0;font-style:italic;letter-spacing:-0.01em}
+  .pullquote-attr{display:block;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);font-style:normal;margin-top:16px;font-weight:600}
+
+  /* CREDITS (Creative Team) */
+  .credits{background:#0d0d0d;padding:110px 32px;border-top:1px solid #222}
+  .credits-inner{max-width:1280px;margin:0 auto}
+  .credits-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:32px;margin-top:56px}
+  .credit-card{text-align:center}
+  .credit-avatar{width:140px;height:140px;border-radius:50%;margin:0 auto 20px;overflow:hidden;position:relative;border:2px solid rgba(255,168,6,0.3);box-shadow:0 0 0 1px rgba(0,0,0,0.3) inset}
+  .credit-avatar img{width:100%;height:100%;object-fit:cover}
+  .credit-avatar.initials{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%);font-size:40px;font-weight:700;color:var(--gold);letter-spacing:-0.02em}
+  .credit-origin{display:inline-block;font-size:10px;letter-spacing:0.15em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 10px;margin-bottom:10px;font-weight:600}
+  .credit-name{font-size:19px;font-weight:700;margin-bottom:6px;letter-spacing:-0.005em}
+  .credit-role{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;font-weight:600}
+  .credit-bio{font-size:13px;line-height:1.5;color:#aaa}
+  .credits-hint{display:none}
+  @media(max-width:760px){
+    .credits{padding:70px 0 70px}
+    .credits-inner{max-width:100%;padding:0 22px}
+    .credits-grid{display:flex;grid-template-columns:none;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 22px 20px;margin:40px -22px 0;scrollbar-width:none}
+    .credits-grid::-webkit-scrollbar{display:none}
+    .credit-card{flex:0 0 72%;max-width:260px;scroll-snap-align:center;text-align:center;padding:20px 14px;background:#151515;border-radius:16px;border:1px solid #222}
+    .credit-avatar{width:110px;height:110px;margin-bottom:16px}
+    .credit-name{font-size:16px}
+    .credit-role{font-size:10px}
+    .credit-bio{font-size:12px}
+    .credits-hint{display:block;text-align:center;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-top:14px;padding:0 22px}
+  }
+
+  /* PRACTICAL */
+  .practical-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#333;border:1px solid #333;margin-top:40px}
+  .practical-cell{background:var(--bg);padding:28px 24px}
+  .practical-label{font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;font-weight:600}
+  .practical-val{font-size:17px;font-weight:600;line-height:1.35}
+  .practical-val.gold{color:var(--gold)}
+
+  /* URGENCY/CTA */
+  .cta-band{background:var(--gold);color:#000;padding:80px 32px;text-align:center}
+  .cta-band h2{font-size:clamp(30px,4vw,48px);font-weight:800;line-height:1.1;max-width:900px;margin:0 auto 18px;letter-spacing:-0.015em}
+  .cta-band p{font-size:17px;max-width:640px;margin:0 auto 36px;color:rgba(0,0,0,0.75)}
+  .cta-band .btn{background:#000;color:var(--gold);padding:22px 44px;font-size:14px}
+  .cta-band .btn:hover{background:#181818}
+  .cta-band small{display:block;margin-top:18px;color:rgba(0,0,0,0.55);font-size:12px}
+
+  /* FESTIVAL CONTEXT */
+  .festival{padding:80px 32px;text-align:center;background:#0a0a0a}
+  .festival-inner{max-width:760px;margin:0 auto}
+  .festival h3{font-size:24px;font-weight:700;margin-bottom:14px}
+  .festival p{font-size:15px;color:#999;line-height:1.6;margin-bottom:20px}
+  .festival a{color:var(--gold);border-bottom:1px solid var(--gold);padding-bottom:2px;font-weight:600}
+
+  /* PHOTO ACCENT (full-bleed hero-stripe with photo + caption) */
+  .photo-accent{position:relative;width:100%;height:clamp(520px,82vh,820px);overflow:hidden;background:#0a0a0a}
+  .photo-accent img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 18%}
+  .photo-accent .photo-accent-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.88) 0%,rgba(10,10,10,0.1) 55%,rgba(10,10,10,0) 100%)}
+  .photo-accent .photo-accent-caption{position:absolute;left:32px;right:32px;bottom:40px;max-width:1280px;margin:0 auto;color:#fff}
+  .photo-accent blockquote{font-family:var(--font-en);font-size:clamp(22px,2.8vw,40px);font-weight:500;line-height:1.2;letter-spacing:-0.015em;max-width:820px;margin:0 0 12px}
+  html[data-lang=ru] .photo-accent blockquote{font-family:var(--font-ru)}
+  .photo-accent-attr{font-size:11px;letter-spacing:0.2em;color:var(--gold);text-transform:uppercase;font-weight:600}
+
+  @media(max-width:900px){
+    .pitch-grid{grid-template-columns:1fr;gap:36px}
+    .story-blocks{grid-template-columns:1fr;gap:32px}
+    .practical-grid{grid-template-columns:1fr 1fr}
+    section.wrap{padding:70px 22px}
+    .credits{padding:70px 22px}
+    .photo-accent .photo-accent-caption{left:22px;right:22px;bottom:28px}
+  }
+  @media(max-width:600px){
+    .practical-grid{grid-template-columns:1fr}
+    .hero-meta > div{min-width:45%}
+  }
+</style>
+</head>
+<body>
+
+<!-- LANG SWITCH (floating, stand-alone) -->
+<div class="lang-switch" role="tablist">
+  <button data-setlang="en" class="active">EN</button>
+  <button data-setlang="gr">GR</button>
+  <button data-setlang="ru">RU</button>
+</div>
+
+<!-- HERO (split like partnership.citf.cy) -->
+<header class="hero">
+  <div class="hero-content-wrap">
+    <div class="hero-content">
+      <span class="hero-kicker" data-en>Cyprus International Theatre Festival · October 2, 2026</span>
+      <span class="hero-kicker" data-ru>Кипрский международный театральный фестиваль · 2 октября 2026</span>
+      <span class="hero-kicker" data-gr>Διεθνές Φεστιβάλ Θεάτρου Κύπρου · 2 Οκτωβρίου 2026</span>
+
+      <h1 data-en><span class="h1-main">CASSANDRE</span><span class="h1-sub">with Fanny Ardant</span></h1>
+      <h1 data-ru><span class="h1-main">КАССАНДРА</span><span class="h1-sub">с Фанни Ардан</span></h1>
+      <h1 data-gr><span class="h1-main">ΚΑΣΣΑΝΔΡΑ</span><span class="h1-sub">με τη Φανί Αρντάν</span></h1>
+
+      <p class="hero-sub" data-en>A spoken opera for an actress and symphony orchestra, staged with Commandaria Symphony Orchestra at Pattihio Theatre, Limassol.</p>
+      <p class="hero-sub" data-ru>Опера-монолог для актрисы и симфонического оркестра, с Commandaria Symphony Orchestra в театре Паттихио, Лимассол.</p>
+      <p class="hero-sub" data-gr>Μια όπερα-μονόλογος για ηθοποιό και συμφωνική ορχήστρα, με την Commandaria Symphony Orchestra στο Παττίχειο Θέατρο, Λεμεσός.</p>
+
+      <div class="hero-meta">
+        <div>
+          <div class="hero-meta-label" data-en>Date</div><div class="hero-meta-label" data-ru>Дата</div><div class="hero-meta-label" data-gr>Ημερομηνία</div>
+          <div class="hero-meta-val gold">2 October 2026 · 20:00</div>
+        </div>
+        <div>
+          <div class="hero-meta-label" data-en>Venue</div><div class="hero-meta-label" data-ru>Площадка</div><div class="hero-meta-label" data-gr>Χώρος</div>
+          <div class="hero-meta-val">Pattihio Theatre, Limassol</div>
+        </div>
+        <div>
+          <div class="hero-meta-label" data-en>Language</div><div class="hero-meta-label" data-ru>Язык</div><div class="hero-meta-label" data-gr>Γλώσσα</div>
+          <div class="hero-meta-val">French + GR/RU subs</div>
+        </div>
+      </div>
+
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#tickets">
+          <span data-en>Buy Ticket</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
+          <span class="btn-price">from €30</span>
+        </a>
+        <a class="btn btn-ghost" href="#story">
+          <span data-en>About the show</span><span data-ru>О спектакле</span><span data-gr>Περισσότερα</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-photo">
+    <img src="/images/tild6331-6134-4866-b763-626331663133___mara_desipris.jpg" alt="Fanny Ardant by Mara Desipris">
+  </div>
+</header>
+
+<!-- PITCH -->
+<section class="pitch">
+  <div class="pitch-inner">
+    <span class="section-kicker" data-en>Why this matters</span>
+    <span class="section-kicker" data-ru>Почему это событие</span>
+    <span class="section-kicker" data-gr>Γιατί είναι σημαντικό</span>
+    <h2 class="section-title" data-en>Three reasons this night will not repeat.</h2>
+    <h2 class="section-title" data-ru>Три причины, почему этот вечер не повторится.</h2>
+    <h2 class="section-title" data-gr>Τρεις λόγοι γιατί αυτή η βραδιά δεν θα επαναληφθεί.</h2>
+
+    <div class="pitch-grid">
+      <div class="pitch-card">
+        <div class="pitch-num">01</div>
+        <h3 data-en>Ardant, live, with orchestra</h3>
+        <h3 data-ru>Ардан вживую, с оркестром</h3>
+        <h3 data-gr>Η Αρντάν ζωντανά, με ορχήστρα</h3>
+        <p data-en>Fanny Ardant performs <em>Cassandre</em> only a handful of times per decade. Each appearance is a cultural event.</p>
+        <p data-ru>Фанни Ардан исполняет «Кассандру» считаные разы в десятилетие. Каждое появление — культурное событие.</p>
+        <p data-gr>Η Φανί Αρντάν ερμηνεύει την «Κασσάνδρα» ελάχιστες φορές ανά δεκαετία. Κάθε εμφάνιση είναι γεγονός πολιτισμού.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-num">02</div>
+        <h3 data-en>Symphony orchestra on stage</h3>
+        <h3 data-ru>Симфонический оркестр на сцене</h3>
+        <h3 data-gr>Συμφωνική ορχήστρα επί σκηνής</h3>
+        <p data-en>Commandaria Orchestra under conductor Jean Deroyer — 35 musicians playing Jarrell&rsquo;s score live. No recording. No compromise.</p>
+        <p data-ru>Commandaria Orchestra под управлением Жана Дероера — 35 музыкантов, партитура Жарелла вживую. Без записи. Без компромиссов.</p>
+        <p data-gr>Η Ορχήστρα Κομμανταρία υπό τη διεύθυνση του Ζαν Ντερουαγιέ — 35 μουσικοί παίζουν ζωντανά την παρτιτούρα του Ζαρέλ. Χωρίς ηχογράφηση.</p>
+      </div>
+      <div class="pitch-card">
+        <div class="pitch-num">03</div>
+        <h3 data-en>World literature, in one sitting</h3>
+        <h3 data-ru>Мировая литература за один вечер</h3>
+        <h3 data-gr>Παγκόσμια λογοτεχνία σε μία βραδιά</h3>
+        <p data-en>Christa Wolf&rsquo;s novella meets Michael Jarrell&rsquo;s score. 70 minutes, no interval, French with GR and RU subtitles.</p>
+        <p data-ru>Новелла Кристы Вольф и партитура Михаэля Жарелла. 70 минут без антракта, французский с русскими и греческими субтитрами.</p>
+        <p data-gr>Η νουβέλα της Κρίστα Βολφ συναντά την παρτιτούρα του Μικαέλ Ζαρέλ. 70 λεπτά χωρίς διάλειμμα, στα γαλλικά με ελληνικούς και ρωσικούς υπότιτλους.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO ACCENT 1 -->
+<div class="photo-accent">
+  <img src="/images/tild3666-3237-4834-b239-613737376334__upscalemedia-transfo.jpg" alt="Fanny Ardant" loading="lazy">
+  <div class="photo-accent-overlay"></div>
+  <div class="photo-accent-caption">
+    <blockquote data-en>&ldquo;To play Cassandre is to play memory itself.&rdquo;</blockquote>
+    <blockquote data-ru>«Играть Кассандру — значит играть саму память.»</blockquote>
+    <blockquote data-gr>«Να παίξεις την Κασσάνδρα σημαίνει να παίξεις την ίδια τη μνήμη.»</blockquote>
+    <span class="photo-accent-attr">Fanny Ardant</span>
+  </div>
+</div>
+
+<!-- STORY -->
+<section class="wrap" id="story">
+  <span class="section-kicker" data-en>The story</span>
+  <span class="section-kicker" data-ru>О спектакле</span>
+  <span class="section-kicker" data-gr>Η Ιστορία</span>
+  <h2 class="section-title" data-en>She knows. Nobody believes her.</h2>
+  <h2 class="section-title" data-ru>Она знает. Ей никто не верит.</h2>
+  <h2 class="section-title" data-gr>Εκείνη γνωρίζει. Κανείς δεν την πιστεύει.</h2>
+
+  <p class="section-lead" data-en>Cassandre stands at the gates of Mycenae, moments before her death. What follows is an interior monologue — memory, loss, prophecy — staged as a spoken opera between a woman&rsquo;s voice and a live symphony.</p>
+  <p class="section-lead" data-ru>Миф о Кассандре разворачивается как непрерывный внутренний монолог женщины, оказавшейся в предельной точке — лицом к лицу со смертью. Это история одиночества и знания, которое невозможно разделить с другими.</p>
+  <p class="section-lead" data-gr>Ο μύθος της Κασσάνδρας ξεδιπλώνεται ως συνεχής εσωτερικός μονόλογος μιας γυναίκας που βρίσκεται στο έσχατο όριο — αντιμέτωπη με τον θάνατο. Μια ιστορία μοναξιάς και μιας γνώσης που δεν μοιράζεται.</p>
+
+  <div class="story-blocks">
+    <div class="story-block">
+      <h3 data-en>Wolf rewrote the myth</h3>
+      <h3 data-ru>Вольф переписала миф</h3>
+      <h3 data-gr>Η Βολφ ξαναέγραψε τον μύθο</h3>
+      <p data-en>In 1983, East German novelist Christa Wolf turned Aeschylus inside out: Cassandre, not Agamemnon, speaks. The prophetess becomes a full human being — a woman looking back at her own life.</p>
+      <p data-ru>В 1983 году писательница из ГДР Криста Вольф переписала Эсхила изнутри: голос получает Кассандра, не Агамемнон. Пророчица становится живым человеком — женщиной, оглядывающейся на собственную жизнь.</p>
+      <p data-gr>Το 1983 η συγγραφέας της Ανατολικής Γερμανίας Κρίστα Βολφ αναστρέφει τον Αισχύλο: μιλά η Κασσάνδρα, όχι ο Αγαμέμνων. Η προφήτισσα γίνεται πλήρως άνθρωπος — γυναίκα που κοιτά πίσω στη ζωή της.</p>
+    </div>
+    <div class="story-block">
+      <h3 data-en>Jarrell set it to music</h3>
+      <h3 data-ru>Жарелл написал к этому музыку</h3>
+      <h3 data-gr>Ο Ζαρέλ έγραψε τη μουσική</h3>
+      <p data-en>In 1994, Swiss composer Michael Jarrell turned Wolf&rsquo;s text into a monodrama for actress and ensemble. <em>Cassandre</em> has been performed across Europe ever since — Fanny Ardant has made it her signature role.</p>
+      <p data-ru>В 1994 году швейцарский композитор Михаэль Жарелл превратил текст Вольф в монодраму для актрисы и ансамбля. «Кассандра» с тех пор идёт по всей Европе — Ардан сделала эту роль одной из центральных в своей карьере.</p>
+      <p data-gr>Το 1994 ο Ελβετός συνθέτης Μικαέλ Ζαρέλ μετέτρεψε το κείμενο της Βολφ σε μονόδραμα για ηθοποιό και σύνολο. Η «Κασσάνδρα» παίζεται έκτοτε σε όλη την Ευρώπη — η Αρντάν την έχει κάνει υπογραφή της.</p>
+    </div>
+    <div class="story-block">
+      <h3 data-en>Ardant made it her own</h3>
+      <h3 data-ru>Ардан сделала её своей</h3>
+      <h3 data-gr>Η Αρντάν την έκανε δική της</h3>
+      <p data-en>César-winning actress, muse to Truffaut, stage partner to Pollack, Antonioni, Zeffirelli. Her <em>Master Class</em> Maria Callas defined a generation. Cassandre belongs in that company.</p>
+      <p data-ru>Лауреат «Сезара», муза Трюффо, работавшая с Поллаком, Антониони, Дзеффирелли. Её Мария Каллас в <em>Master Class</em> стала знаковой. Кассандра — того же ряда ролей.</p>
+      <p data-gr>Βραβευμένη με César, μούσα του Τρυφό, συνεργάτης του Πόλακ, Αντονιόνι, Τζεφιρέλι. Η Μαρία Κάλλας της στο <em>Master Class</em> έγινε σταθμός. Η Κασσάνδρα ανήκει στον ίδιο κύκλο.</p>
+    </div>
+    <div class="story-block">
+      <h3 data-en>Why now, why Cyprus</h3>
+      <h3 data-ru>Почему сейчас и почему Кипр</h3>
+      <h3 data-gr>Γιατί τώρα, γιατί Κύπρος</h3>
+      <p data-en>This season CITF is built around one theme: <strong>SHE IS HERE</strong> — independent female voices that shape today&rsquo;s stage. Cassandre opens the year as a special October event, outside the main festival week.</p>
+      <p data-ru>Сезон CITF строится вокруг темы <strong>SHE IS HERE — «ОНА ЗДЕСЬ»</strong> — женщины, чьи голоса формируют современную сцену. «Кассандра» открывает сезон как специальное октябрьское событие вне основной фестивальной недели.</p>
+      <p data-gr>Η σεζόν του CITF είναι χτισμένη γύρω από ένα θέμα: <strong>SHE IS HERE — ΕΚΕΙΝΗ ΕΙΝΑΙ ΕΔΩ</strong> — αυτόνομες γυναικείες φωνές που διαμορφώνουν τη σημερινή σκηνή. Η «Κασσάνδρα» ανοίγει τη χρονιά ως ειδική εκδήλωση του Οκτωβρίου, εκτός της κύριας εβδομάδας φεστιβάλ.</p>
+    </div>
+  </div>
+
+  <blockquote class="pullquote">
+    <span data-en>&ldquo;Ardant has built a career defined by intensity, elegance, and deep emotional resonance.&rdquo;</span>
+    <span data-ru>«Ардан построила карьеру из интенсивности, элегантности и глубокого эмоционального резонанса.»</span>
+    <span data-gr>«Η Αρντάν έχει χτίσει μια καριέρα που ορίζεται από την ένταση, την κομψότητα και βαθιά συναισθηματική απήχηση.»</span>
+    <span class="pullquote-attr">— International Arts Review</span>
+  </blockquote>
+</section>
+
+<!-- PHOTO ACCENT 2 -->
+<div class="photo-accent">
+  <img src="/images/tild3930-3139-4136-a464-666561303837___carole_bellaiche_2_.jpg" alt="Fanny Ardant, portrait" loading="lazy">
+  <div class="photo-accent-overlay"></div>
+  <div class="photo-accent-caption">
+    <blockquote data-en>&ldquo;Cassandre looks back. She sees everything. She speaks &mdash; and no one listens.&rdquo;</blockquote>
+    <blockquote data-ru>«Кассандра оглядывается назад. Она видит всё. Говорит &mdash; и её никто не слышит.»</blockquote>
+    <blockquote data-gr>«Η Κασσάνδρα κοιτά πίσω. Τα βλέπει όλα. Μιλά &mdash; και κανείς δεν την ακούει.»</blockquote>
+    <span class="photo-accent-attr">Photo by Carole Bellaïche</span>
+  </div>
+</div>
+
+<!-- CREDITS -->
+<section class="credits">
+  <div class="credits-inner">
+    <span class="section-kicker" data-en>The creative team</span>
+    <span class="section-kicker" data-ru>Творческая команда</span>
+    <span class="section-kicker" data-gr>Η Δημιουργική Ομάδα</span>
+    <h2 class="section-title" data-en>Five voices behind one woman.</h2>
+    <h2 class="section-title" data-ru>Пять голосов за одной женщиной.</h2>
+    <h2 class="section-title" data-gr>Πέντε φωνές πίσω από μία γυναίκα.</h2>
+
+    <div class="credits-grid">
+
+      <div class="credit-card">
+        <div class="credit-avatar"><img src="/images/tild3930-3139-4136-a464-666561303837___carole_bellaiche_2_.jpg" alt="Fanny Ardant"></div>
+        <span class="credit-origin">FR</span>
+        <div class="credit-name">Fanny Ardant</div>
+        <div class="credit-role" data-en>Actress</div><div class="credit-role" data-ru>Актриса</div><div class="credit-role" data-gr>Ηθοποιός</div>
+        <p class="credit-bio" data-en>César-winning French icon. Stage partner to Truffaut, Antonioni, Pollack, Zeffirelli.</p>
+        <p class="credit-bio" data-ru>Обладательница «Сезара», партнёр Трюффо, Антониони, Поллака, Дзеффирелли.</p>
+        <p class="credit-bio" data-gr>Βραβευμένη με César, σύντροφος Τρυφό, Αντονιόνι, Πόλακ, Τζεφιρέλι.</p>
+      </div>
+
+      <div class="credit-card">
+        <div class="credit-avatar"><img src="/images/credits/jarrell.jpg" alt="Michael Jarrell"></div>
+        <span class="credit-origin">CH</span>
+        <div class="credit-name">Michael Jarrell</div>
+        <div class="credit-role" data-en>Composer</div><div class="credit-role" data-ru>Композитор</div><div class="credit-role" data-gr>Συνθέτης</div>
+        <p class="credit-bio" data-en>Swiss composer (b. 1958). <em>Cassandre</em> (1994) is his most-performed work.</p>
+        <p class="credit-bio" data-ru>Швейцарский композитор (р. 1958). «Кассандра» (1994) — самое исполняемое его сочинение.</p>
+        <p class="credit-bio" data-gr>Ελβετός συνθέτης (γ. 1958). Η «Κασσάνδρα» (1994) είναι το πιο πολυπαιγμένο έργο του.</p>
+      </div>
+
+      <div class="credit-card">
+        <div class="credit-avatar"><img src="/images/credits/wolf.jpg" alt="Christa Wolf"></div>
+        <span class="credit-origin">DE</span>
+        <div class="credit-name">Christa Wolf</div>
+        <div class="credit-role" data-en>Text</div><div class="credit-role" data-ru>Текст</div><div class="credit-role" data-gr>Κείμενο</div>
+        <p class="credit-bio" data-en>German novelist (1929–2011). The 1983 novella <em>Kassandra</em> is the source text.</p>
+        <p class="credit-bio" data-ru>Немецкая писательница (1929–2011). Новелла «Кассандра» (1983) — первоисточник оперы.</p>
+        <p class="credit-bio" data-gr>Γερμανίδα συγγραφέας (1929–2011). Η νουβέλα «Κασσάνδρα» (1983) είναι το πηγαίο κείμενο.</p>
+      </div>
+
+      <div class="credit-card">
+        <div class="credit-avatar"><img src="/images/credits/deroyer.jpg" alt="Jean Deroyer" loading="lazy"></div>
+        <span class="credit-origin">FR</span>
+        <div class="credit-name">Jean Deroyer</div>
+        <div class="credit-role" data-en>Conductor</div><div class="credit-role" data-ru>Дирижёр</div><div class="credit-role" data-gr>Μαέστρος</div>
+        <p class="credit-bio" data-en>French conductor (b. 1979). Ensemble Intercontemporain, Opéra national de Paris.</p>
+        <p class="credit-bio" data-ru>Французский дирижёр (р. 1979). Ensemble Intercontemporain, Opéra national de Paris.</p>
+        <p class="credit-bio" data-gr>Γάλλος μαέστρος (γ. 1979). Ensemble Intercontemporain, Opéra national de Paris.</p>
+      </div>
+
+      <div class="credit-card">
+        <div class="credit-avatar"><img src="/images/credits/francis-guy.png" alt="Francis Guy, Commandaria Orchestra" onerror="this.parentElement.classList.add('initials');this.parentElement.innerHTML='FG'"></div>
+        <span class="credit-origin">CY</span>
+        <div class="credit-name">Francis Guy</div>
+        <div class="credit-role" data-en>Music Director · Commandaria Orchestra</div><div class="credit-role" data-ru>Музыкальный руководитель · Commandaria Orchestra</div><div class="credit-role" data-gr>Μουσικός Διευθυντής · Ορχήστρα Κομμανταρία</div>
+        <p class="credit-bio" data-en>Leads Cyprus&rsquo; symphonic ensemble based in Limassol — the resident orchestra of this production.</p>
+        <p class="credit-bio" data-ru>Руководит кипрским симфоническим ансамблем в Лимассоле — оркестром этой постановки.</p>
+        <p class="credit-bio" data-gr>Διευθύνει το συμφωνικό σύνολο της Κύπρου στη Λεμεσό — την ορχήστρα αυτής της παραγωγής.</p>
+      </div>
+
+    </div>
+    <div class="credits-hint" data-en>Swipe for more →</div>
+    <div class="credits-hint" data-ru>Листай →</div>
+    <div class="credits-hint" data-gr>Σύρετε →</div>
+  </div>
+</section>
+
+<!-- PRACTICAL -->
+<section class="wrap" id="tickets">
+  <span class="section-kicker" data-en>Practical info</span>
+  <span class="section-kicker" data-ru>Информация</span>
+  <span class="section-kicker" data-gr>Πρακτικές πληροφορίες</span>
+  <h2 class="section-title" data-en>Everything you need to know before you book.</h2>
+  <h2 class="section-title" data-ru>Всё, что нужно знать перед покупкой.</h2>
+  <h2 class="section-title" data-gr>Όλα όσα χρειάζεται να ξέρετε.</h2>
+
+  <div class="practical-grid">
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Date &amp; Time</div><div class="practical-label" data-ru>Дата и время</div><div class="practical-label" data-gr>Ημερομηνία &amp; Ώρα</div>
+      <div class="practical-val gold">2 October 2026<br>Friday, 20:00</div>
+    </div>
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Venue</div><div class="practical-label" data-ru>Место</div><div class="practical-label" data-gr>Χώρος</div>
+      <div class="practical-val">Pattihio Municipal Theatre<br>Limassol, Cyprus</div>
+    </div>
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Duration</div><div class="practical-label" data-ru>Длительность</div><div class="practical-label" data-gr>Διάρκεια</div>
+      <div class="practical-val" data-en>70 minutes<br>no interval</div>
+      <div class="practical-val" data-ru>70 минут<br>без антракта</div>
+      <div class="practical-val" data-gr>70 λεπτά<br>χωρίς διάλειμμα</div>
+    </div>
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Language</div><div class="practical-label" data-ru>Язык</div><div class="practical-label" data-gr>Γλώσσα</div>
+      <div class="practical-val" data-en>French<br>GR &amp; RU surtitles</div>
+      <div class="practical-val" data-ru>Французский<br>греч. и рус. субтитры</div>
+      <div class="practical-val" data-gr>Γαλλικά<br>GR &amp; RU υπότιτλοι</div>
+    </div>
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Tickets</div><div class="practical-label" data-ru>Билеты</div><div class="practical-label" data-gr>Εισιτήρια</div>
+      <div class="practical-val">From €30</div>
+    </div>
+    <div class="practical-cell">
+      <div class="practical-label" data-en>Festival Pass</div><div class="practical-label" data-ru>Festival Pass</div><div class="practical-label" data-gr>Festival Pass</div>
+      <div class="practical-val"><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-en>Access all shows →</a><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-ru>Все спектакли →</a><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-gr>Όλες οι παραστάσεις →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY CTA -->
+<section class="cta-band">
+  <h2 data-en>Pattihio seats 700.<br>Best ones go first.</h2>
+  <h2 data-ru>В Pattihio 700 мест.<br>Лучшие разбирают первыми.</h2>
+  <h2 data-gr>Το Παττίχειο έχει 700 θέσεις.<br>Οι καλύτερες φεύγουν πρώτες.</h2>
+
+  <p data-en>One night. One October. One Ardant.</p>
+  <p data-ru>Одна ночь. Один октябрь. Одна Ардан.</p>
+  <p data-gr>Μία βραδιά. Ένας Οκτώβριος. Μία Αρντάν.</p>
+
+  <a class="btn" href="https://www.soldoutticketbox.com/easyconsole.cfm/page/select_seats_newil/block_id/1280&event_day_id=13766&lang=en" target="_blank" rel="noopener">
+    <span data-en>Buy Ticket · from €30</span><span data-ru>Купить билет · от €30</span><span data-gr>Αγοράστε · από €30</span>
+  </a>
+
+  <small data-en>Questions? <a href="mailto:office@citf.cy" style="color:#000;border-bottom:1px solid #000">office@citf.cy</a></small>
+  <small data-ru>Вопросы? <a href="mailto:office@citf.cy" style="color:#000;border-bottom:1px solid #000">office@citf.cy</a></small>
+  <small data-gr>Ερωτήσεις; <a href="mailto:office@citf.cy" style="color:#000;border-bottom:1px solid #000">office@citf.cy</a></small>
+</section>
+
+<!-- FESTIVAL CONTEXT -->
+<section class="festival">
+  <div class="festival-inner">
+    <h3 data-en>About Cyprus International Theatre Festival</h3>
+    <h3 data-ru>О Кипрском международном театральном фестивале</h3>
+    <h3 data-gr>Σχετικά με το Κυπριακό Διεθνές Θεατρικό Φεστιβάλ</h3>
+
+    <p data-en><em>Cassandre</em> is a special event in the CITF season, staged under the theme <strong>SHE IS HERE</strong> — a programme dedicated to the independent female voice on stage.</p>
+    <p data-ru>«Кассандра» — специальное событие сезона CITF в рамках темы <strong>SHE IS HERE</strong> — программы, посвящённой независимому женскому голосу на сцене.</p>
+    <p data-gr>Η «Κασσάνδρα» είναι ειδική εκδήλωση της σεζόν του CITF στο πλαίσιο του θέματος <strong>SHE IS HERE</strong> — ενός προγράμματος αφιερωμένου στην ανεξάρτητη γυναικεία φωνή επί σκηνής.</p>
+
+    <a href="/" data-en>See full festival programme →</a>
+    <a href="/" data-ru>Смотреть программу →</a>
+    <a href="/" data-gr>Δείτε το πλήρες πρόγραμμα →</a>
+  </div>
+</section>
+
+<!-- Footer will be added post-deploy from main citf.cy -->
+
+<script>
+(function(){
+  var LS='citf_lang', valid=['en','ru','gr'];
+  function setLang(l){
+    if(!valid.indexOf(l)+1)l='en';
+    document.documentElement.setAttribute('data-lang',l);
+    try{localStorage.setItem(LS,l)}catch(e){}
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-setlang')===l);
+    });
+    document.documentElement.lang = l==='gr'?'el':l;
+  }
+  // URL ?lang= overrides, else localStorage, else browser lang fallback to EN
+  var url=new URL(location.href), q=url.searchParams.get('lang');
+  var saved; try{saved=localStorage.getItem(LS)}catch(e){}
+  var browser=(navigator.language||'').toLowerCase();
+  var initial = q||saved||(browser.indexOf('ru')===0?'ru':browser.indexOf('el')===0?'gr':'en');
+  setLang(initial);
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
+    b.addEventListener('click',function(){setLang(b.getAttribute('data-setlang'))});
+  });
+})();
+</script>
+</body>
+</html>
