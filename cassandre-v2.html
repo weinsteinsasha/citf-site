@@ -44,21 +44,22 @@
   .lang-switch button:hover{color:#fff}
   .lang-switch button.active{background:var(--gold);color:#000}
 
-  /* HERO */
-  .hero{position:relative;isolation:isolate;min-height:100vh;display:flex;align-items:flex-end;padding:100px 32px 60px;background:#181818;overflow:hidden}
-  .hero-img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:100% 25%}
-  .hero::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(24,24,24,0.97) 0%,rgba(24,24,24,0.9) 35%,rgba(24,24,24,0.55) 55%,rgba(24,24,24,0.1) 100%),linear-gradient(to top,rgba(24,24,24,0.9) 0%,rgba(24,24,24,0) 55%);pointer-events:none}
-  .hero-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;width:100%}
-  .hero-content{max-width:720px}
-  .hero-kicker{display:inline-block;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);padding:6px 12px;border:1px solid var(--gold);border-radius:999px;margin-bottom:24px;font-weight:600}
-  .hero h1{font-family:var(--font-en);font-weight:800;font-size:clamp(40px,7.2vw,96px);line-height:0.95;letter-spacing:-0.035em;margin-bottom:24px;white-space:nowrap}
-  html[data-lang=ru] .hero h1{font-family:var(--font-ru);font-size:clamp(36px,6vw,80px)}
-  @media(max-width:820px){
-    .hero{align-items:flex-end;min-height:92vh}
-    .hero-img{object-position:75% 20%;opacity:0.55}
-    .hero::after{background:linear-gradient(to top,rgba(24,24,24,0.97) 0%,rgba(24,24,24,0.7) 50%,rgba(24,24,24,0.35) 100%)}
-    .hero-content{max-width:100%}
-    .hero h1{font-size:clamp(40px,12vw,72px)}
+  /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
+  .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#181818}
+  .hero-photo{position:relative;overflow:hidden;background:#111}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:right center;display:block}
+  .hero-content-wrap{display:flex;flex-direction:column;justify-content:flex-end;padding:100px 48px 64px;min-height:100vh}
+  .hero-content{max-width:640px}
+  .hero-kicker{display:inline-block;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;font-weight:700}
+  .hero h1{font-family:var(--font-en);font-weight:800;font-size:clamp(56px,7.5vw,120px);line-height:0.9;letter-spacing:-0.035em;margin-bottom:28px}
+  .hero h1 .gold{color:var(--gold)}
+  html[data-lang=ru] .hero h1{font-family:var(--font-ru);font-size:clamp(44px,6vw,92px)}
+  @media(max-width:960px){
+    .hero{grid-template-columns:1fr;min-height:auto}
+    .hero-photo{height:60vh;min-height:420px;order:-1}
+    .hero-photo img{object-position:center 25%}
+    .hero-content-wrap{padding:48px 24px 56px;min-height:auto}
+    .hero h1{font-size:clamp(44px,11vw,80px)}
   }
   .hero-sub{font-size:clamp(18px,2.2vw,28px);max-width:740px;line-height:1.3;color:#ddd;font-weight:400;margin-bottom:40px}
   .hero-meta{display:flex;flex-wrap:wrap;gap:18px 36px;margin-bottom:44px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.12);border-bottom:1px solid rgba(255,255,255,0.12)}
@@ -163,20 +164,21 @@
   <button data-setlang="ru">RU</button>
 </div>
 
-<!-- HERO -->
+<!-- HERO (split like partnership.citf.cy) -->
 <header class="hero">
-  <img class="hero-img" src="/images/tild3930-3139-4136-a464-666561303837___carole_bellaiche_2_.jpg" alt="Fanny Ardant by Carole Bellaïche">
-  <div class="hero-inner">
+  <div class="hero-content-wrap">
     <div class="hero-content">
-      <span class="hero-kicker" data-en>She is here · October 2, 2026</span>
-      <span class="hero-kicker" data-ru>ОНА ЗДЕСЬ · 2 октября 2026</span>
-      <span class="hero-kicker" data-gr>ΕΚΕΙΝΗ ΕΙΝΑΙ ΕΔΩ · 2 Οκτωβρίου 2026</span>
+      <span class="hero-kicker" data-en>Cyprus International Theatre Festival · October 2, 2026</span>
+      <span class="hero-kicker" data-ru>Кипрский международный театральный фестиваль · 2 октября 2026</span>
+      <span class="hero-kicker" data-gr>Διεθνές Φεστιβάλ Θεάτρου Κύπρου · 2 Οκτωβρίου 2026</span>
 
-      <h1>CASSANDRE</h1>
+      <h1 data-en>CASSANDRE <span class="gold">with Fanny Ardant</span></h1>
+      <h1 data-ru>КАССАНДРА <span class="gold">с Фанни Ардан</span></h1>
+      <h1 data-gr>ΚΑΣΣΑΝΔΡΑ <span class="gold">με τη Φανί Αρντάν</span></h1>
 
-      <p class="hero-sub" data-en>A spoken opera for an actress and symphony orchestra — with <strong>Fanny Ardant</strong>.</p>
-      <p class="hero-sub" data-ru>Современная опера для драматической актрисы с симфоническим оркестром — с участием <strong>Фанни Ардан</strong>.</p>
-      <p class="hero-sub" data-gr>Μια σύγχρονη όπερα-μονόλογος για ηθοποιό και συμφωνική ορχήστρα — με την <strong>Φανί Αρντάν</strong>.</p>
+      <p class="hero-sub" data-en>A spoken opera for an actress and symphony orchestra, staged with Commandaria Symphony Orchestra at Pattihio Theatre, Limassol.</p>
+      <p class="hero-sub" data-ru>Опера-монолог для актрисы и симфонического оркестра, с Commandaria Symphony Orchestra в театре Паттихио, Лимассол.</p>
+      <p class="hero-sub" data-gr>Μια όπερα-μονόλογος για ηθοποιό και συμφωνική ορχήστρα, με την Commandaria Symphony Orchestra στο Παττίχειο Θέατρο, Λεμεσός.</p>
 
       <div class="hero-meta">
         <div>
@@ -203,6 +205,9 @@
         </a>
       </div>
     </div>
+  </div>
+  <div class="hero-photo">
+    <img src="/images/tild6331-6134-4866-b763-626331663133___mara_desipris.jpg" alt="Fanny Ardant by Mara Desipris">
   </div>
 </header>
 
@@ -256,7 +261,7 @@
     <blockquote data-en>&ldquo;To play Cassandre is to play memory itself.&rdquo;</blockquote>
     <blockquote data-ru>«Играть Кассандру — значит играть саму память.»</blockquote>
     <blockquote data-gr>«Να παίξεις την Κασσάνδρα σημαίνει να παίξεις την ίδια τη μνήμη.»</blockquote>
-    <span class="photo-accent-attr">Fanny Ardant · Photo by Mara Desipris</span>
+    <span class="photo-accent-attr">Fanny Ardant</span>
   </div>
 </div>
 
@@ -318,13 +323,13 @@
 
 <!-- PHOTO ACCENT 2 -->
 <div class="photo-accent">
-  <img src="/images/tild6331-6134-4866-b763-626331663133___mara_desipris.jpg" alt="Fanny Ardant at the window" loading="lazy">
+  <img src="/images/tild3930-3139-4136-a464-666561303837___carole_bellaiche_2_.jpg" alt="Fanny Ardant, portrait" loading="lazy">
   <div class="photo-accent-overlay"></div>
   <div class="photo-accent-caption">
     <blockquote data-en>&ldquo;Cassandre looks back. She sees everything. She speaks &mdash; and no one listens.&rdquo;</blockquote>
     <blockquote data-ru>«Кассандра оглядывается назад. Она видит всё. Говорит &mdash; и её никто не слышит.»</blockquote>
     <blockquote data-gr>«Η Κασσάνδρα κοιτά πίσω. Τα βλέπει όλα. Μιλά &mdash; και κανείς δεν την ακούει.»</blockquote>
-    <span class="photo-accent-attr">Photo by Mara Desipris</span>
+    <span class="photo-accent-attr">Photo by Carole Bellaïche</span>
   </div>
 </div>
 
