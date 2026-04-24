@@ -1,0 +1,33 @@
+* {
+    font-feature-settings: "lnum" 1;
+}
+
+
+
+.t-form-success-popup__text {
+  color: #181818;
+}
+
+.t-submit {
+    font-size: 11px; /* Устанавливаем размер шрифта */
+}
+
+.tn-form__submit {
+    font-size: 11px; /* Устанавливаем размер шрифта */
+}
+
+a[style*="border-bottom"] {
+  position: relative;
+  text-decoration: none !important;
+  border-bottom: none !important;
+  background-image: linear-gradient(to right, #FFA806, #FFA806); /* Цвет линии */
+  background-position: 0 100%; /* Позиция линии */
+  background-repeat: no-repeat; /* Не повторять линию */
+  background-size: 100% 1px; /* Начальная ширина и высота линии */
+  transition: background-size 0.1s ease-in-out; /* Плавный переход */
+}
+
+a[style*="border-bottom"]:hover {
+  background-size: 0 1px; /* Уменьшение ширины до нуля при наведении */
+}
+

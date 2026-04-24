@@ -1,0 +1,423 @@
+{
+  "cleanUrls": false,
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/page121413356.html"
+    },
+    {
+      "source": "/main",
+      "destination": "/page121413356.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/page57937517.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/page58114205.html"
+    },
+    {
+      "source": "/press",
+      "destination": "/page58683593.html"
+    },
+    {
+      "source": "/friends-club",
+      "destination": "/page60180195.html"
+    },
+    {
+      "source": "/support",
+      "destination": "/page60184443.html"
+    },
+    {
+      "source": "/the-festival-pass",
+      "destination": "/page58143043.html"
+    },
+    {
+      "source": "/people/alexander-weinstein",
+      "destination": "/page51923167.html"
+    },
+    {
+      "source": "/style",
+      "destination": "/page57946681.html"
+    },
+    {
+      "source": "/footer",
+      "destination": "/page45006379.html"
+    },
+    {
+      "source": "/error",
+      "destination": "/page45082443.html"
+    },
+    {
+      "source": "/header-new",
+      "destination": "/page60195591.html"
+    },
+    {
+      "source": "/gallery",
+      "destination": "/page58890361.html"
+    },
+    {
+      "source": "/gallery-open-talk-kirill-serebrenikov",
+      "destination": "/page48609885.html"
+    },
+    {
+      "source": "/gallery-apocalypse-tomorrow",
+      "destination": "/page48621539.html"
+    },
+    {
+      "source": "/gallery-infamous-ramirez-hofmann",
+      "destination": "/page49136265.html"
+    },
+    {
+      "source": "/open-talk-john-malkovich",
+      "destination": "/page49137715.html"
+    },
+    {
+      "source": "/gallery-mahamaya",
+      "destination": "/page50028113.html"
+    },
+    {
+      "source": "/gallery-mahamaya-ukr",
+      "destination": "/page50032447.html"
+    },
+    {
+      "source": "/gallery-ivan-vyrypaev-butterflies",
+      "destination": "/page50032925.html"
+    },
+    {
+      "source": "/gallery-the-only-thing-you-need-to-know-about-derrida",
+      "destination": "/page50835645.html"
+    },
+    {
+      "source": "/gallery/io-sono-un-errore-troubleyn",
+      "destination": "/page65148837.html"
+    },
+    {
+      "source": "/gallery/divina-commedia-nogravity",
+      "destination": "/page65748631.html"
+    },
+    {
+      "source": "/gallery/re-creation-pilobolus",
+      "destination": "/page71305125.html"
+    },
+    {
+      "source": "/gallery/healing",
+      "destination": "/page71317083.html"
+    },
+    {
+      "source": "/gallery/ridicule-and-transformation",
+      "destination": "/page106277576.html"
+    },
+    {
+      "source": "/gallery/questioning-04-03-2026",
+      "destination": "/page124688686.html"
+    },
+    {
+      "source": "/gallery/marianna-de-sanctis-03-03-2026",
+      "destination": "/page124694176.html"
+    },
+    {
+      "source": "/gallery/vera-polozkova-06-03-2026",
+      "destination": "/page125692306.html"
+    },
+    {
+      "source": "/festival-ticket",
+      "destination": "/page46278209.html"
+    },
+    {
+      "source": "/festival-ticket-marfields",
+      "destination": "/page46620067.html"
+    },
+    {
+      "source": "/the-superfluous-man",
+      "destination": "/page48658681.html"
+    },
+    {
+      "source": "/apocalypse-tomorrow",
+      "destination": "/page45005013.html"
+    },
+    {
+      "source": "/infamous-ramirez-hoffman",
+      "destination": "/page45823279.html"
+    },
+    {
+      "source": "/mahamaya-electronic-devices",
+      "destination": "/page46643539.html"
+    },
+    {
+      "source": "/mahamaya-ukr",
+      "destination": "/page49655361.html"
+    },
+    {
+      "source": "/the-only-thing-you-need-to-know-about-derrida",
+      "destination": "/page47284521.html"
+    },
+    {
+      "source": "/thoc-open-talk-with-malkovich",
+      "destination": "/page47130083.html"
+    },
+    {
+      "source": "/the-world-of-beautiful-butterflies",
+      "destination": "/page46716635.html"
+    },
+    {
+      "source": "/kamuyot-batsheva",
+      "destination": "/page46245315.html"
+    },
+    {
+      "source": "/home-first",
+      "destination": "/page43500128.html"
+    },
+    {
+      "source": "/festival-opening-party",
+      "destination": "/page45941143.html"
+    },
+    {
+      "source": "/header-old",
+      "destination": "/page44816059.html"
+    },
+    {
+      "source": "/privacy",
+      "destination": "/page44848077.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/page44891299.html"
+    },
+    {
+      "source": "/legal",
+      "destination": "/page44892053.html"
+    },
+    {
+      "source": "/success_page",
+      "destination": "/page45621927.html"
+    },
+    {
+      "source": "/fail_page",
+      "destination": "/page45621981.html"
+    },
+    {
+      "source": "/thanks",
+      "destination": "/page47938481.html"
+    },
+    {
+      "source": "/monumentomania",
+      "destination": "/page50838037.html"
+    },
+    {
+      "source": "/2024",
+      "destination": "/page56527815.html"
+    },
+    {
+      "source": "/header",
+      "destination": "/page45006085.html"
+    },
+    {
+      "source": "/2025-home",
+      "destination": "/page57871579.html"
+    },
+    {
+      "source": "/2026/another-era",
+      "destination": "/page114228156.html"
+    },
+    {
+      "source": "/fragments-of-who-we-are",
+      "destination": "/page61545581.html"
+    },
+    {
+      "source": "/articles/interview-with-alexander-weinstein",
+      "destination": "/page59844015.html"
+    },
+    {
+      "source": "/articles/citf-is-hiring-production-manager",
+      "destination": "/page62730025.html"
+    },
+    {
+      "source": "/articles/citf-is-hiring-community-partnerships-manager",
+      "destination": "/page62734373.html"
+    },
+    {
+      "source": "/journal/important-updates",
+      "destination": "/page123583266.html"
+    },
+    {
+      "source": "/journal",
+      "destination": "/page61665577.html"
+    },
+    {
+      "source": "/events/open-talk-with-daniel-wetzel",
+      "destination": "/page59156911.html"
+    },
+    {
+      "source": "/2025/events/nogravity-divina-commedia",
+      "destination": "/page61957429.html"
+    },
+    {
+      "source": "/2025/events/pilobolus-dance-company-creaion",
+      "destination": "/page62112007.html"
+    },
+    {
+      "source": "/2025/events/jan-fabre-mikhail-baryshnikov-not-once",
+      "destination": "/page62254697.html"
+    },
+    {
+      "source": "/2025/events/voices-from-chernobyl",
+      "destination": "/page63704893.html"
+    },
+    {
+      "source": "/2025/events/troubleyn-jan-fabre-i-am-a-mistake",
+      "destination": "/page63964053.html"
+    },
+    {
+      "source": "/2025/events/vaba-lava-theatre-healing",
+      "destination": "/page63977469.html"
+    },
+    {
+      "source": "/2025/events/master-class-pilobolus",
+      "destination": "/page64818125.html"
+    },
+    {
+      "source": "/2025/events/family-workshop-pilobolus",
+      "destination": "/page64821723.html"
+    },
+    {
+      "source": "/2025/events/troubleyn-workshop",
+      "destination": "/page64964869.html"
+    },
+    {
+      "source": "/2025/events/nogravity-dance-company-workshop",
+      "destination": "/page65075081.html"
+    },
+    {
+      "source": "/2025/events/discussion-of-the-play-healing",
+      "destination": "/page66964583.html"
+    },
+    {
+      "source": "/2025/events/video-performance-three-sisters",
+      "destination": "/page66966523.html"
+    },
+    {
+      "source": "/2025/events/how-and-why-to-watch-contemporary-theatre",
+      "destination": "/page67023685.html"
+    },
+    {
+      "source": "/2025/events/where-to-watch-contemporary-theatre",
+      "destination": "/page67025301.html"
+    },
+    {
+      "source": "/2025/events/contemporary-theatre-and-me",
+      "destination": "/page67027783.html"
+    },
+    {
+      "source": "/2025/events/ridicule-and-transformation-workshop",
+      "destination": "/page87467036.html"
+    },
+    {
+      "source": "/2026/mother-woman-artist",
+      "destination": "/page105038996.html"
+    },
+    {
+      "source": "/2026/mother-woman-artist-gr",
+      "destination": "/page115473006.html"
+    },
+    {
+      "source": "/2026/mother-woman-artist-ru",
+      "destination": "/page114197346.html"
+    },
+    {
+      "source": "/2026/questioning-magic-garden",
+      "destination": "/page102399276.html"
+    },
+    {
+      "source": "/2026/questioning-magic-garden-ru",
+      "destination": "/page115788416.html"
+    },
+    {
+      "source": "/2026/questioning-magic-garden-gr",
+      "destination": "/page115795426.html"
+    },
+    {
+      "source": "/2026/questioning-for-companies",
+      "destination": "/page102433356.html"
+    },
+    {
+      "source": "/2026/questioning-for-companies/preshowing",
+      "destination": "/page108870916.html"
+    },
+    {
+      "source": "/2026/perhaps-perhaps-quizas",
+      "destination": "/page105081506.html"
+    },
+    {
+      "source": "/2026/perhaps-perhaps-quizas-ru",
+      "destination": "/page105161016.html"
+    },
+    {
+      "source": "/2026/perhaps-perhaps-quizas-gr",
+      "destination": "/page115479856.html"
+    },
+    {
+      "source": "/2026/vera-polozkova",
+      "destination": "/page114237986.html"
+    },
+    {
+      "source": "/2026/vera-polozkova-ru",
+      "destination": "/page114240206.html"
+    },
+    {
+      "source": "/2026/vera-polozkova-gr",
+      "destination": "/page115485136.html"
+    },
+    {
+      "source": "/2026/lyudmila-petrushevskaya",
+      "destination": "/page114787426.html"
+    },
+    {
+      "source": "/2026/lyudmila-petrushevskaya-ru",
+      "destination": "/page116713806.html"
+    },
+    {
+      "source": "/2026/lyudmila-petrushevskaya-gr",
+      "destination": "/page116722416.html"
+    },
+    {
+      "source": "/2026/cassandre-fanny-ardant",
+      "destination": "/page114945796.html"
+    },
+    {
+      "source": "/2026/cassandre-fanny-ardant-ru",
+      "destination": "/page118106096.html"
+    },
+    {
+      "source": "/2026/cassandre-fanny-ardant-gr",
+      "destination": "/page118110576.html"
+    },
+    {
+      "source": "/ru/about",
+      "destination": "/page105377546.html"
+    },
+    {
+      "source": "/gr/about",
+      "destination": "/page105403556.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/berengaria-open-talk-with-malkovich",
+      "destination": "/thoc-open-talk-with-malkovich",
+      "permanent": true
+    },
+    {
+      "source": "/fragments-of-who-we-are",
+      "destination": "/articles/fragments-of-who-we-are",
+      "permanent": true
+    },
+    {
+      "source": "/2025/events/troubleyn-jan-fabre-io-sono-un-errore",
+      "destination": "/2025/events/troubleyn-jan-fabre-I-am-a-mistake",
+      "permanent": true
+    }
+  ]
+}

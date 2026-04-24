@@ -1,0 +1,22 @@
+User-Agent: *
+Disallow: /page57946681.html
+Disallow: /style
+Disallow: /page45006379.html
+Disallow: /footer
+Disallow: /page45082443.html
+Disallow: /error
+Disallow: /page60195591.html
+Disallow: /header-new
+Disallow: /tilda/form*
+Disallow: /tilda/rec*
+Disallow: /tilda/click*
+Disallow: /tilda/scroll*
+Disallow: /tilda/popup*
+Disallow: /tilda/cart*
+Disallow: /tilda/product*
+Disallow: /tilda/event*
+Disallow:
+
+
+Sitemap: http://citf.cy/sitemap.xml
+Sitemap: http://citf.cy/sitemap-store.xml
