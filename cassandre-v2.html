@@ -56,6 +56,11 @@
   .lang-switch-fallback button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600}
   .lang-switch-fallback button.active{background:var(--gold);color:#000}
   body.has-mainnav .lang-switch-fallback{display:none}
+  /* On mobile the main nav's language links are hidden behind the burger,
+     so always keep the fallback pill visible there as a safety net. */
+  @media(max-width:960px){
+    body.has-mainnav .lang-switch-fallback{display:flex;top:auto;bottom:16px;right:16px}
+  }
 
   /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
   .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#181818}
@@ -540,6 +545,18 @@ window.__citfSetLang = (function(){
 })();
 
 // ----- Pull header + footer from homepage (so they stay in sync site-wide) -----
+function loadScript(src){
+  return new Promise(function(res){
+    var name = src.split('?')[0].split('/').pop();
+    if(document.querySelector('script[src*="'+name+'"]')){ res(); return; }
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = res;
+    s.onerror = function(){ console.warn('[citf] failed to load', src); res(); };
+    document.head.appendChild(s);
+  });
+}
+
 (async function mountChrome(){
   try{
     var r = await fetch('/', {credentials:'same-origin'});
@@ -553,6 +570,20 @@ window.__citfSetLang = (function(){
     }
     if(footer){
       document.getElementById('t-footer-slot').replaceWith(footer);
+    }
+
+    // The injected header/footer rely on Tilda runtime bundles (jQuery,
+    // tilda-scripts, tilda-zero, the per-page blocks bundle) that aren't on
+    // this page. Without them t396_init is undefined and the burger menu
+    // never binds. Load them sequentially before re-running inline scripts.
+    var tildaJs = [
+      '/js/jquery-1.10.2.min.js',
+      '/js/tilda-scripts-3.0.min.js',
+      '/js/tilda-zero-1.1.min.js',
+      '/js/tilda-blocks-page121413356.min.js'
+    ];
+    for(var i=0;i<tildaJs.length;i++){
+      await loadScript(tildaJs[i]);
     }
 
     // Run inline <script>s the header/footer brought with them (DOMParser neutralizes them).
