@@ -79,6 +79,47 @@
 
   function injectAllCSS() {
     TILDA_CSS.forEach(injectCSS);
+    injectInlineCSS();
+  }
+
+  // i18n CSS + visible lang-toggle pill styles. Injected synchronously so the
+  // page never flashes all three language versions at once.
+  function injectInlineCSS() {
+    if (document.getElementById('citf-i18n-css')) return;
+    var s = document.createElement('style');
+    s.id = 'citf-i18n-css';
+    s.textContent = "" +
+      /* hide inactive language nodes */
+      "html[data-lang=en] [data-ru],html[data-lang=en] [data-gr]," +
+      "html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr]," +
+      "html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}" +
+
+      /* visible lang toggle pill (top right, above any Tilda chrome) */
+      ".citf-langpill{position:fixed;top:8px;right:14px;z-index:9999;display:inline-flex;align-items:center;gap:0;background:rgba(17,17,17,0.92);border:1px solid #FFA806;border-radius:999px;padding:3px 4px;font-family:'Syne',Arial,sans-serif;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(0,0,0,0.3)}" +
+      ".citf-langpill button{font-family:inherit;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:5px 10px;color:#888;font-weight:700;background:none;border:0;cursor:pointer;border-radius:999px;transition:color 0.15s,background 0.15s}" +
+      ".citf-langpill button:hover{color:#fff}" +
+      ".citf-langpill button.active{background:#FFA806;color:#000}" +
+      "@media(max-width:520px){.citf-langpill{top:6px;right:8px;padding:2px 3px}.citf-langpill button{padding:4px 8px;font-size:10px}}" +
+      "";
+    document.head.appendChild(s);
+  }
+
+  // Build the visible language-toggle pill (always available, not dependent on Tilda chrome)
+  function injectLangPill() {
+    if (document.querySelector('.citf-langpill')) return;
+    var pill = document.createElement('div');
+    pill.className = 'citf-langpill';
+    pill.setAttribute('role', 'tablist');
+    pill.innerHTML =
+      '<button data-citf-setlang="en">EN</button>' +
+      '<button data-citf-setlang="ru">RU</button>' +
+      '<button data-citf-setlang="gr">EL</button>';
+    document.body.appendChild(pill);
+    pill.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        setLang(b.getAttribute('data-citf-setlang'));
+      });
+    });
   }
 
   function loadTildaJS() {
@@ -159,6 +200,9 @@
     var u = new URL(location.href);
     if (l === 'en') u.searchParams.delete('lang'); else u.searchParams.set('lang', l);
     history.replaceState(null, '', u.toString());
+    document.querySelectorAll('.citf-langpill button, [data-citf-setlang]').forEach(function (b) {
+      b.classList.toggle('active', b.getAttribute('data-citf-setlang') === l);
+    });
   }
   window.__citfSetLang = setLang;
 
@@ -195,7 +239,16 @@
   }
 
   async function boot() {
-    // 1) CSS first so the ticker/nav/footer aren't unstyled flashes
+    // 0) Inject i18n CSS + lang-pill styles SYNCHRONOUSLY so the page never
+    //    flashes all three language versions before chrome arrives.
+    injectInlineCSS();
+    // 0.5) Apply initial language ASAP (before fetches) so html[data-lang] is correct
+    setLang(initialLang());
+    // 0.7) Mount visible EN|RU|EL toggle pill — always present, even if Tilda chrome fails
+    injectLangPill();
+    setLang(initialLang()); // re-run so the new pill buttons get the .active class
+
+    // 1) Tilda CSS bundles (the ticker/nav/footer styles)
     injectAllCSS();
     // 2) Tilda JS bundle (must finish before re-running inline scripts that call t396_init etc.)
     try { await loadTildaJS(); } catch (e) { console.warn('[citf chrome] tilda bundle load error', e); }
@@ -204,15 +257,12 @@
       mountFragment('citf-header-mount', '/components/header.html'),
       mountFragment('citf-footer-mount', '/components/footer.html')
     ]);
-    // 4) Apply initial language BEFORE forcing re-init (so Tilda lang menu shows correct active state)
+    // 4) Apply initial language again now that Tilda menu is in DOM
     setLang(initialLang());
     // 5) Force Tilda block init in case inline scripts didn't fire
-    //    (give the DOM a tick to settle first)
     setTimeout(function () {
       reinitTildaBlocks();
       bindLangSwitcher();
-      // Also re-run scaling on resize (Tilda does this automatically when its own
-      // page bootstraps, but on our pages we need to nudge it)
       window.addEventListener('resize', function () { reinitTildaBlocks(); });
     }, 50);
     // 6) Final pass after window load (images, fonts, etc) so layout settles
