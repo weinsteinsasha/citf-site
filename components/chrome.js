@@ -101,6 +101,13 @@
       ".citf-navlangs button.active{background:#FFA806;color:#000}" +
       ".citf-navlangs.floating{position:fixed;top:40px;right:14px;z-index:9999;background:rgba(17,17,17,0.94);box-shadow:0 4px 16px rgba(0,0,0,0.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}" +
 
+      /* lang pill placed inside the Tilda header, just left of the social icons */
+      ".citf-navlangs.in-nav{position:absolute;top:60px;right:230px;z-index:120;background:rgba(14,14,14,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}" +
+      "@media(max-width:1439px){.citf-navlangs.in-nav{top:34px;right:200px}}" +
+      "@media(max-width:980px){.citf-navlangs.in-nav{top:28px;right:170px}}" +
+      "@media(max-width:640px){.citf-navlangs.in-nav{top:18px;right:140px;padding:2px 3px}.citf-navlangs.in-nav button{font-size:10px;padding:4px 7px;letter-spacing:0.14em}}" +
+      "@media(max-width:380px){.citf-navlangs.in-nav{right:120px;top:14px}}" +
+
       /* floating Buy Ticket button — bottom-right, configurable per page via window.CITF_BUY */
       ".citf-buyfab{position:fixed;bottom:22px;right:22px;z-index:9998;display:inline-flex;align-items:center;gap:8px;background:#FFA806;color:#000 !important;font-family:'Syne',Arial,sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;font-weight:800;padding:14px 22px;border-radius:999px;text-decoration:none !important;box-shadow:0 8px 28px rgba(255,168,6,0.35),0 4px 12px rgba(0,0,0,0.4);transition:transform 0.15s ease,background 0.15s ease}" +
       ".citf-buyfab:hover{background:#ffbd38;transform:translateY(-2px)}" +
@@ -109,19 +116,9 @@
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
 
-      /* hide Tilda's partners image (it's a fixed bitmap that doesn't adapt and includes St. Raphael); we render our own below */
-      "img[imgfield='tn_img_1741704123132']{display:none !important}" +
-      "img[imgfield='tn_img_1741704123132']+*{display:none !important}" +
-
-      /* custom adaptive partners block — replaces the bitmap */
-      ".citf-partners{padding:60px 32px 30px;background:#0a0a0a;border-top:1px solid #1c1c1c}" +
-      ".citf-partners-inner{max-width:1280px;margin:0 auto}" +
-      ".citf-partners-row{display:flex;flex-wrap:wrap;gap:36px 56px;justify-content:center;align-items:flex-start}" +
-      ".citf-partner-item{text-align:center;min-width:120px}" +
-      ".citf-partner-role{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#737373;margin-bottom:6px;font-family:'Syne',Arial,sans-serif;font-weight:600}" +
-      ".citf-partner-name{font-size:14px;color:#ddd;font-weight:700;letter-spacing:-0.005em;font-family:'Syne',Arial,sans-serif}" +
-      ".citf-partners-divider{display:block;text-align:center;font-size:10px;letter-spacing:0.22em;color:#555;text-transform:uppercase;margin:36px 0 24px;font-family:'Syne',Arial,sans-serif}" +
-      "@media(max-width:600px){.citf-partners{padding:40px 22px 20px}.citf-partners-row{gap:22px 28px}.citf-partner-item{min-width:0;flex:1 1 40%}}" +
+      /* keep Tilda's partner bitmap visible — we now use a masked v2 file (St. Raphael blacked out)
+         and let it scale down responsively */
+      "img[imgfield='tn_img_1741704123132']{max-width:100% !important;height:auto !important}" +
       "";
     document.head.appendChild(s);
   }
@@ -149,22 +146,20 @@
     document.body.appendChild(makeLangPillElement('floating'));
   }
 
-  // After chrome mounts, find the social-icons block in the Tilda header and
-  // place the lang pill immediately to the left of it. Removes the floating one.
+  // After chrome mounts, place the lang pill INSIDE the Tilda header — visually
+  // right next to (just left of) the social icons. Tilda absolutely-positions
+  // its nav elements, so we use a CSS class (.in-nav) with absolute positioning
+  // anchored to the header's top-right area.
   function attachLangSwitcherToNav() {
-    var floating = document.querySelector('.citf-navlangs.floating');
-    // Tilda nav has rec841567062 (T396) which holds the small icons & subscribe button.
-    // Look for a known target: the email/social anchors.
-    // Strategy: pick the first `<a>` whose href starts with mailto: or fb/instagram inside the header.
+    if (document.querySelector('.citf-navlangs.in-nav')) return;
     var header = document.getElementById('t-header');
     if (!header) return;
-    var anchorImg = header.querySelector('a[href^="mailto:"],a[href*="instagram.com"],a[href*="facebook.com"]');
-    if (!anchorImg) return;
-    // Walk up to find the parent that holds the social icon row
-    var socialRow = anchorImg.closest('[class*="t-col"], .tn-elem, .t396__elem') || anchorImg.parentElement;
-    if (!socialRow) return;
-    var pill = makeLangPillElement();
-    socialRow.parentNode.insertBefore(pill, socialRow);
+    // Make sure header is the positioning context for our absolute pill
+    var cs = window.getComputedStyle(header);
+    if (cs.position === 'static') header.style.position = 'relative';
+    var pill = makeLangPillElement('in-nav');
+    header.appendChild(pill);
+    var floating = document.querySelector('.citf-navlangs.floating');
     if (floating) floating.remove();
     setLang(initialLang());
   }
@@ -196,65 +191,8 @@
     document.body.appendChild(a);
   }
 
-  // Custom adaptive partners block — replaces Tilda's fixed bitmap.
-  // Removed: St. Raphael (per direction).
-  var PARTNERS = [
-    {role_en:'Under the Auspices', role_ru:'Под патронажем', role_gr:'Υπό την Αιγίδα', name:'Mayor of Limassol', name_ru:'Мэра Лимассола', name_gr:'Δήμου Λεμεσού'},
-    {role_en:'Main Partner', role_ru:'Главный партнёр', role_gr:'Κύριος Συνεργάτης', name:'Pattihio Theatre', name_ru:'Театр Паттихио', name_gr:'Παττίχειο Θέατρο'},
-    {role_en:'Sponsor', role_ru:'Спонсор', role_gr:'Χορηγός', name:'ASG Leasing'},
-    {role_en:'Official Flight Partner', role_ru:'Авиаперевозчик', role_gr:'Επίσημος Αεροπορικός Συνεργάτης', name:'Cyprus Airways'},
-    {role_en:'Media Partner', role_ru:'Медиа-партнёр', role_gr:'Χορηγός Επικοινωνίας', name:'Ο Φιλελεύθερος'},
-    {role_en:'Media Partner', role_ru:'Медиа-партнёр', role_gr:'Χορηγός Επικοινωνίας', name:'ZIMA'},
-    {role_en:'Venue', role_ru:'Площадка', role_gr:'Χώρος', name:'ETKO'},
-    {role_en:'Official Hotel', role_ru:'Официальный отель', role_gr:'Επίσημο Ξενοδοχείο', name:'Crowne Plaza'},
-    {role_en:'Event Partner', role_ru:'Партнёр события', role_gr:'Συνεργάτης Εκδήλωσης', name:'Allegro'},
-    {role_en:'Orchestra', role_ru:'Оркестр', role_gr:'Ορχήστρα', name:'Commandaria Orchestra', name_ru:'Оркестр Commandaria', name_gr:'Ορχήστρα Κομμανταρία'},
-    {role_en:'Flowers', role_ru:'Цветы', role_gr:'Λουλούδια', name:'Be Bloomy'},
-    {role_en:'Event Partner', role_ru:'Партнёр события', role_gr:'Συνεργάτης Εκδήλωσης', name:'AYA Cooks'}
-  ];
-
-  function injectPartnersBlock() {
-    if (document.querySelector('.citf-partners')) return;
-    var sec = document.createElement('section');
-    sec.className = 'citf-partners';
-    var inner = document.createElement('div');
-    inner.className = 'citf-partners-inner';
-
-    var divider = document.createElement('div');
-    divider.className = 'citf-partners-divider';
-    divider.innerHTML =
-      '<span data-en>With the support of</span>' +
-      '<span data-ru>При поддержке</span>' +
-      '<span data-gr>Με την υποστήριξη</span>';
-    inner.appendChild(divider);
-
-    var row = document.createElement('div');
-    row.className = 'citf-partners-row';
-    PARTNERS.forEach(function (p) {
-      var item = document.createElement('div');
-      item.className = 'citf-partner-item';
-      item.innerHTML =
-        '<div class="citf-partner-role" data-en>'+ p.role_en +'</div>' +
-        '<div class="citf-partner-role" data-ru>'+ (p.role_ru || p.role_en) +'</div>' +
-        '<div class="citf-partner-role" data-gr>'+ (p.role_gr || p.role_en) +'</div>' +
-        '<div class="citf-partner-name" data-en>'+ p.name +'</div>' +
-        '<div class="citf-partner-name" data-ru>'+ (p.name_ru || p.name) +'</div>' +
-        '<div class="citf-partner-name" data-gr>'+ (p.name_gr || p.name) +'</div>';
-      row.appendChild(item);
-    });
-    inner.appendChild(row);
-    sec.appendChild(inner);
-
-    // Insert just before the footer mount so it lives BETWEEN page content and the Tilda footer
-    var footerMount = document.getElementById('citf-footer-mount') || document.getElementById('t-footer');
-    if (footerMount && footerMount.parentNode) {
-      footerMount.parentNode.insertBefore(sec, footerMount);
-    } else {
-      // fallback to end of #allrecords
-      var ar = document.getElementById('allrecords') || document.body;
-      ar.appendChild(sec);
-    }
-  }
+  // (Custom text-based partners block removed — Tilda's masked v2 bitmap is now used directly.)
+  function injectPartnersBlock() { /* no-op kept for backwards-compat boot order */ }
 
   function loadTildaJS() {
     // Load sequentially so dependencies (jquery first) resolve in order
