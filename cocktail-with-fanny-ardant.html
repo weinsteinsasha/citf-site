@@ -75,6 +75,22 @@
   .holding-note{padding:28px 30px;background:#1d1300;border:1px solid rgba(255,168,6,0.4);border-radius:14px;margin:30px 0;color:#fff;font-size:14px;line-height:1.55}
   .holding-note strong{color:var(--gold);letter-spacing:0.04em}
 
+  /* GUEST CARDS */
+  .guests{padding:90px 32px;max-width:1200px;margin:0 auto;text-align:center}
+  .guests h2{font-size:clamp(28px,3.4vw,44px);font-weight:700;margin-bottom:14px;letter-spacing:-0.015em}
+  .guests p.lead{font-size:16px;color:#bbb;max-width:620px;margin:0 auto 60px;line-height:1.6}
+  .guest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:32px;max-width:1000px;margin:0 auto}
+  .guest-card{text-align:center}
+  .guest-avatar{width:160px;height:160px;border-radius:50%;margin:0 auto 22px;overflow:hidden;background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,168,6,0.3);box-shadow:0 0 0 1px rgba(0,0,0,0.3) inset;font-size:46px;font-weight:800;color:var(--gold);letter-spacing:-0.02em}
+  .guest-avatar img{width:100%;height:100%;object-fit:cover}
+  .guest-role{display:inline-block;font-size:10px;letter-spacing:0.18em;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:3px 10px;margin-bottom:12px;font-weight:700;text-transform:uppercase}
+  .guest-name{font-size:20px;font-weight:700;margin-bottom:6px;letter-spacing:-0.005em}
+  .guest-bio{font-size:13px;line-height:1.55;color:#aaa;max-width:280px;margin:0 auto}
+  @media(max-width:640px){
+    .guests{padding:60px 22px}
+    .guest-avatar{width:130px;height:130px;font-size:36px}
+  }
+
   /* i18n: hide inactive */
   html[data-lang=en] [data-ru],html[data-lang=en] [data-gr],
   html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
@@ -144,13 +160,66 @@
   <p class="section-lead" data-ru>Неформальный вечер с Фанни Ардан вне сцены — напитки, разговор, на следующий день после спектакля. Ограниченное количество мест.</p>
   <p class="section-lead" data-gr>Μια ανεπίσημη βραδιά για να γνωρίσετε τη Φανί Αρντάν εκτός σκηνής — ποτά, συζήτηση, την επομένη της παράστασης. Περιορισμένη χωρητικότητα.</p>
 
-  <div class="holding-note">
+  <div class="holding-note" id="holding">
     <strong data-en>NOTE · Page in progress.</strong>
     <strong data-ru>ВНИМАНИЕ · Страница в работе.</strong>
     <strong data-gr>ΣΗΜΕΙΩΣΗ · Σελίδα σε εξέλιξη.</strong>
     <span data-en> Programme details, host, dress code and ticket price will be added once confirmed. To register interest, email <a href="mailto:office@citf.cy" style="color:var(--gold);border-bottom:1px solid var(--gold)">office@citf.cy</a>.</span>
     <span data-ru> Программа, ведущий, дресс-код и стоимость будут добавлены после подтверждения. Чтобы записаться, напишите на <a href="mailto:office@citf.cy" style="color:var(--gold);border-bottom:1px solid var(--gold)">office@citf.cy</a>.</span>
     <span data-gr> Πρόγραμμα, οικοδεσπότης, dress code και τιμή θα προστεθούν μετά την επιβεβαίωση. Για ενδιαφέρον, στείλτε email στο <a href="mailto:office@citf.cy" style="color:var(--gold);border-bottom:1px solid var(--gold)">office@citf.cy</a>.</span>
+  </div>
+</section>
+
+<!-- GUESTS -->
+<section class="guests">
+  <h2 data-en>Three voices in one evening</h2>
+  <h2 data-ru>Три голоса за один вечер</h2>
+  <h2 data-gr>Τρεις φωνές σε μία βραδιά</h2>
+  <p class="lead" data-en>An intimate evening of conversation, music and presence — with the people who shape the night.</p>
+  <p class="lead" data-ru>Камерный вечер разговора, музыки и присутствия — с теми, кто создаёт этот вечер.</p>
+  <p class="lead" data-gr>Μια οικεία βραδιά συζήτησης, μουσικής και παρουσίας — με τους ανθρώπους που διαμορφώνουν τη νύχτα.</p>
+
+  <div class="guest-grid">
+
+    <div class="guest-card">
+      <div class="guest-avatar">
+        <img src="/images/tild6331-6134-4866-b763-626331663133___mara_desipris.jpg" alt="Fanny Ardant" onerror="this.style.display='none';this.parentElement.textContent='FA'">
+      </div>
+      <span class="guest-role" data-en>Guest of honour</span>
+      <span class="guest-role" data-ru>Почётный гость</span>
+      <span class="guest-role" data-gr>Τιμώμενη προσκεκλημένη</span>
+      <div class="guest-name">Fanny Ardant</div>
+      <p class="guest-bio" data-en>French actress, César winner. The day after Cassandre, in conversation outside the stage.</p>
+      <p class="guest-bio" data-ru>Французская актриса, обладательница «Сезара». На следующий день после «Кассандры» — в разговоре вне сцены.</p>
+      <p class="guest-bio" data-gr>Γαλλίδα ηθοποιός, βραβευμένη με César. Την επομένη της «Κασσάνδρας», σε συζήτηση εκτός σκηνής.</p>
+    </div>
+
+    <div class="guest-card">
+      <div class="guest-avatar">
+        <img src="/images/credits/melanie-steliou.jpg" alt="Melanie Steliou" onerror="this.style.display='none';this.parentElement.textContent='MS'">
+      </div>
+      <span class="guest-role" data-en>Moderator</span>
+      <span class="guest-role" data-ru>Модератор</span>
+      <span class="guest-role" data-gr>Συντονίστρια</span>
+      <div class="guest-name">Melanie Steliou</div>
+      <p class="guest-bio" data-en>Cypriot actress, TV presenter and political activist. Leading the conversation with Fanny Ardant.</p>
+      <p class="guest-bio" data-ru>Кипрская актриса, телеведущая и общественный деятель. Ведёт разговор с Фанни Ардан.</p>
+      <p class="guest-bio" data-gr>Κύπρια ηθοποιός, τηλεπαρουσιάστρια και πολιτική ακτιβίστρια. Συντονίζει τη συζήτηση με τη Φανί Αρντάν.</p>
+    </div>
+
+    <div class="guest-card">
+      <div class="guest-avatar">
+        <img src="/images/credits/belolipetskaya.jpg" alt="Ksenia Belolipetskaya" onerror="this.style.display='none';this.parentElement.textContent='KB'">
+      </div>
+      <span class="guest-role" data-en>Vocal tribute</span>
+      <span class="guest-role" data-ru>Вокальный трибьют</span>
+      <span class="guest-role" data-gr>Φωνητικό αφιέρωμα</span>
+      <div class="guest-name">Ksenia Belolipetskaya</div>
+      <p class="guest-bio" data-en>Opera singer. Opens the evening with a tribute to Maria Callas — honouring one of Ardant&rsquo;s most iconic roles.</p>
+      <p class="guest-bio" data-ru>Оперная певица. Открывает вечер трибьютом Марии Каллас — одной из самых знаковых ролей Ардан.</p>
+      <p class="guest-bio" data-gr>Οπερατική τραγουδίστρια. Ανοίγει τη βραδιά με αφιέρωμα στη Μαρία Κάλλας — μία από τις πιο εμβληματικές ρόλους της Αρντάν.</p>
+    </div>
+
   </div>
 </section>
 
