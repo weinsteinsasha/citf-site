@@ -19,13 +19,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Tilda stylesheets for the shared header/footer (same bundle as homepage) -->
-<link rel="stylesheet" href="/css/tilda-grid-3.0.min.css" type="text/css" media="all">
-<link rel="stylesheet" href="/css/tilda-blocks-page121413356.min.css?t=1776697778" type="text/css" media="all">
-<link rel="stylesheet" href="/css/tilda-animation-2.0.min.css" type="text/css" media="all">
-<link rel="stylesheet" href="/css/tilda-popup-1.1.min.css" type="text/css" media="all">
-<link rel="stylesheet" href="/css/tilda-forms-1.0.min.css" type="text/css" media="all">
-<link rel="stylesheet" type="text/css" href="/css/custom.css?t=1776697778">
 
 <style>
   :root{
@@ -46,19 +39,58 @@
   html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
   html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
 
-  /* Hide main Tilda menu's 'more' indicator if present, and ensure header
-     stacks above our content */
-  header#t-header{position:relative;z-index:10}
-  /* Placeholder style for fetched header/footer before they arrive */
-  #t-header-slot,#t-footer-slot{min-height:0}
-  /* Local fallback lang pill — hidden once the main header mounts */
-  .lang-switch-fallback{position:fixed;top:18px;right:20px;z-index:90;display:flex;gap:2px;background:rgba(17,17,17,0.85);border:1px solid #333;border-radius:999px;padding:4px;backdrop-filter:blur(10px)}
-  .lang-switch-fallback button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600}
-  .lang-switch-fallback button.active{background:var(--gold);color:#000}
-  body.has-mainnav .lang-switch-fallback{display:none}
+  /* SITE NAV (matches citf.cy style) */
+  .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(24,24,24,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+  .site-nav-logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;font-size:13px;color:var(--gold)}
+  .site-nav-logo img{height:32px;width:auto}
+  .site-nav-menu{display:flex;gap:24px;align-items:center}
+  .site-nav-menu a{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#ddd;font-weight:500;transition:color 0.15s;padding:8px 0}
+  .site-nav-menu a:hover{color:var(--gold)}
+  .site-nav-right{display:flex;gap:14px;align-items:center}
+  .lang-switch{display:flex;gap:2px;background:rgba(17,17,17,0.7);border:1px solid #333;border-radius:999px;padding:3px}
+  .lang-switch button{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 11px;border-radius:999px;color:var(--muted);font-weight:600;transition:color 0.15s,background 0.15s}
+  .lang-switch button:hover{color:#fff}
+  .lang-switch button.active{background:var(--gold);color:#000}
+  .nav-buy{display:none;background:var(--gold);color:#000;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;padding:10px 18px;border-radius:999px}
+  .nav-buy:hover{background:#ffbd38}
+  .nav-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:8px;background:none;border:0}
+  .nav-toggle span{display:block;width:22px;height:2px;background:var(--fg);transition:0.2s}
+  @media(min-width:1080px){.nav-buy{display:inline-flex;align-items:center}}
+  @media(max-width:1079px){
+    .site-nav{padding:12px 20px}
+    .site-nav-menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#181818;border-bottom:1px solid #222;gap:0;padding:6px 0;align-items:stretch}
+    .site-nav-menu.open{display:flex}
+    .site-nav-menu a{padding:14px 22px;border-bottom:1px solid #1f1f1f;font-size:12px}
+    .nav-toggle{display:flex}
+  }
+  /* Push hero down so fixed nav doesn't cover its top edge */
+  body{padding-top:0}
+
+  /* SITE FOOTER */
+  .site-footer{padding:64px 32px 28px;background:#0a0a0a;border-top:1px solid #1c1c1c}
+  .site-footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px 56px;margin-bottom:44px}
+  .footer-brand h4{font-size:18px;font-weight:800;margin-bottom:12px;color:var(--gold);letter-spacing:0.02em}
+  .footer-brand p{font-size:13px;line-height:1.6;color:#999;max-width:380px;margin-bottom:16px}
+  .footer-brand .footer-contact{font-size:13px;color:#bbb}
+  .footer-brand .footer-contact a{color:var(--gold)}
+  .footer-col h5{font-size:11px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;font-weight:700}
+  .footer-col a{display:block;font-size:13px;color:#bbb;margin-bottom:10px;transition:color 0.15s}
+  .footer-col a:hover{color:var(--gold)}
+  .footer-bottom{max-width:1280px;margin:0 auto;padding-top:24px;border-top:1px solid #1c1c1c;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:11px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
+  .footer-social{display:flex;gap:14px}
+  .footer-social a{color:#888;font-size:11px;letter-spacing:0.18em}
+  .footer-social a:hover{color:var(--gold)}
+  @media(max-width:880px){
+    .site-footer{padding:50px 22px 22px}
+    .site-footer-inner{grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
+    .footer-brand{grid-column:1/-1}
+  }
+  @media(max-width:520px){
+    .site-footer-inner{grid-template-columns:1fr}
+  }
 
   /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
-  .hero{position:relative;min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:#181818}
+  .hero{position:relative;min-height:calc(100vh - 64px);display:grid;grid-template-columns:1fr 1fr;background:#181818;margin-top:64px}
   .hero-photo{position:relative;overflow:hidden;background:#111}
   .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:right center;display:block}
   .hero-content-wrap{display:flex;flex-direction:column;justify-content:flex-end;padding:100px 48px 64px;min-height:100vh}
@@ -187,15 +219,33 @@
 </head>
 <body>
 
-<!-- Slot: main site header is injected here at load time -->
-<div id="t-header-slot"></div>
-
-<!-- Fallback lang pill (shown only if main header fails to load) -->
-<div class="lang-switch-fallback lang-switch" role="tablist">
-  <button data-setlang="en" class="active">EN</button>
-  <button data-setlang="gr">GR</button>
-  <button data-setlang="ru">RU</button>
-</div>
+<!-- SITE NAV -->
+<nav class="site-nav">
+  <a class="site-nav-logo" href="/">
+    <img src="/images/tild3738-6662-4535-a334-316536636261__svg_1730978181783.svg" alt="" onerror="this.style.display='none'">
+    <span>CITF</span>
+  </a>
+  <div class="site-nav-menu" id="siteNavMenu">
+    <a href="/" data-en>Shows &amp; Events</a><a href="/" data-ru>Афиша</a><a href="/" data-gr>Παραστάσεις</a>
+    <a href="/about" data-en>About</a><a href="/ru/about" data-ru>О нас</a><a href="/gr/about" data-gr>Σχετικά</a>
+    <a href="/the-festival-pass" data-en>Festival Pass</a><a href="/the-festival-pass" data-ru>Festival Pass</a><a href="/the-festival-pass" data-gr>Festival Pass</a>
+    <a href="/friends-club" data-en>Friends Club</a><a href="/friends-club" data-ru>Friends Club</a><a href="/friends-club" data-gr>Friends Club</a>
+    <a href="/gallery" data-en>Gallery</a><a href="/gallery" data-ru>Галерея</a><a href="/gallery" data-gr>Gallery</a>
+    <a href="/press" data-en>Press</a><a href="/press" data-ru>Пресса</a><a href="/press" data-gr>Τύπος</a>
+    <a href="/contact" data-en>Contact</a><a href="/contact" data-ru>Контакты</a><a href="/contact" data-gr>Επικοινωνία</a>
+  </div>
+  <div class="site-nav-right">
+    <div class="lang-switch" role="tablist">
+      <button data-setlang="en" class="active">EN</button>
+      <button data-setlang="gr">GR</button>
+      <button data-setlang="ru">RU</button>
+    </div>
+    <a class="nav-buy" href="https://www.soldoutticketbox.com/easyconsole.cfm/page/select_seats_newil/block_id/1280&amp;event_day_id=13766&amp;lang=en" target="_blank" rel="noopener">
+      <span data-en>Buy Ticket</span><span data-ru>Купить</span><span data-gr>Εισιτήριο</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('siteNavMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
 
 <!-- HERO (split like partnership.citf.cy) -->
 <header class="hero">
@@ -372,9 +422,9 @@
     <span class="section-kicker" data-en>The creative team</span>
     <span class="section-kicker" data-ru>Творческая команда</span>
     <span class="section-kicker" data-gr>Η Δημιουργική Ομάδα</span>
-    <h2 class="section-title" data-en>Five voices behind one woman.</h2>
-    <h2 class="section-title" data-ru>Пять голосов за одной женщиной.</h2>
-    <h2 class="section-title" data-gr>Πέντε φωνές πίσω από μία γυναίκα.</h2>
+    <h2 class="section-title" data-en>Five voices behind this show.</h2>
+    <h2 class="section-title" data-ru>Пять голосов за этим спектаклем.</h2>
+    <h2 class="section-title" data-gr>Πέντε φωνές πίσω από αυτή την παράσταση.</h2>
 
     <div class="credits-grid">
 
@@ -512,18 +562,57 @@
   </div>
 </section>
 
-<!-- Slot: main site footer injected here -->
-<div id="t-footer-slot"></div>
+<!-- SITE FOOTER -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand">
+      <h4>Cyprus International Theatre Festival</h4>
+      <p data-en>World-class theatre brought to Cyprus. Performances and special events at Pattihio Theatre, Limassol, throughout the year.</p>
+      <p data-ru>Театр мирового уровня на Кипре. Спектакли и специальные события в театре Паттихио, Лимассол, в течение всего года.</p>
+      <p data-gr>Παγκόσμιας κλάσης θέατρο στην Κύπρο. Παραστάσεις και ειδικές εκδηλώσεις στο Παττίχειο Θέατρο, Λεμεσός, όλη τη διάρκεια του χρόνου.</p>
+      <div class="footer-contact">
+        <a href="mailto:office@citf.cy">office@citf.cy</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h5 data-en>Festival</h5><h5 data-ru>Фестиваль</h5><h5 data-gr>Φεστιβάλ</h5>
+      <a href="/" data-en>Shows &amp; Events</a><a href="/" data-ru>Афиша</a><a href="/" data-gr>Παραστάσεις</a>
+      <a href="/about" data-en>About</a><a href="/ru/about" data-ru>О нас</a><a href="/gr/about" data-gr>Σχετικά</a>
+      <a href="/the-festival-pass" data-en>Festival Pass</a><a href="/the-festival-pass" data-ru>Festival Pass</a><a href="/the-festival-pass" data-gr>Festival Pass</a>
+      <a href="/friends-club" data-en>Friends Club</a><a href="/friends-club" data-ru>Friends Club</a><a href="/friends-club" data-gr>Friends Club</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-en>Connect</h5><h5 data-ru>Связь</h5><h5 data-gr>Επικοινωνία</h5>
+      <a href="/contact" data-en>Contact</a><a href="/contact" data-ru>Контакты</a><a href="/contact" data-gr>Επικοινωνία</a>
+      <a href="/press" data-en>Press</a><a href="/press" data-ru>Пресса</a><a href="/press" data-gr>Τύπος</a>
+      <a href="/gallery" data-en>Gallery</a><a href="/gallery" data-ru>Галерея</a><a href="/gallery" data-gr>Gallery</a>
+    </div>
+    <div class="footer-col">
+      <h5 data-en>Follow</h5><h5 data-ru>Соцсети</h5><h5 data-gr>Κοινωνικά</h5>
+      <a href="https://www.instagram.com/citf.cy" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/citf.cy" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.youtube.com/channel/UCnM5xTx4ZlH9d1biuq_0MDA" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span data-en>© Cyprus International Theatre Festival</span>
+    <span data-ru>© Кипрский международный театральный фестиваль</span>
+    <span data-gr>© Διεθνές Φεστιβάλ Θεάτρου Κύπρου</span>
+    <div class="footer-social">
+      <a href="/privacy" data-en>Privacy</a><a href="/privacy" data-ru>Политика</a><a href="/privacy" data-gr>Ιδιωτικότητα</a>
+      <a href="/terms" data-en>Terms</a><a href="/terms" data-ru>Условия</a><a href="/terms" data-gr>Όροι</a>
+    </div>
+  </div>
+</footer>
 
 <script>
-// ----- i18n core -----
-window.__citfSetLang = (function(){
+(function(){
   var LS='citf_lang', valid=['en','ru','gr'];
   function setLang(l){
     if(valid.indexOf(l)<0)l='en';
     document.documentElement.setAttribute('data-lang',l);
     try{localStorage.setItem(LS,l)}catch(e){}
-    document.querySelectorAll('.lang-switch button, .lang-switch-fallback button').forEach(function(b){
+    document.querySelectorAll('.lang-switch button').forEach(function(b){
       b.classList.toggle('active', b.getAttribute('data-setlang')===l);
     });
     document.documentElement.lang = l==='gr'?'el':l;
@@ -533,62 +622,12 @@ window.__citfSetLang = (function(){
   var browser=(navigator.language||'').toLowerCase();
   var initial = q||saved||(browser.indexOf('ru')===0?'ru':browser.indexOf('el')===0?'gr':'en');
   setLang(initial);
-  document.querySelectorAll('.lang-switch-fallback button').forEach(function(b){
+  document.querySelectorAll('.lang-switch button').forEach(function(b){
     b.addEventListener('click',function(){setLang(b.getAttribute('data-setlang'))});
   });
-  return setLang;
-})();
-
-// ----- Pull header + footer from homepage (so they stay in sync site-wide) -----
-(async function mountChrome(){
-  try{
-    var r = await fetch('/', {credentials:'same-origin'});
-    if(!r.ok) throw new Error('home '+r.status);
-    var html = await r.text();
-    var doc = new DOMParser().parseFromString(html, 'text/html');
-    var header = doc.getElementById('t-header');
-    var footer = doc.getElementById('t-footer');
-    if(header){
-      document.getElementById('t-header-slot').replaceWith(header);
-    }
-    if(footer){
-      document.getElementById('t-footer-slot').replaceWith(footer);
-    }
-
-    // Run inline <script>s the header/footer brought with them (DOMParser neutralizes them).
-    [header, footer].forEach(function(root){
-      if(!root) return;
-      root.querySelectorAll('script').forEach(function(old){
-        var s = document.createElement('script');
-        for(var i=0;i<old.attributes.length;i++){
-          s.setAttribute(old.attributes[i].name, old.attributes[i].value);
-        }
-        s.text = old.textContent;
-        old.parentNode.replaceChild(s, old);
-      });
-    });
-
-    document.body.classList.add('has-mainnav');
-
-    // Hijack Tilda language-switcher: intercept its clicks so we stay on this
-    // page and just swap the copy, instead of redirecting to /ru/ or /gr/.
-    document.querySelectorAll('[data-tilda-lang], [data-lang-switcher] a, a[href="/ru/"], a[href="/gr/"], a[href="/"]').forEach(function(a){
-      var href = a.getAttribute('href')||'';
-      var ls = a.getAttribute('data-tilda-lang');
-      var target = ls || (href==='/ru/'?'ru':href==='/gr/'?'gr':href==='/'?'en':null);
-      if(!target) return;
-      // Only rewrite if this looks like a lang link (3-letter or path-prefix match).
-      a.addEventListener('click', function(e){
-        e.preventDefault();
-        window.__citfSetLang(target);
-        var u = new URL(location.href);
-        if(target==='en') u.searchParams.delete('lang'); else u.searchParams.set('lang', target);
-        history.replaceState(null, '', u.toString());
-      });
-    });
-  }catch(err){
-    console.warn('[citf] header/footer mount failed:', err);
-  }
+  // Close mobile menu when a link inside is clicked
+  var menu = document.getElementById('siteNavMenu');
+  if(menu) menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
 })();
 </script>
 </body>
