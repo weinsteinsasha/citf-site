@@ -116,9 +116,31 @@
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
 
-      /* keep Tilda's partner bitmap visible — we now use a masked v2 file (St. Raphael blacked out)
-         and let it scale down responsively */
-      "img[imgfield='tn_img_1741704123132']{max-width:100% !important;height:auto !important}" +
+      /* hide Tilda's flat partners bitmap — replaced by adaptive HTML grid below */
+      "img[imgfield='tn_img_1741704123132']{display:none !important}" +
+      "img[imgfield='tn_img_1741704123132']+*{display:none !important}" +
+
+      /* CITF partners — adaptive HTML grid using individual logo PNGs.
+         Sits between page content and the Tilda footer; site-wide via chrome.js. */
+      ".citf-partners{padding:64px 32px 48px;background:#181818;border-top:1px solid #232323}" +
+      ".citf-partners-inner{max-width:1280px;margin:0 auto}" +
+      ".citf-partners-title{display:block;text-align:center;font-family:'Syne',Arial,sans-serif;font-size:11px;letter-spacing:0.28em;color:#737373;text-transform:uppercase;margin-bottom:48px;font-weight:600}" +
+      ".citf-partners-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:42px 56px;margin-bottom:48px}" +
+      ".citf-partners-row.main .citf-partner-logo{height:88px}" +
+      ".citf-partners-row.rest{gap:32px 44px;margin-bottom:0}" +
+      ".citf-partners-row.rest .citf-partner-logo{height:48px}" +
+      ".citf-partner{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}" +
+      ".citf-partner-role{font-family:'Syne',Arial,sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#737373;font-weight:600;text-align:center;line-height:1.4;max-width:160px}" +
+      ".citf-partners-row.main .citf-partner-role{font-size:10px;max-width:240px}" +
+      ".citf-partner-logo{display:block;width:auto;max-width:180px;object-fit:contain;filter:brightness(1) contrast(1)}" +
+      "@media(max-width:760px){" +
+        ".citf-partners{padding:48px 22px 36px}" +
+        ".citf-partners-title{margin-bottom:32px}" +
+        ".citf-partners-row{gap:32px 36px;margin-bottom:32px}" +
+        ".citf-partners-row.main .citf-partner-logo{height:64px}" +
+        ".citf-partners-row.rest{gap:24px 28px}" +
+        ".citf-partners-row.rest .citf-partner-logo{height:38px}" +
+      "}" +
       "";
     document.head.appendChild(s);
   }
@@ -191,8 +213,82 @@
     document.body.appendChild(a);
   }
 
-  // (Custom text-based partners block removed — Tilda's masked v2 bitmap is now used directly.)
-  function injectPartnersBlock() { /* no-op kept for backwards-compat boot order */ }
+  // CITF partners — adaptive HTML grid. ADD/REMOVE partners by editing this array;
+  // logos live in /images/partners/<file>. Mark `main: true` for the larger top row.
+  // Roles use the trilingual {en, ru, gr} object.
+  var PARTNERS = [
+    { file:'mayor-of-limassol', alt:'Mayor of Limassol', main:true,
+      role:{ en:'Under the Auspices of the Mayor of Limassol', ru:'Под патронажем мэра Лимассола', gr:'Υπό την Αιγίδα του Δημάρχου Λεμεσού' } },
+    { file:'pattihio', alt:'Pattihio Municipal Theatre', main:true,
+      role:{ en:'Main Partner', ru:'Главный партнёр', gr:'Κύριος Συνεργάτης' } },
+
+    { file:'asg-leasing', alt:'ASG Leasing',
+      role:{ en:'Sponsor', ru:'Спонсор', gr:'Χορηγός' } },
+    { file:'cyprus-airways', alt:'Cyprus Airways',
+      role:{ en:'Official Flight Partner', ru:'Авиаперевозчик', gr:'Επίσημος Αεροπορικός Συνεργάτης' } },
+    { file:'filelefteros', alt:'Ο Φιλελεύθερος',
+      role:{ en:'Media Partner', ru:'Медиа-партнёр', gr:'Χορηγός Επικοινωνίας' } },
+    { file:'zima', alt:'ZIMA Magazine',
+      role:{ en:'Media Partner', ru:'Медиа-партнёр', gr:'Χορηγός Επικοινωνίας' } },
+    { file:'etko', alt:'ETKO',
+      role:{ en:'Venue', ru:'Площадка', gr:'Χώρος' } },
+    { file:'crowne-plaza', alt:'Crowne Plaza Limassol',
+      role:{ en:'Official Hotel', ru:'Официальный отель', gr:'Επίσημο Ξενοδοχείο' } },
+    { file:'allegro', alt:'Allegro',
+      role:{ en:'Event Partner', ru:'Партнёр события', gr:'Συνεργάτης Εκδήλωσης' } },
+    { file:'commandaria', alt:'Commandaria Orchestra',
+      role:{ en:'Orchestra', ru:'Оркестр', gr:'Ορχήστρα' } },
+    { file:'be-bloomy', alt:'Be Bloomy',
+      role:{ en:'Flowers', ru:'Цветы', gr:'Λουλούδια' } },
+    { file:'aya-cooks', alt:'AYA Cooks',
+      role:{ en:'Event Partner', ru:'Партнёр события', gr:'Συνεργάτης Εκδήλωσης' } }
+  ];
+
+  function makePartnerCard(p) {
+    return '' +
+      '<div class="citf-partner">' +
+        '<img class="citf-partner-logo" src="/images/partners/'+ p.file +'.png" alt="'+ p.alt +'" loading="lazy">' +
+        '<span class="citf-partner-role" data-en>'+ p.role.en +'</span>' +
+        '<span class="citf-partner-role" data-ru>'+ p.role.ru +'</span>' +
+        '<span class="citf-partner-role" data-gr>'+ p.role.gr +'</span>' +
+      '</div>';
+  }
+
+  function injectPartnersBlock() {
+    if (document.querySelector('.citf-partners')) return;
+    var sec = document.createElement('section');
+    sec.className = 'citf-partners';
+    var inner = document.createElement('div');
+    inner.className = 'citf-partners-inner';
+
+    var title = document.createElement('span');
+    title.className = 'citf-partners-title';
+    title.innerHTML =
+      '<span data-en>With the support of</span>' +
+      '<span data-ru>При поддержке</span>' +
+      '<span data-gr>Με την υποστήριξη</span>';
+    inner.appendChild(title);
+
+    var mainRow = document.createElement('div');
+    mainRow.className = 'citf-partners-row main';
+    var restRow = document.createElement('div');
+    restRow.className = 'citf-partners-row rest';
+    PARTNERS.forEach(function (p) {
+      (p.main ? mainRow : restRow).insertAdjacentHTML('beforeend', makePartnerCard(p));
+    });
+    inner.appendChild(mainRow);
+    inner.appendChild(restRow);
+    sec.appendChild(inner);
+
+    // Insert just before the footer mount so it lives BETWEEN page content and the Tilda footer
+    var footerMount = document.getElementById('citf-footer-mount') || document.getElementById('t-footer');
+    if (footerMount && footerMount.parentNode) {
+      footerMount.parentNode.insertBefore(sec, footerMount);
+    } else {
+      var ar = document.getElementById('allrecords') || document.body;
+      ar.appendChild(sec);
+    }
+  }
 
   function loadTildaJS() {
     // Load sequentially so dependencies (jquery first) resolve in order
