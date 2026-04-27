@@ -412,38 +412,51 @@
     //    all three language versions.
     injectInlineCSS();
     setLang(initialLang());
-    // 0.5) Visible fallback lang pill (floating, removed once chrome attaches it to nav)
-    injectFallbackLangPill();
-    setLang(initialLang());
-    // 0.7) Floating Buy Ticket FAB if page configured one
+    // 0.7) Floating Buy Ticket FAB if page configured one (instant, no chrome dep)
     injectBuyFab();
 
     // 1) Tilda parent DOM (body.t-body + #allrecords wrapper)
     prepareBody();
     ensureAllrecords();
 
-    // 2) Tilda CSS bundles
+    // 2) Tilda CSS bundles (parallel, non-blocking)
     injectAllCSS();
-    // 3) Tilda JS bundle
-    try { await loadTildaJS(); } catch (e) { console.warn('[citf chrome] tilda bundle load error', e); }
-    // 4) Mount header + footer
+
+    // 3) Mount header + footer IMMEDIATELY — do NOT wait for the heavy Tilda
+    //    JS bundle. The static HTML + CSS render the chrome correctly on its
+    //    own; Tilda JS only adds extra interactivity (animations, popups) that
+    //    we re-init in the background once it loads.
     await Promise.all([
       mountFragment('citf-header-mount', '/components/header.html'),
       mountFragment('citf-footer-mount', '/components/footer.html')
     ]);
-    // 4.5) Inject our adaptive partners block between page content and footer,
-    //      and (try to) move the lang pill into the nav.
+    // 3.5) Inject our adaptive partners block between page content and footer,
+    //      and move the lang pill into the nav (right next to the social icons).
     injectPartnersBlock();
     attachLangSwitcherToNav();
-
-    // 5) Apply language again now that all i18n nodes are in DOM
-    setLang(initialLang());
-    // 6) Force Tilda block init
+    // 3.6) If for some reason the lang pill couldn't be attached to the nav,
+    //      show the floating fallback (only after a short delay so it never
+    //      flashes when chrome attaches normally).
     setTimeout(function () {
-      reinitTildaBlocks();
-      bindLangSwitcher();
-      window.addEventListener('resize', function () { reinitTildaBlocks(); });
-    }, 50);
+      if (!document.querySelector('.citf-navlangs')) injectFallbackLangPill();
+    }, 600);
+
+    // 4) Apply language again now that all i18n nodes are in DOM
+    setLang(initialLang());
+    bindLangSwitcher();
+
+    // 5) NOW load Tilda JS in the background. The chrome is already visible;
+    //    when the bundle resolves we re-init blocks (animations, popups, scale).
+    loadTildaJS()
+      .then(function () {
+        setTimeout(function () {
+          reinitTildaBlocks();
+          bindLangSwitcher();
+        }, 50);
+      })
+      .catch(function (e) { console.warn('[citf chrome] tilda bundle load error', e); });
+
+    window.addEventListener('resize', function () { reinitTildaBlocks(); });
     if (document.readyState === 'complete') {
       setTimeout(reinitTildaBlocks, 200);
     } else {
