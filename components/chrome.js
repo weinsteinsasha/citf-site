@@ -101,12 +101,11 @@
       ".citf-navlangs button.active{background:#FFA806;color:#000}" +
       ".citf-navlangs.floating{position:fixed;top:40px;right:14px;z-index:9999;background:rgba(17,17,17,0.94);box-shadow:0 4px 16px rgba(0,0,0,0.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}" +
 
-      /* lang pill placed inside the Tilda header, just left of the social icons */
-      ".citf-navlangs.in-nav{position:absolute;top:60px;right:230px;z-index:120;background:rgba(14,14,14,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}" +
-      "@media(max-width:1439px){.citf-navlangs.in-nav{top:34px;right:200px}}" +
-      "@media(max-width:980px){.citf-navlangs.in-nav{top:28px;right:170px}}" +
-      "@media(max-width:640px){.citf-navlangs.in-nav{top:18px;right:140px;padding:2px 3px}.citf-navlangs.in-nav button{font-size:10px;padding:4px 7px;letter-spacing:0.14em}}" +
-      "@media(max-width:380px){.citf-navlangs.in-nav{right:120px;top:14px}}" +
+      /* Lang pill — absolutely positioned inside Tilda's header artboard.
+         Final top/left coords are set in JS to match the social-icons row exactly,
+         and recomputed on resize. Mobile (≤640) gets a smaller font. */
+      ".citf-navlangs.in-nav{position:absolute;z-index:120;background:rgba(14,14,14,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}" +
+      "@media(max-width:640px){.citf-navlangs.in-nav{padding:2px 3px}.citf-navlangs.in-nav button{font-size:10px;padding:4px 7px;letter-spacing:0.14em}}" +
 
       /* floating Buy Ticket button — bottom-right, configurable per page via window.CITF_BUY */
       ".citf-buyfab{position:fixed;bottom:22px;right:22px;z-index:9998;display:inline-flex;align-items:center;gap:8px;background:#FFA806;color:#000 !important;font-family:'Syne',Arial,sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;font-weight:800;padding:14px 22px;border-radius:999px;text-decoration:none !important;box-shadow:0 8px 28px rgba(255,168,6,0.35),0 4px 12px rgba(0,0,0,0.4);transition:transform 0.15s ease,background 0.15s ease}" +
@@ -168,22 +167,87 @@
     document.body.appendChild(makeLangPillElement('floating'));
   }
 
-  // After chrome mounts, place the lang pill INSIDE the Tilda header — visually
-  // right next to (just left of) the social icons. Tilda absolutely-positions
-  // its nav elements, so we use a CSS class (.in-nav) with absolute positioning
-  // anchored to the header's top-right area.
+  // After chrome mounts, drop the lang pill INSIDE the Tilda header and pin it
+  // to the same row as the social icons — by reading the live position of the
+  // Facebook anchor (which Tilda re-computes on every resize). The pill becomes
+  // a sibling of the social icons inside the same .t396__artboard so it shares
+  // the same coordinate system.
+  // Find the VISIBLE anchor inside the Tilda header to align the lang pill to.
+  // Strategy: prefer the social-icons row if it's actually painted on screen
+  // (desktop layout), otherwise fall back to the MENU button — which is always
+  // visible across all breakpoints. Returns the .tn-elem wrapper.
+  function isElemVisible(el) {
+    if (!el) return false;
+    var rect = el.getBoundingClientRect();
+    if (rect.height <= 0 || rect.width <= 0) return false;
+    if (rect.top < 0 || rect.top > window.innerHeight) return false;
+    var p = el;
+    while (p && p !== document.body) {
+      var cs = window.getComputedStyle(p);
+      if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+      p = p.parentElement;
+    }
+    return true;
+  }
+
+  function findHeaderAnchorElem() {
+    var i, a, elem;
+    // 1) Prefer social icons if visible (desktop layout)
+    var socials = document.querySelectorAll('#t-header a[href*="facebook.com"], #t-header a[href*="instagram.com"]');
+    for (i = 0; i < socials.length; i++) {
+      elem = socials[i].closest('.tn-elem') || socials[i].parentElement;
+      if (isElemVisible(elem)) return elem;
+    }
+    // 2) Fallback: the MENU button — it's the burger/menu trigger and is shown on every breakpoint
+    var allElems = document.querySelectorAll('#t-header .tn-elem');
+    for (i = 0; i < allElems.length; i++) {
+      var t = (allElems[i].textContent || '').trim().toUpperCase();
+      if ((t === 'MENU' || t === 'МЕНЮ' || t === 'ΜΕΝΟΥ') && isElemVisible(allElems[i])) {
+        return allElems[i];
+      }
+    }
+    return null;
+  }
+
+  function positionLangPill(pill) {
+    var anchor = findHeaderAnchorElem();
+    if (!anchor || !anchor.parentElement) return false;
+    var artboard = anchor.parentElement;
+    if (artboard !== pill.parentElement) artboard.appendChild(pill);
+    // Tilda's t396 scales element coords via CSS calc(var(--zoom)), so
+    // offsetLeft/offsetTop are pre-zoom and don't match what's painted.
+    // getBoundingClientRect gives the real on-screen position post-zoom.
+    var aRect  = anchor.getBoundingClientRect();
+    var abRect = artboard.getBoundingClientRect();
+    var pillH  = pill.offsetHeight || 28;
+    var topPx   = aRect.top  - abRect.top + (aRect.height - pillH) / 2;
+    var rightPx = abRect.right - aRect.left + 16; // 16-px gap to anchor's left edge
+    pill.style.top   = Math.max(0, Math.round(topPx))   + 'px';
+    pill.style.right = Math.max(0, Math.round(rightPx)) + 'px';
+    pill.style.left  = 'auto';
+    return true;
+  }
+
   function attachLangSwitcherToNav() {
-    if (document.querySelector('.citf-navlangs.in-nav')) return;
     var header = document.getElementById('t-header');
     if (!header) return;
-    // Make sure header is the positioning context for our absolute pill
-    var cs = window.getComputedStyle(header);
-    if (cs.position === 'static') header.style.position = 'relative';
-    var pill = makeLangPillElement('in-nav');
-    header.appendChild(pill);
+    var pill = document.querySelector('.citf-navlangs.in-nav');
+    if (!pill) {
+      pill = makeLangPillElement('in-nav');
+      header.appendChild(pill);                // temp — positionLangPill moves it into the artboard
+    }
     var floating = document.querySelector('.citf-navlangs.floating');
     if (floating) floating.remove();
+    // Try to pin to FB now and after each Tilda re-layout
+    var attempts = 0, iv = setInterval(function () {
+      if (positionLangPill(pill) || ++attempts > 12) clearInterval(iv);
+    }, 200);
     setLang(initialLang());
+  }
+
+  function repinLangPill() {
+    var pill = document.querySelector('.citf-navlangs.in-nav');
+    if (pill) positionLangPill(pill);
   }
 
   // Floating "Buy Ticket" FAB. Page configures via window.CITF_BUY before chrome.js loads:
@@ -486,15 +550,18 @@
         setTimeout(function () {
           reinitTildaBlocks();
           bindLangSwitcher();
+          repinLangPill();
         }, 50);
       })
       .catch(function (e) { console.warn('[citf chrome] tilda bundle load error', e); });
 
-    window.addEventListener('resize', function () { reinitTildaBlocks(); });
+    window.addEventListener('resize', function () { reinitTildaBlocks(); repinLangPill(); });
     if (document.readyState === 'complete') {
-      setTimeout(reinitTildaBlocks, 200);
+      setTimeout(function(){ reinitTildaBlocks(); repinLangPill(); }, 200);
     } else {
-      window.addEventListener('load', function () { setTimeout(reinitTildaBlocks, 200); });
+      window.addEventListener('load', function () {
+        setTimeout(function(){ reinitTildaBlocks(); repinLangPill(); }, 200);
+      });
     }
   }
 
