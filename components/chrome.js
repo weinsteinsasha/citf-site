@@ -115,10 +115,15 @@
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
 
-      /* No partner-section overrides — chrome shows the SAME Tilda bitmap as
-         the main site (citf.cy/), so header+footer+partners are identical
-         across all pages. The bitmap files on disk have St Raphael cut out;
-         individual logo PNGs in /images/partners/ are kept for future use. */
+      /* Partner bitmap responsive override — Tilda hard-codes the artboard
+         height (489px desktop / 242px tablet / 110px mobile) which clips the
+         image when viewport width changes. Force the artboard to auto-size
+         and the image to keep its natural aspect ratio at any width. */
+      "#rec890778214 .t396__artboard,#rec890778214 .t396__filter,#rec890778214 .t396__carrier{height:auto !important;min-height:0 !important}" +
+      "#rec890781301 .t396__artboard,#rec890781301 .t396__filter,#rec890781301 .t396__carrier{height:auto !important;min-height:0 !important}" +
+      "#rec890778214 .t396__elem,#rec890781301 .t396__elem{position:relative !important;top:auto !important;left:auto !important;width:100% !important;height:auto !important;display:block !important}" +
+      "#rec890778214 .tn-atom,#rec890781301 .tn-atom{display:block !important;width:100% !important;height:auto !important}" +
+      "img[imgfield='tn_img_1741704123132']{width:100% !important;height:auto !important;max-width:100% !important;display:block !important;object-fit:contain !important}" +
       "";
     document.head.appendChild(s);
   }
