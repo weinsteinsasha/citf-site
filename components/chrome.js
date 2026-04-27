@@ -94,12 +94,12 @@
       "html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr]," +
       "html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}" +
 
-      /* visible lang toggle pill (top right, above any Tilda chrome) */
-      ".citf-langpill{position:fixed;top:8px;right:14px;z-index:9999;display:inline-flex;align-items:center;gap:0;background:rgba(17,17,17,0.92);border:1px solid #FFA806;border-radius:999px;padding:3px 4px;font-family:'Syne',Arial,sans-serif;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(0,0,0,0.3)}" +
+      /* visible lang toggle pill — sits BELOW the marquee (top:40) so it never covers menu */
+      ".citf-langpill{position:fixed;top:40px;right:14px;z-index:9999;display:inline-flex;align-items:center;gap:0;background:rgba(17,17,17,0.94);border:1px solid #FFA806;border-radius:999px;padding:3px 4px;font-family:'Syne',Arial,sans-serif;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 4px 16px rgba(0,0,0,0.4)}" +
       ".citf-langpill button{font-family:inherit;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:5px 10px;color:#888;font-weight:700;background:none;border:0;cursor:pointer;border-radius:999px;transition:color 0.15s,background 0.15s}" +
       ".citf-langpill button:hover{color:#fff}" +
       ".citf-langpill button.active{background:#FFA806;color:#000}" +
-      "@media(max-width:520px){.citf-langpill{top:6px;right:8px;padding:2px 3px}.citf-langpill button{padding:4px 8px;font-size:10px}}" +
+      "@media(max-width:520px){.citf-langpill{top:36px;right:8px;padding:2px 3px}.citf-langpill button{padding:4px 8px;font-size:10px}}" +
       "";
     document.head.appendChild(s);
   }
@@ -129,22 +129,50 @@
     }, Promise.resolve());
   }
 
-  // Fetch chrome HTML and replace a mount point with it, replaying inline scripts
-  function mountFragment(slotId, url) {
+  // Tilda CSS keys on body.t-body and #allrecords ancestors. Set those up so
+  // the chrome's fonts, sizes, and #allrecords-scoped selectors apply.
+  function prepareBody() {
+    document.body.classList.add('t-body');
+    document.body.style.margin = '0';
+  }
+
+  function ensureAllrecords() {
+    var ar = document.getElementById('allrecords');
+    if (ar) return ar;
+    ar = document.createElement('div');
+    ar.id = 'allrecords';
+    ar.className = 't-records';
+    ar.setAttribute('data-tilda-export', 'yes');
+    ar.setAttribute('data-tilda-project-id', '8561442');
+    ar.setAttribute('data-tilda-formskey', 'b4653a09f154d821fd96e21128561442');
+    document.body.insertBefore(ar, document.body.firstChild);
+    return ar;
+  }
+
+  // Fetch a chrome HTML fragment and place the parsed root inside #allrecords,
+  // replacing the slot at slotId. Inline scripts are replayed after mount.
+  // position: 'top' = first child of #allrecords (header), 'bottom' = last (footer).
+  function mountFragment(slotId, url, position) {
     var slot = document.getElementById(slotId);
     if (!slot) return Promise.resolve();
     return fetch(url, { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.text() : Promise.reject(new Error(slotId + ' ' + r.status)); })
       .then(function (html) {
-        // Parse and extract the first element child (the <header> or <footer>)
         var doc = new DOMParser().parseFromString(html, 'text/html');
         var node = doc.body.firstElementChild || doc.body.firstChild;
         if (!node) throw new Error('empty fragment ' + slotId);
-        // Replace slot with the parsed node
+
+        // Move slot into #allrecords first, then replace slot with the node, so
+        // the chrome ends up nested inside the Tilda parent that the CSS expects.
+        var allrec = ensureAllrecords();
+        if (position === 'top') {
+          allrec.insertBefore(slot, allrec.firstChild);
+        } else {
+          allrec.appendChild(slot);
+        }
         slot.parentNode.replaceChild(node, slot);
 
         // Re-execute inline scripts (DOMParser disables them) by cloning into live <script> nodes.
-        // We need to do this in document order so tilda inits queue properly.
         var scripts = node.querySelectorAll('script');
         scripts.forEach(function (old) {
           var s = document.createElement('script');
@@ -242,30 +270,32 @@
     // 0) Inject i18n CSS + lang-pill styles SYNCHRONOUSLY so the page never
     //    flashes all three language versions before chrome arrives.
     injectInlineCSS();
-    // 0.5) Apply initial language ASAP (before fetches) so html[data-lang] is correct
     setLang(initialLang());
-    // 0.7) Mount visible EN|RU|EL toggle pill — always present, even if Tilda chrome fails
     injectLangPill();
-    setLang(initialLang()); // re-run so the new pill buttons get the .active class
-
-    // 1) Tilda CSS bundles (the ticker/nav/footer styles)
-    injectAllCSS();
-    // 2) Tilda JS bundle (must finish before re-running inline scripts that call t396_init etc.)
-    try { await loadTildaJS(); } catch (e) { console.warn('[citf chrome] tilda bundle load error', e); }
-    // 3) Mount header + footer (parallel fetch)
-    await Promise.all([
-      mountFragment('citf-header-mount', '/components/header.html'),
-      mountFragment('citf-footer-mount', '/components/footer.html')
-    ]);
-    // 4) Apply initial language again now that Tilda menu is in DOM
     setLang(initialLang());
-    // 5) Force Tilda block init in case inline scripts didn't fire
+
+    // 1) Prepare Tilda parent DOM (body.t-body + #allrecords wrapper)
+    prepareBody();
+    ensureAllrecords();
+
+    // 2) Tilda CSS bundles (the ticker/nav/footer styles)
+    injectAllCSS();
+    // 3) Tilda JS bundle (must finish before re-running inline scripts that call t396_init etc.)
+    try { await loadTildaJS(); } catch (e) { console.warn('[citf chrome] tilda bundle load error', e); }
+    // 4) Mount header (top of #allrecords) + footer (bottom) in parallel
+    await Promise.all([
+      mountFragment('citf-header-mount', '/components/header.html', 'top'),
+      mountFragment('citf-footer-mount', '/components/footer.html', 'bottom')
+    ]);
+    // 5) Apply initial language again now that Tilda menu is in DOM
+    setLang(initialLang());
+    // 6) Force Tilda block init in case inline scripts didn't fire
     setTimeout(function () {
       reinitTildaBlocks();
       bindLangSwitcher();
       window.addEventListener('resize', function () { reinitTildaBlocks(); });
     }, 50);
-    // 6) Final pass after window load (images, fonts, etc) so layout settles
+    // 7) Final pass after window load (images, fonts, etc) so layout settles
     if (document.readyState === 'complete') {
       setTimeout(reinitTildaBlocks, 200);
     } else {
