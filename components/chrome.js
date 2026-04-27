@@ -115,6 +115,21 @@
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
 
+      /* Hide the desktop menu links + decorative elements at viewports
+         <1200px. Tilda's design keeps SHOWS & EVENT / ABOUT / THE FESTIVAL
+         PASS visible at the tablet breakpoint, but they overlap the MENU
+         button + lang pill — and once the MENU popup carries the same
+         items, showing them inline is redundant. Whitelist: logo (image),
+         MENU button (rec853550221 elem-id 1730997530909), our lang pill. */
+      "@media(max-width:1199px){" +
+        "#rec853550221 .tn-elem{display:none !important}" +
+        "#rec853550221 [data-elem-id=\"1730978182370\"]," +     /* CITF logo image */
+        "#rec853550221 [data-elem-id=\"1730997530909\"]," +     /* MENU button */
+        "#rec853550221 [data-elem-id=\"1731422568840\"]," +     /* logo+text wrapper button */
+        "#rec853550221 .citf-navlangs.in-nav" +                  /* our lang pill */
+        "{display:block !important}" +
+      "}" +
+
       /* Partner bitmap responsive override — Tilda hard-codes the artboard
          height (489px desktop / 242px tablet / 110px mobile) which clips the
          image when viewport width changes. Force the artboard to auto-size
