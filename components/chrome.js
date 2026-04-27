@@ -117,6 +117,83 @@
       .catch(function (err) { console.warn('[citf chrome] mount failed', slotId, err); });
   }
 
+  // Header rec ids that need t396_init / t1003_init / t1093__init to render correctly.
+  // (We force these after mount in case the inline scripts inside the chrome HTML
+  // didn't get a chance to run before the bundle loaded.)
+  var HEADER_RECS_T396 = ['853550221', '841567060', '841567062'];
+  var HEADER_REC_T1003 = '1157755106';
+  var HEADER_RECS_T1093 = ['841567061', '841567063'];
+  var FOOTER_RECS_T396 = ['890778214', '890781301'];
+
+  function callIfExists(fn /*, ...args */) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    if (typeof window[fn] === 'function') {
+      try { window[fn].apply(window, args); } catch (e) { console.warn('[citf chrome]', fn, e); }
+    }
+  }
+
+  function reinitTildaBlocks() {
+    // ticker
+    callIfExists('t1003_init', HEADER_REC_T1003, '');
+    // nav rec blocks (logo+menu, mobile menu, social/buy)
+    HEADER_RECS_T396.concat(FOOTER_RECS_T396).forEach(function (id) {
+      callIfExists('t396_initialScale', id);
+      callIfExists('t396_init', id);
+    });
+    // mobile menu popups
+    HEADER_RECS_T1093.forEach(function (id) {
+      callIfExists('t1093__init', id);
+      callIfExists('t1093__initPopup', id);
+    });
+  }
+
+  // Intercept Tilda's lang switcher (which redirects to /ru/ /gr/ paths) so
+  // it stays on this page and toggles our data-lang i18n instead.
+  var LS_KEY = 'citf_lang';
+  var VALID_LANGS = ['en', 'ru', 'gr'];
+  function setLang(l) {
+    if (VALID_LANGS.indexOf(l) < 0) l = 'en';
+    document.documentElement.setAttribute('data-lang', l);
+    try { localStorage.setItem(LS_KEY, l); } catch (e) {}
+    document.documentElement.lang = (l === 'gr') ? 'el' : l;
+    var u = new URL(location.href);
+    if (l === 'en') u.searchParams.delete('lang'); else u.searchParams.set('lang', l);
+    history.replaceState(null, '', u.toString());
+  }
+  window.__citfSetLang = setLang;
+
+  function initialLang() {
+    var q = (new URL(location.href)).searchParams.get('lang');
+    if (q && VALID_LANGS.indexOf(q) >= 0) return q;
+    var saved; try { saved = localStorage.getItem(LS_KEY); } catch (e) {}
+    if (saved && VALID_LANGS.indexOf(saved) >= 0) return saved;
+    var b = (navigator.language || '').toLowerCase();
+    if (b.indexOf('ru') === 0) return 'ru';
+    if (b.indexOf('el') === 0) return 'gr';
+    return 'en';
+  }
+
+  function bindLangSwitcher() {
+    // Tilda lang switcher uses [data-tilda-lang] or hrefs like /ru/, /gr/, /
+    var langButtons = document.querySelectorAll('[data-tilda-lang], a[href="/ru/"], a[href="/gr/"], a[href="/en/"]');
+    langButtons.forEach(function (el) {
+      // figure out target lang
+      var t = el.getAttribute('data-tilda-lang');
+      if (!t) {
+        var h = el.getAttribute('href') || '';
+        if (h === '/ru/' || h === '/ru') t = 'ru';
+        else if (h === '/gr/' || h === '/gr') t = 'gr';
+        else if (h === '/en/' || h === '/en') t = 'en';
+      }
+      if (!t) return;
+      el.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        setLang(t);
+      }, true);
+    });
+  }
+
   async function boot() {
     // 1) CSS first so the ticker/nav/footer aren't unstyled flashes
     injectAllCSS();
@@ -127,6 +204,23 @@
       mountFragment('citf-header-mount', '/components/header.html'),
       mountFragment('citf-footer-mount', '/components/footer.html')
     ]);
+    // 4) Apply initial language BEFORE forcing re-init (so Tilda lang menu shows correct active state)
+    setLang(initialLang());
+    // 5) Force Tilda block init in case inline scripts didn't fire
+    //    (give the DOM a tick to settle first)
+    setTimeout(function () {
+      reinitTildaBlocks();
+      bindLangSwitcher();
+      // Also re-run scaling on resize (Tilda does this automatically when its own
+      // page bootstraps, but on our pages we need to nudge it)
+      window.addEventListener('resize', function () { reinitTildaBlocks(); });
+    }, 50);
+    // 6) Final pass after window load (images, fonts, etc) so layout settles
+    if (document.readyState === 'complete') {
+      setTimeout(reinitTildaBlocks, 200);
+    } else {
+      window.addEventListener('load', function () { setTimeout(reinitTildaBlocks, 200); });
+    }
   }
 
   if (document.readyState === 'loading') {
