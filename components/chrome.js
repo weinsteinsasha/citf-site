@@ -171,6 +171,14 @@
         if (!node) throw new Error('empty fragment ' + slotId);
         slot.parentNode.replaceChild(node, slot);
 
+        // Tilda's lazyload swaps src<-data-original on scroll. On our pages
+        // the lazy-load init isn't catching properly, so partner logos and
+        // other images stay as 20px-wide placeholders. Force the swap now.
+        node.querySelectorAll('img[data-original]').forEach(function (img) {
+          var full = img.getAttribute('data-original');
+          if (full) img.setAttribute('src', full);
+        });
+
         // Re-execute inline scripts (DOMParser disables them) by cloning into live <script> nodes.
         var scripts = node.querySelectorAll('script');
         scripts.forEach(function (old) {

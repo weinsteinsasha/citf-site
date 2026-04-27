@@ -48,8 +48,11 @@
   html[data-lang=gr] .hero h1{font-size:clamp(36px,3.8vw,64px)}
   @media(max-width:960px){
     .hero{grid-template-columns:1fr;min-height:auto}
-    .hero-photo{height:62vh;min-height:440px;order:-1}
-    .hero-photo img{object-position:center 22%}
+    /* Mobile: keep full Ardant portrait visible (no top crop). Aspect-ratio
+       preserves the photo's native proportions; object-fit:contain shows the
+       whole image and letterboxes against #111 if needed. */
+    .hero-photo{height:auto;aspect-ratio:3/2;min-height:0;order:-1;background:#111}
+    .hero-photo img{object-fit:contain;object-position:center;height:100%}
     .hero-content-wrap{padding:40px 20px 52px;min-height:auto}
     .hero h1{font-size:clamp(38px,8.5vw,64px)}
     html[data-lang=ru] .hero h1{font-size:clamp(30px,7vw,52px)}
@@ -62,12 +65,15 @@
   .hero-meta-val{font-size:17px;font-weight:600}
   .hero-meta-val.gold{color:var(--gold)}
   .hero-ctas{display:flex;gap:16px;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:10px;padding:18px 32px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;transition:transform 0.15s ease,background 0.15s ease}
-  .btn-primary{background:var(--gold);color:#000}
-  .btn-primary:hover{transform:translateY(-2px);background:#ffbd38}
-  .btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,0.3)}
-  .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-  .btn-price{font-size:12px;color:rgba(0,0,0,0.55);margin-left:6px;letter-spacing:0.05em;text-transform:none;font-weight:500}
+  /* override Tilda's #allrecords a{color:#FF8562} which would tint buttons coral */
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:18px 32px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;transition:transform 0.15s ease,background 0.15s ease;text-decoration:none !important}
+  .btn-primary,.btn-primary span,.btn-primary small{color:#000 !important}
+  .btn-primary{background:var(--gold) !important}
+  .btn-primary:hover{transform:translateY(-2px);background:#ffbd38 !important}
+  .btn-ghost,.btn-ghost span{color:var(--fg) !important}
+  .btn-ghost{background:transparent !important;border:1px solid rgba(255,255,255,0.3)}
+  .btn-ghost:hover,.btn-ghost:hover span{border-color:var(--gold);color:var(--gold) !important}
+  .btn-price{font-size:12px;color:rgba(0,0,0,0.55) !important;margin-left:6px;letter-spacing:0.05em;text-transform:none;font-weight:500}
 
   /* SECTIONS */
   section.wrap{padding:110px 32px;max-width:1280px;margin:0 auto}
