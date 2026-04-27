@@ -115,31 +115,10 @@
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
 
-      /* hide Tilda's flat partners bitmap — replaced by adaptive HTML grid below */
-      "img[imgfield='tn_img_1741704123132']{display:none !important}" +
-      "img[imgfield='tn_img_1741704123132']+*{display:none !important}" +
-
-      /* CITF partners — adaptive HTML grid using individual logo PNGs.
-         Sits between page content and the Tilda footer; site-wide via chrome.js. */
-      ".citf-partners{padding:64px 32px 48px;background:#181818;border-top:1px solid #232323}" +
-      ".citf-partners-inner{max-width:1280px;margin:0 auto}" +
-      ".citf-partners-title{display:block;text-align:center;font-family:'Syne',Arial,sans-serif;font-size:11px;letter-spacing:0.28em;color:#737373;text-transform:uppercase;margin-bottom:48px;font-weight:600}" +
-      ".citf-partners-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:42px 56px;margin-bottom:48px}" +
-      ".citf-partners-row.main .citf-partner-logo{height:88px}" +
-      ".citf-partners-row.rest{gap:32px 44px;margin-bottom:0}" +
-      ".citf-partners-row.rest .citf-partner-logo{height:48px}" +
-      ".citf-partner{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}" +
-      ".citf-partner-role{font-family:'Syne',Arial,sans-serif;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:#737373;font-weight:600;text-align:center;line-height:1.4;max-width:160px}" +
-      ".citf-partners-row.main .citf-partner-role{font-size:10px;max-width:240px}" +
-      ".citf-partner-logo{display:block;width:auto;max-width:180px;object-fit:contain;filter:brightness(1) contrast(1)}" +
-      "@media(max-width:760px){" +
-        ".citf-partners{padding:48px 22px 36px}" +
-        ".citf-partners-title{margin-bottom:32px}" +
-        ".citf-partners-row{gap:32px 36px;margin-bottom:32px}" +
-        ".citf-partners-row.main .citf-partner-logo{height:64px}" +
-        ".citf-partners-row.rest{gap:24px 28px}" +
-        ".citf-partners-row.rest .citf-partner-logo{height:38px}" +
-      "}" +
+      /* No partner-section overrides — chrome shows the SAME Tilda bitmap as
+         the main site (citf.cy/), so header+footer+partners are identical
+         across all pages. The bitmap files on disk have St Raphael cut out;
+         individual logo PNGs in /images/partners/ are kept for future use. */
       "";
     document.head.appendChild(s);
   }
@@ -277,81 +256,58 @@
     document.body.appendChild(a);
   }
 
-  // CITF partners — adaptive HTML grid. ADD/REMOVE partners by editing this array;
-  // logos live in /images/partners/<file>. Mark `main: true` for the larger top row.
-  // Roles use the trilingual {en, ru, gr} object.
-  var PARTNERS = [
-    { file:'mayor-of-limassol', alt:'Mayor of Limassol', main:true,
-      role:{ en:'Under the Auspices of the Mayor of Limassol', ru:'Под патронажем мэра Лимассола', gr:'Υπό την Αιγίδα του Δημάρχου Λεμεσού' } },
-    { file:'pattihio', alt:'Pattihio Municipal Theatre', main:true,
-      role:{ en:'Main Partner', ru:'Главный партнёр', gr:'Κύριος Συνεργάτης' } },
+  // Partners are rendered by Tilda's footer bitmap (the shared Tilda chrome).
+  // Files /images/partners/<name>.png are extracted individual logos kept
+  // for future use; they are not currently rendered.
+  function injectPartnersBlock() { /* no-op — Tilda bitmap is the source of truth */ }
 
-    { file:'asg-leasing', alt:'ASG Leasing',
-      role:{ en:'Sponsor', ru:'Спонсор', gr:'Χορηγός' } },
-    { file:'cyprus-airways', alt:'Cyprus Airways',
-      role:{ en:'Official Flight Partner', ru:'Авиаперевозчик', gr:'Επίσημος Αεροπορικός Συνεργάτης' } },
-    { file:'filelefteros', alt:'Ο Φιλελεύθερος',
-      role:{ en:'Media Partner', ru:'Медиа-партнёр', gr:'Χορηγός Επικοινωνίας' } },
-    { file:'zima', alt:'ZIMA Magazine',
-      role:{ en:'Media Partner', ru:'Медиа-партнёр', gr:'Χορηγός Επικοινωνίας' } },
-    { file:'etko', alt:'ETKO',
-      role:{ en:'Venue', ru:'Площадка', gr:'Χώρος' } },
-    { file:'crowne-plaza', alt:'Crowne Plaza Limassol',
-      role:{ en:'Official Hotel', ru:'Официальный отель', gr:'Επίσημο Ξενοδοχείο' } },
-    { file:'allegro', alt:'Allegro',
-      role:{ en:'Event Partner', ru:'Партнёр события', gr:'Συνεργάτης Εκδήλωσης' } },
-    { file:'commandaria', alt:'Commandaria Orchestra',
-      role:{ en:'Orchestra', ru:'Оркестр', gr:'Ορχήστρα' } },
-    { file:'be-bloomy', alt:'Be Bloomy',
-      role:{ en:'Flowers', ru:'Цветы', gr:'Λουλούδια' } },
-    { file:'aya-cooks', alt:'AYA Cooks',
-      role:{ en:'Event Partner', ru:'Партнёр события', gr:'Συνεργάτης Εκδήλωσης' } }
-  ];
-
-  function makePartnerCard(p) {
-    return '' +
-      '<div class="citf-partner">' +
-        '<img class="citf-partner-logo" src="/images/partners/'+ p.file +'.png" alt="'+ p.alt +'" loading="lazy">' +
-        '<span class="citf-partner-role" data-en>'+ p.role.en +'</span>' +
-        '<span class="citf-partner-role" data-ru>'+ p.role.ru +'</span>' +
-        '<span class="citf-partner-role" data-gr>'+ p.role.gr +'</span>' +
-      '</div>';
+  // The bottom-footer rec (824824359) is missing some field data in our Tilda
+  // export, so its t396_doResize crashes on every animation frame. Tilda
+  // catches and console.errors each throw, flooding DevTools without affecting
+  // what the user sees. We patch t396_doResize once it's available to skip
+  // this specific rec — also belt-and-suspenders the console.error filter.
+  function silenceKnownTildaNoise() {
+    if (window.__citfNoiseSilenced) return;
+    window.__citfNoiseSilenced = true;
+    var BAD = '824824359';
+    // 1) Wait for t396_doResize to be defined, then wrap it
+    var iv = setInterval(function () {
+      if (typeof window.t396_doResize === 'function' && !window.t396_doResize.__citfPatched) {
+        var orig = window.t396_doResize;
+        window.t396_doResize = function (t, force) {
+          if (String(t) === BAD) return;
+          return orig.apply(this, arguments);
+        };
+        window.t396_doResize.__citfPatched = true;
+        clearInterval(iv);
+      }
+    }, 30);
+    // Stop trying after 10s
+    setTimeout(function () { clearInterval(iv); }, 10000);
+    // 2) Also filter console.error in case the wrap is too late
+    var origError = console.error;
+    console.error = function () {
+      var first = arguments.length ? arguments[0] : '';
+      if (typeof first === 'string' && first.indexOf('Error trying to resize rec' + BAD) === 0) return;
+      return origError.apply(console, arguments);
+    };
   }
 
-  function injectPartnersBlock() {
-    if (document.querySelector('.citf-partners')) return;
-    var sec = document.createElement('section');
-    sec.className = 'citf-partners';
-    var inner = document.createElement('div');
-    inner.className = 'citf-partners-inner';
-
-    var title = document.createElement('span');
-    title.className = 'citf-partners-title';
-    title.innerHTML =
-      '<span data-en>With the support of</span>' +
-      '<span data-ru>При поддержке</span>' +
-      '<span data-gr>Με την υποστήριξη</span>';
-    inner.appendChild(title);
-
-    var mainRow = document.createElement('div');
-    mainRow.className = 'citf-partners-row main';
-    var restRow = document.createElement('div');
-    restRow.className = 'citf-partners-row rest';
-    PARTNERS.forEach(function (p) {
-      (p.main ? mainRow : restRow).insertAdjacentHTML('beforeend', makePartnerCard(p));
+  // Pre-stub window.tn['ab<recid>'] for every artboard in DOM so Tilda's
+  // tilda-zero resize observer never sees an undefined entry. Reads
+  // data-artboard-screens (set by Tilda export) and parses it as numbers.
+  function preStubArtboards() {
+    if (!window.tn) window.tn = {};
+    document.querySelectorAll('.t396__artboard[data-artboard-recid][data-artboard-screens]').forEach(function (ab) {
+      var recid = ab.getAttribute('data-artboard-recid');
+      var key = 'ab' + recid;
+      if (window.tn[key] && window.tn[key].screens) return;
+      var raw = ab.getAttribute('data-artboard-screens') || '';
+      var screens = raw.split(',').map(function (s) { return parseInt(s, 10); }).filter(function (n) { return n > 0; });
+      if (screens.length === 0) screens = [320, 640, 1200];
+      window.tn[key] = window.tn[key] || {};
+      window.tn[key].screens = screens;
     });
-    inner.appendChild(mainRow);
-    inner.appendChild(restRow);
-    sec.appendChild(inner);
-
-    // Insert just before the footer mount so it lives BETWEEN page content and the Tilda footer
-    var footerMount = document.getElementById('citf-footer-mount') || document.getElementById('t-footer');
-    if (footerMount && footerMount.parentNode) {
-      footerMount.parentNode.insertBefore(sec, footerMount);
-    } else {
-      var ar = document.getElementById('allrecords') || document.body;
-      ar.appendChild(sec);
-    }
   }
 
   function loadTildaJS() {
@@ -431,7 +387,9 @@
   var HEADER_RECS_T396 = ['853550221', '841567060', '841567062'];
   var HEADER_REC_T1003 = '1157755106';
   var HEADER_RECS_T1093 = ['841567061', '841567063'];
-  var FOOTER_RECS_T396 = ['890778214', '890781301'];
+  // Footer T396 records: 890778214 (desktop partners bitmap), 890781301 (mobile partners),
+  // 824824359 (bottom row — socials, legal, become-our-partner, copyright, newsletter).
+  var FOOTER_RECS_T396 = ['890778214', '890781301', '824824359'];
 
   function callIfExists(fn /*, ...args */) {
     var args = Array.prototype.slice.call(arguments, 1);
@@ -528,6 +486,18 @@
       mountFragment('citf-header-mount', '/components/header.html'),
       mountFragment('citf-footer-mount', '/components/footer.html')
     ]);
+    // 3.1) Pre-populate window.tn['ab<recid>'] with the screens array read from
+    //      each artboard's data attribute. This stops Tilda's resize observer
+    //      (in tilda-zero-1.1.min.js) from crashing on the first ticks before
+    //      t396_init has fired for each rec. The full settings get overwritten
+    //      by t396_init later — we just need a non-undefined .screens here.
+    preStubArtboards();
+    // 3.2) Tilda's t396 resize loop wraps each rec in try/catch and logs to
+    //      console.error. rec824824359 (the bottom-footer copyright/socials
+    //      block) is missing some Tilda field data in our export and throws
+    //      every animation frame — flooding the console without affecting
+    //      what the user sees. Filter just that noise; let real errors through.
+    silenceKnownTildaNoise();
     // 3.5) Inject our adaptive partners block between page content and footer,
     //      and move the lang pill into the nav (right next to the social icons).
     injectPartnersBlock();
