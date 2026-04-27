@@ -14,7 +14,7 @@
 <style>
   :root{
     --bg:#181818; --fg:#eeeeee; --muted:#737373;
-    --gold:#FFA806; --coral:#FF8562;
+    --gold:#FFA806;
     --font-en:'Syne',Arial,sans-serif;
     --font-ru:'Unbounded','Syne',Arial,sans-serif;
   }
@@ -22,126 +22,66 @@
   html,body{background:var(--bg);color:var(--fg);font-family:var(--font-en);font-weight:400;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
   html[data-lang=ru] body{font-family:var(--font-ru)}
   a{color:inherit;text-decoration:none}
-  button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
-  /* i18n: hide inactive langs */
-  html[data-lang=en] [data-ru],html[data-lang=en] [data-gr],
-  html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
-  html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
-
-  .page{min-height:100vh;display:flex;flex-direction:column}
-  .topbar{padding:20px 32px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.06)}
-  .logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;font-size:13px;color:var(--gold)}
-  .logo img{height:28px}
-  .lang-switch{display:flex;gap:2px;background:#111;border:1px solid #333;border-radius:999px;padding:4px}
-  .lang-switch button{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;padding:6px 12px;border-radius:999px;color:var(--muted);font-weight:600;transition:color 0.15s,background 0.15s}
-  .lang-switch button:hover{color:#fff}
-  .lang-switch button.active{background:var(--gold);color:#000}
-
-  main.wrap{flex:1;max-width:1100px;margin:0 auto;width:100%;padding:80px 32px 40px;display:flex;flex-direction:column;justify-content:center}
+  main.wrap404{min-height:calc(100vh - 280px);max-width:1100px;margin:0 auto;padding:80px 32px;display:flex;flex-direction:column;justify-content:center}
   .kicker{display:inline-block;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:6px 14px;margin-bottom:30px;font-weight:700;width:max-content}
   h1{font-family:var(--font-en);font-weight:800;font-size:clamp(88px,18vw,240px);line-height:0.88;letter-spacing:-0.04em;margin:0 0 24px;color:#fff}
   html[data-lang=ru] h1{font-family:var(--font-ru);font-size:clamp(72px,14vw,180px)}
   .lead{font-size:clamp(20px,2.4vw,30px);line-height:1.35;max-width:640px;color:#ddd;margin-bottom:40px;font-weight:500}
   .sub{font-size:16px;line-height:1.55;max-width:620px;color:#aaa;margin-bottom:48px}
 
-  .actions{display:flex;gap:14px;flex-wrap:wrap;align-items:stretch}
+  .actions{display:flex;gap:14px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;gap:12px;padding:18px 28px;border-radius:999px;font-weight:700;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;transition:transform 0.15s ease,background 0.15s ease,border-color 0.15s ease}
   .btn-primary{background:var(--gold);color:#000}
   .btn-primary:hover{transform:translateY(-2px);background:#ffbd38}
   .btn-ghost{background:transparent;color:var(--fg);border:1px solid rgba(255,255,255,0.25)}
   .btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
   .btn small{display:block;font-size:10px;font-weight:500;letter-spacing:0.12em;color:rgba(0,0,0,0.6);text-transform:none;margin-top:2px}
-  .btn-ghost small{color:var(--muted)}
   .btn-inline{flex-direction:column;align-items:flex-start;gap:4px;text-align:left;padding:18px 24px}
 
-  footer{padding:24px 32px;border-top:1px solid rgba(255,255,255,0.06);font-size:11px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px}
-  footer a{color:var(--gold)}
-
   @media(max-width:700px){
-    .topbar{padding:14px 20px}
-    main.wrap{padding:48px 20px 28px}
+    main.wrap404{padding:48px 20px}
     h1{font-size:clamp(72px,22vw,140px)}
     .actions{flex-direction:column;align-items:stretch}
     .btn{justify-content:center}
     .btn-inline{align-items:center;text-align:center}
-    footer{padding:18px 20px;font-size:10px}
   }
 </style>
 </head>
 <body>
-<div class="page">
 
-  <div class="topbar">
-    <a class="logo" href="/">
-      <img src="/images/tild3738-6662-4535-a334-316536636261__svg_1730978181783.svg" alt="" onerror="this.style.display='none'">
-      <span>CITF</span>
+<div id="citf-header-mount"></div>
+
+<main class="wrap404">
+  <span class="kicker" data-en>Error 404</span>
+  <span class="kicker" data-ru>Ошибка 404</span>
+  <span class="kicker" data-gr>Σφάλμα 404</span>
+
+  <h1>404</h1>
+
+  <p class="lead" data-en>This page slipped through the curtain.</p>
+  <p class="lead" data-ru>Эта страница ускользнула за кулисы.</p>
+  <p class="lead" data-gr>Αυτή η σελίδα γλίστρησε πίσω από την αυλαία.</p>
+
+  <p class="sub" data-en>While you&rsquo;re here — which CITF show is made for you? Take our 90-second quiz and find out.</p>
+  <p class="sub" data-ru>Раз уж вы здесь — какой спектакль CITF подойдёт именно вам? Пройдите наш 90-секундный квиз.</p>
+  <p class="sub" data-gr>Αφού είστε εδώ — ποια παράσταση του CITF είναι φτιαγμένη για εσάς; Κάντε το κουίζ 90 δευτερολέπτων.</p>
+
+  <div class="actions">
+    <a class="btn btn-primary btn-inline" href="https://partnership.citf.cy/quiz">
+      <span data-en>Take the quiz</span><span data-ru>Пройти квиз</span><span data-gr>Κάντε το κουίζ</span>
+      <small data-en>Which show is yours? · 90 sec</small>
+      <small data-ru>Ваш спектакль · 90 сек</small>
+      <small data-gr>Η παράστασή σας · 90 δευτ.</small>
     </a>
-    <div class="lang-switch" role="tablist">
-      <button data-setlang="en" class="active">EN</button>
-      <button data-setlang="gr">GR</button>
-      <button data-setlang="ru">RU</button>
-    </div>
+    <a class="btn btn-ghost" href="/">
+      <span data-en>Back to homepage</span><span data-ru>На главную</span><span data-gr>Αρχική σελίδα</span>
+    </a>
   </div>
+</main>
 
-  <main class="wrap">
-    <span class="kicker" data-en>Error 404</span>
-    <span class="kicker" data-ru>Ошибка 404</span>
-    <span class="kicker" data-gr>Σφάλμα 404</span>
+<div id="citf-footer-mount"></div>
 
-    <h1>404</h1>
-
-    <p class="lead" data-en>This page slipped through the curtain.</p>
-    <p class="lead" data-ru>Эта страница ускользнула за кулисы.</p>
-    <p class="lead" data-gr>Αυτή η σελίδα γλίστρησε πίσω από την αυλαία.</p>
-
-    <p class="sub" data-en>While you&rsquo;re here — which CITF show is made for you? Take our 90-second quiz and find out.</p>
-    <p class="sub" data-ru>Раз уж вы здесь — какой спектакль CITF подойдёт именно вам? Пройдите наш 90-секундный квиз.</p>
-    <p class="sub" data-gr>Αφού είστε εδώ — ποια παράσταση του CITF είναι φτιαγμένη για εσάς; Κάντε το κουίζ 90 δευτερολέπτων.</p>
-
-    <div class="actions">
-      <a class="btn btn-primary btn-inline" href="https://partnership.citf.cy/quiz">
-        <span data-en>Take the quiz</span><span data-ru>Пройти квиз</span><span data-gr>Κάντε το κουίζ</span>
-        <small data-en>Which show is yours? · 90 sec</small>
-        <small data-ru>Ваш спектакль · 90 сек</small>
-        <small data-gr>Η παράστασή σας · 90 δευτ.</small>
-      </a>
-      <a class="btn btn-ghost" href="/">
-        <span data-en>Back to homepage</span><span data-ru>На главную</span><span data-gr>Αρχική σελίδα</span>
-      </a>
-    </div>
-  </main>
-
-  <footer>
-    <span data-en>© Cyprus International Theatre Festival · citf.cy</span>
-    <span data-ru>© Кипрский международный театральный фестиваль · citf.cy</span>
-    <span data-gr>© Διεθνές Φεστιβάλ Θεάτρου Κύπρου · citf.cy</span>
-    <span><a href="mailto:office@citf.cy">office@citf.cy</a></span>
-  </footer>
-
-</div>
-
-<script>
-(function(){
-  var LS='citf_lang', valid=['en','ru','gr'];
-  function setLang(l){
-    if(valid.indexOf(l)<0)l='en';
-    document.documentElement.setAttribute('data-lang',l);
-    try{localStorage.setItem(LS,l)}catch(e){}
-    document.querySelectorAll('.lang-switch button').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-setlang')===l);
-    });
-    document.documentElement.lang = l==='gr'?'el':l;
-  }
-  var q=(new URL(location.href)).searchParams.get('lang');
-  var saved; try{saved=localStorage.getItem(LS)}catch(e){}
-  var browser=(navigator.language||'').toLowerCase();
-  var initial = q||saved||(browser.indexOf('ru')===0?'ru':browser.indexOf('el')===0?'gr':'en');
-  setLang(initial);
-  document.querySelectorAll('.lang-switch button').forEach(function(b){
-    b.addEventListener('click',function(){setLang(b.getAttribute('data-setlang'))});
-  });
-})();
-</script>
+<script src="/components/chrome.js" defer></script>
 </body>
 </html>

@@ -34,63 +34,8 @@
   a{color:inherit;text-decoration:none}
   button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 
-  /* i18n: hide only inactive languages; active lang keeps its native display */
-  html[data-lang=en] [data-ru],html[data-lang=en] [data-gr],
-  html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
-  html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
-
-  /* SITE NAV (matches citf.cy style) */
-  .site-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:14px 32px;background:rgba(24,24,24,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
-  .site-nav-logo{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:0.15em;text-transform:uppercase;font-size:13px;color:var(--gold)}
-  .site-nav-logo img{height:32px;width:auto}
-  .site-nav-menu{display:flex;gap:24px;align-items:center}
-  .site-nav-menu a{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#ddd;font-weight:500;transition:color 0.15s;padding:8px 0}
-  .site-nav-menu a:hover{color:var(--gold)}
-  .site-nav-right{display:flex;gap:14px;align-items:center}
-  .lang-switch{display:flex;gap:2px;background:rgba(17,17,17,0.7);border:1px solid #333;border-radius:999px;padding:3px}
-  .lang-switch button{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;padding:6px 11px;border-radius:999px;color:var(--muted);font-weight:600;transition:color 0.15s,background 0.15s}
-  .lang-switch button:hover{color:#fff}
-  .lang-switch button.active{background:var(--gold);color:#000}
-  .nav-buy{display:none;background:var(--gold);color:#000;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;padding:10px 18px;border-radius:999px}
-  .nav-buy:hover{background:#ffbd38}
-  .nav-toggle{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:8px;background:none;border:0}
-  .nav-toggle span{display:block;width:22px;height:2px;background:var(--fg);transition:0.2s}
-  @media(min-width:1080px){.nav-buy{display:inline-flex;align-items:center}}
-  @media(max-width:1079px){
-    .site-nav{padding:12px 20px}
-    .site-nav-menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#181818;border-bottom:1px solid #222;gap:0;padding:6px 0;align-items:stretch}
-    .site-nav-menu.open{display:flex}
-    .site-nav-menu a{padding:14px 22px;border-bottom:1px solid #1f1f1f;font-size:12px}
-    .nav-toggle{display:flex}
-  }
-  /* Push hero down so fixed nav doesn't cover its top edge */
-  body{padding-top:0}
-
-  /* SITE FOOTER */
-  .site-footer{padding:64px 32px 28px;background:#0a0a0a;border-top:1px solid #1c1c1c}
-  .site-footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px 56px;margin-bottom:44px}
-  .footer-brand h4{font-size:18px;font-weight:800;margin-bottom:12px;color:var(--gold);letter-spacing:0.02em}
-  .footer-brand p{font-size:13px;line-height:1.6;color:#999;max-width:380px;margin-bottom:16px}
-  .footer-brand .footer-contact{font-size:13px;color:#bbb}
-  .footer-brand .footer-contact a{color:var(--gold)}
-  .footer-col h5{font-size:11px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;font-weight:700}
-  .footer-col a{display:block;font-size:13px;color:#bbb;margin-bottom:10px;transition:color 0.15s}
-  .footer-col a:hover{color:var(--gold)}
-  .footer-bottom{max-width:1280px;margin:0 auto;padding-top:24px;border-top:1px solid #1c1c1c;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;font-size:11px;letter-spacing:0.1em;color:var(--muted);text-transform:uppercase}
-  .footer-social{display:flex;gap:14px}
-  .footer-social a{color:#888;font-size:11px;letter-spacing:0.18em}
-  .footer-social a:hover{color:var(--gold)}
-  @media(max-width:880px){
-    .site-footer{padding:50px 22px 22px}
-    .site-footer-inner{grid-template-columns:1fr 1fr;gap:32px;margin-bottom:32px}
-    .footer-brand{grid-column:1/-1}
-  }
-  @media(max-width:520px){
-    .site-footer-inner{grid-template-columns:1fr}
-  }
-
   /* HERO — split 50/50: dark column left, photo right (like partnership.citf.cy) */
-  .hero{position:relative;min-height:calc(100vh - 64px);display:grid;grid-template-columns:1fr 1fr;background:#181818;margin-top:64px}
+  .hero{position:relative;min-height:calc(100vh - 96px);display:grid;grid-template-columns:1fr 1fr;background:#181818}
   .hero-photo{position:relative;overflow:hidden;background:#111}
   .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:right center;display:block}
   .hero-content-wrap{display:flex;flex-direction:column;justify-content:flex-end;padding:100px 48px 64px;min-height:100vh}
@@ -172,12 +117,34 @@
     .credits-hint{display:block;text-align:center;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-top:14px;padding:0 22px}
   }
 
+  /* DIRECTOR NOTE */
+  .director-note{padding:100px 32px;background:#0d0d0d;border-top:1px solid #1c1c1c;border-bottom:1px solid #1c1c1c}
+  .director-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start}
+  .director-photo{width:200px;height:200px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#2a2a2a 0%,#1a1a1a 100%);display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,168,6,0.3);box-shadow:0 0 0 1px rgba(0,0,0,0.3) inset}
+  .director-photo img{width:100%;height:100%;object-fit:cover}
+  .director-photo.placeholder{font-size:44px;font-weight:800;color:var(--gold);letter-spacing:-0.02em}
+  .director-quote-kicker{display:inline-block;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:700}
+  .director-quote{font-family:var(--font-en);font-weight:500;font-size:clamp(20px,2vw,28px);line-height:1.35;color:#eee;margin-bottom:24px;letter-spacing:-0.01em;font-style:italic}
+  html[data-lang=ru] .director-quote{font-family:var(--font-ru)}
+  .director-quote::before{content:"\201C";color:var(--gold);font-size:1.4em;margin-right:6px;font-style:normal}
+  .director-quote::after{content:"\201D";color:var(--gold);font-size:1.4em;margin-left:4px;font-style:normal}
+  .director-name{font-size:14px;font-weight:700;letter-spacing:-0.005em}
+  .director-title{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:4px}
+  @media(max-width:760px){
+    .director-note{padding:70px 22px}
+    .director-inner{grid-template-columns:1fr;gap:24px;text-align:center}
+    .director-photo{margin:0 auto;width:140px;height:140px;font-size:32px}
+  }
+
   /* PRACTICAL */
   .practical-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#333;border:1px solid #333;margin-top:40px}
   .practical-cell{background:var(--bg);padding:28px 24px}
+  .practical-cell.highlight{background:#1d1300}
   .practical-label{font-size:10px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-bottom:8px;font-weight:600}
   .practical-val{font-size:17px;font-weight:600;line-height:1.35}
   .practical-val.gold{color:var(--gold)}
+  .practical-cell a{color:var(--gold);border-bottom:1px solid rgba(255,168,6,0.4);padding-bottom:1px}
+  .practical-cell a:hover{border-bottom-color:var(--gold)}
 
   /* URGENCY/CTA */
   .cta-band{background:var(--gold);color:#000;padding:80px 32px;text-align:center}
@@ -219,33 +186,8 @@
 </head>
 <body>
 
-<!-- SITE NAV -->
-<nav class="site-nav">
-  <a class="site-nav-logo" href="/">
-    <img src="/images/tild3738-6662-4535-a334-316536636261__svg_1730978181783.svg" alt="" onerror="this.style.display='none'">
-    <span>CITF</span>
-  </a>
-  <div class="site-nav-menu" id="siteNavMenu">
-    <a href="/" data-en>Shows &amp; Events</a><a href="/" data-ru>Афиша</a><a href="/" data-gr>Παραστάσεις</a>
-    <a href="/about" data-en>About</a><a href="/ru/about" data-ru>О нас</a><a href="/gr/about" data-gr>Σχετικά</a>
-    <a href="/the-festival-pass" data-en>Festival Pass</a><a href="/the-festival-pass" data-ru>Festival Pass</a><a href="/the-festival-pass" data-gr>Festival Pass</a>
-    <a href="/friends-club" data-en>Friends Club</a><a href="/friends-club" data-ru>Friends Club</a><a href="/friends-club" data-gr>Friends Club</a>
-    <a href="/gallery" data-en>Gallery</a><a href="/gallery" data-ru>Галерея</a><a href="/gallery" data-gr>Gallery</a>
-    <a href="/press" data-en>Press</a><a href="/press" data-ru>Пресса</a><a href="/press" data-gr>Τύπος</a>
-    <a href="/contact" data-en>Contact</a><a href="/contact" data-ru>Контакты</a><a href="/contact" data-gr>Επικοινωνία</a>
-  </div>
-  <div class="site-nav-right">
-    <div class="lang-switch" role="tablist">
-      <button data-setlang="en" class="active">EN</button>
-      <button data-setlang="gr">GR</button>
-      <button data-setlang="ru">RU</button>
-    </div>
-    <a class="nav-buy" href="https://www.soldoutticketbox.com/easyconsole.cfm/page/select_seats_newil/block_id/1280&amp;event_day_id=13766&amp;lang=en" target="_blank" rel="noopener">
-      <span data-en>Buy Ticket</span><span data-ru>Купить</span><span data-gr>Εισιτήριο</span>
-    </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('siteNavMenu').classList.toggle('open')"><span></span><span></span><span></span></button>
-  </div>
-</nav>
+<!-- Shared CITF chrome (header + ticker + footer) is mounted by /components/chrome.js -->
+<div id="citf-header-mount"></div>
 
 <!-- HERO (split like partnership.citf.cy) -->
 <header class="hero">
@@ -307,9 +249,9 @@
     <div class="pitch-grid">
       <div class="pitch-card">
         <div class="pitch-num">01</div>
-        <h3 data-en>Ardant, live, with orchestra</h3>
-        <h3 data-ru>Ардан вживую, с оркестром</h3>
-        <h3 data-gr>Η Αρντάν ζωντανά, με ορχήστρα</h3>
+        <h3 data-en>Ardant, live</h3>
+        <h3 data-ru>Ардан вживую</h3>
+        <h3 data-gr>Η Αρντάν ζωντανά</h3>
         <p data-en>Fanny Ardant performs <em>Cassandre</em> only a handful of times per decade. Each appearance is a cultural event.</p>
         <p data-ru>Фанни Ардан исполняет «Кассандру» считаные разы в десятилетие. Каждое появление — культурное событие.</p>
         <p data-gr>Η Φανί Αρντάν ερμηνεύει την «Κασσάνδρα» ελάχιστες φορές ανά δεκαετία. Κάθε εμφάνιση είναι γεγονός πολιτισμού.</p>
@@ -319,9 +261,9 @@
         <h3 data-en>Symphony orchestra on stage</h3>
         <h3 data-ru>Симфонический оркестр на сцене</h3>
         <h3 data-gr>Συμφωνική ορχήστρα επί σκηνής</h3>
-        <p data-en>Commandaria Orchestra under conductor Jean Deroyer — 35 musicians playing Jarrell&rsquo;s score live. No recording. No compromise.</p>
-        <p data-ru>Commandaria Orchestra под управлением Жана Дероера — 35 музыкантов, партитура Жарелла вживую. Без записи. Без компромиссов.</p>
-        <p data-gr>Η Ορχήστρα Κομμανταρία υπό τη διεύθυνση του Ζαν Ντερουαγιέ — 35 μουσικοί παίζουν ζωντανά την παρτιτούρα του Ζαρέλ. Χωρίς ηχογράφηση.</p>
+        <p data-en>Commandaria Orchestra under conductor Jean Deroyer — 18 musicians playing Jarrell&rsquo;s score live.</p>
+        <p data-ru>Commandaria Orchestra под управлением Жана Дероера — 18 музыкантов исполняют партитуру Жарелла вживую.</p>
+        <p data-gr>Η Ορχήστρα Κομμανταρία υπό τη διεύθυνση του Ζαν Ντερουαγιέ — 18 μουσικοί παίζουν ζωντανά την παρτιτούρα του Ζαρέλ.</p>
       </div>
       <div class="pitch-card">
         <div class="pitch-num">03</div>
@@ -402,6 +344,29 @@
     <span data-gr>«Η Αρντάν έχει χτίσει μια καριέρα που ορίζεται από την ένταση, την κομψότητα και βαθιά συναισθηματική απήχηση.»</span>
     <span class="pullquote-attr">— International Arts Review</span>
   </blockquote>
+</section>
+
+<!-- DIRECTOR NOTE -->
+<section class="director-note">
+  <div class="director-inner">
+    <div class="director-photo placeholder">
+      <img src="/images/credits/weinstein.jpg" alt="Alexander Weinstein" onerror="this.style.display='none';this.parentElement.textContent='AW'">
+    </div>
+    <div>
+      <span class="director-quote-kicker" data-en>From the festival director</span>
+      <span class="director-quote-kicker" data-ru>От директора фестиваля</span>
+      <span class="director-quote-kicker" data-gr>Από τον διευθυντή του φεστιβάλ</span>
+
+      <p class="director-quote" data-en>Bringing Ardant to Cyprus isn&rsquo;t a coup &mdash; it&rsquo;s a promise. The island deserves theatre at the level of Paris, Vienna, Berlin. Cassandre is one of the most uncompromising pieces in the contemporary repertoire. She agreed because she trusts the project. Now it&rsquo;s our turn to deserve that trust.</p>
+      <p class="director-quote" data-ru>Привезти Ардан на Кипр &mdash; не сенсация, а обещание. Остров заслуживает театр уровня Парижа, Вены, Берлина. «Кассандра» &mdash; одно из самых бескомпромиссных произведений современного репертуара. Она согласилась, потому что поверила в проект. Теперь наша очередь оправдать эту веру.</p>
+      <p class="director-quote" data-gr>Το να φέρουμε την Αρντάν στην Κύπρο δεν είναι σαν να κερδίζουμε &mdash; είναι μια υπόσχεση. Το νησί αξίζει θέατρο επιπέδου Παρισιού, Βιέννης, Βερολίνου. Η «Κασσάνδρα» είναι ένα από τα πιο ασυμβίβαστα έργα του σύγχρονου ρεπερτορίου. Συμφώνησε γιατί εμπιστεύεται το έργο. Σειρά μας τώρα να το αξίζουμε.</p>
+
+      <div class="director-name">Alexander Weinstein</div>
+      <div class="director-title" data-en>Founder &amp; Artistic Director · CITF</div>
+      <div class="director-title" data-ru>Основатель и художественный руководитель · CITF</div>
+      <div class="director-title" data-gr>Ιδρυτής &amp; Καλλιτεχνικός Διευθυντής · CITF</div>
+    </div>
+  </div>
 </section>
 
 <!-- PHOTO ACCENT 2 -->
@@ -519,9 +484,9 @@
       <div class="practical-label" data-en>Tickets</div><div class="practical-label" data-ru>Билеты</div><div class="practical-label" data-gr>Εισιτήρια</div>
       <div class="practical-val">From €30</div>
     </div>
-    <div class="practical-cell">
-      <div class="practical-label" data-en>Festival Pass</div><div class="practical-label" data-ru>Festival Pass</div><div class="practical-label" data-gr>Festival Pass</div>
-      <div class="practical-val"><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-en>Access all shows →</a><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-ru>Все спектакли →</a><a href="/the-festival-pass" style="color:var(--gold);border-bottom:1px solid var(--gold)" data-gr>Όλες οι παραστάσεις →</a></div>
+    <div class="practical-cell highlight">
+      <div class="practical-label" data-en>Stay another night</div><div class="practical-label" data-ru>Останьтесь ещё на день</div><div class="practical-label" data-gr>Μείνετε ακόμα μία βραδιά</div>
+      <div class="practical-val"><a href="/2026/cocktail-with-fanny-ardant" data-en>Cocktail with Fanny Ardant · Oct 3 →</a><a href="/2026/cocktail-with-fanny-ardant" data-ru>Коктейль с Фанни Ардан · 3 октября →</a><a href="/2026/cocktail-with-fanny-ardant" data-gr>Κοκτέιλ με τη Φανί Αρντάν · 3 Οκτ →</a></div>
     </div>
   </div>
 </section>
@@ -562,73 +527,9 @@
   </div>
 </section>
 
-<!-- SITE FOOTER -->
-<footer class="site-footer">
-  <div class="site-footer-inner">
-    <div class="footer-brand">
-      <h4>Cyprus International Theatre Festival</h4>
-      <p data-en>World-class theatre brought to Cyprus. Performances and special events at Pattihio Theatre, Limassol, throughout the year.</p>
-      <p data-ru>Театр мирового уровня на Кипре. Спектакли и специальные события в театре Паттихио, Лимассол, в течение всего года.</p>
-      <p data-gr>Παγκόσμιας κλάσης θέατρο στην Κύπρο. Παραστάσεις και ειδικές εκδηλώσεις στο Παττίχειο Θέατρο, Λεμεσός, όλη τη διάρκεια του χρόνου.</p>
-      <div class="footer-contact">
-        <a href="mailto:office@citf.cy">office@citf.cy</a>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h5 data-en>Festival</h5><h5 data-ru>Фестиваль</h5><h5 data-gr>Φεστιβάλ</h5>
-      <a href="/" data-en>Shows &amp; Events</a><a href="/" data-ru>Афиша</a><a href="/" data-gr>Παραστάσεις</a>
-      <a href="/about" data-en>About</a><a href="/ru/about" data-ru>О нас</a><a href="/gr/about" data-gr>Σχετικά</a>
-      <a href="/the-festival-pass" data-en>Festival Pass</a><a href="/the-festival-pass" data-ru>Festival Pass</a><a href="/the-festival-pass" data-gr>Festival Pass</a>
-      <a href="/friends-club" data-en>Friends Club</a><a href="/friends-club" data-ru>Friends Club</a><a href="/friends-club" data-gr>Friends Club</a>
-    </div>
-    <div class="footer-col">
-      <h5 data-en>Connect</h5><h5 data-ru>Связь</h5><h5 data-gr>Επικοινωνία</h5>
-      <a href="/contact" data-en>Contact</a><a href="/contact" data-ru>Контакты</a><a href="/contact" data-gr>Επικοινωνία</a>
-      <a href="/press" data-en>Press</a><a href="/press" data-ru>Пресса</a><a href="/press" data-gr>Τύπος</a>
-      <a href="/gallery" data-en>Gallery</a><a href="/gallery" data-ru>Галерея</a><a href="/gallery" data-gr>Gallery</a>
-    </div>
-    <div class="footer-col">
-      <h5 data-en>Follow</h5><h5 data-ru>Соцсети</h5><h5 data-gr>Κοινωνικά</h5>
-      <a href="https://www.instagram.com/citf.cy" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.facebook.com/citf.cy" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.youtube.com/channel/UCnM5xTx4ZlH9d1biuq_0MDA" target="_blank" rel="noopener">YouTube</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span data-en>© Cyprus International Theatre Festival</span>
-    <span data-ru>© Кипрский международный театральный фестиваль</span>
-    <span data-gr>© Διεθνές Φεστιβάλ Θεάτρου Κύπρου</span>
-    <div class="footer-social">
-      <a href="/privacy" data-en>Privacy</a><a href="/privacy" data-ru>Политика</a><a href="/privacy" data-gr>Ιδιωτικότητα</a>
-      <a href="/terms" data-en>Terms</a><a href="/terms" data-ru>Условия</a><a href="/terms" data-gr>Όροι</a>
-    </div>
-  </div>
-</footer>
+<!-- Shared CITF footer mounted by /components/chrome.js -->
+<div id="citf-footer-mount"></div>
 
-<script>
-(function(){
-  var LS='citf_lang', valid=['en','ru','gr'];
-  function setLang(l){
-    if(valid.indexOf(l)<0)l='en';
-    document.documentElement.setAttribute('data-lang',l);
-    try{localStorage.setItem(LS,l)}catch(e){}
-    document.querySelectorAll('.lang-switch button').forEach(function(b){
-      b.classList.toggle('active', b.getAttribute('data-setlang')===l);
-    });
-    document.documentElement.lang = l==='gr'?'el':l;
-  }
-  var url=new URL(location.href), q=url.searchParams.get('lang');
-  var saved; try{saved=localStorage.getItem(LS)}catch(e){}
-  var browser=(navigator.language||'').toLowerCase();
-  var initial = q||saved||(browser.indexOf('ru')===0?'ru':browser.indexOf('el')===0?'gr':'en');
-  setLang(initial);
-  document.querySelectorAll('.lang-switch button').forEach(function(b){
-    b.addEventListener('click',function(){setLang(b.getAttribute('data-setlang'))});
-  });
-  // Close mobile menu when a link inside is clicked
-  var menu = document.getElementById('siteNavMenu');
-  if(menu) menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
-})();
-</script>
+<script src="/components/chrome.js" defer></script>
 </body>
 </html>
