@@ -136,6 +136,10 @@
     document.body.style.margin = '0';
   }
 
+  // Wrap ALL existing body children in <div id="allrecords"> so Tilda's
+  // '#allrecords .r', '#allrecords a' and similar selectors apply to the
+  // chrome AND we keep the page's natural document order
+  // (header-mount → page content → footer-mount).
   function ensureAllrecords() {
     var ar = document.getElementById('allrecords');
     if (ar) return ar;
@@ -145,14 +149,18 @@
     ar.setAttribute('data-tilda-export', 'yes');
     ar.setAttribute('data-tilda-project-id', '8561442');
     ar.setAttribute('data-tilda-formskey', 'b4653a09f154d821fd96e21128561442');
-    document.body.insertBefore(ar, document.body.firstChild);
+    // Move every existing body child into ar (preserves order)
+    while (document.body.firstChild) {
+      ar.appendChild(document.body.firstChild);
+    }
+    document.body.appendChild(ar);
     return ar;
   }
 
-  // Fetch a chrome HTML fragment and place the parsed root inside #allrecords,
-  // replacing the slot at slotId. Inline scripts are replayed after mount.
-  // position: 'top' = first child of #allrecords (header), 'bottom' = last (footer).
-  function mountFragment(slotId, url, position) {
+  // Fetch chrome HTML and replace the slot in-place (the slot is already
+  // inside #allrecords because we wrapped the whole body). Re-executes inline
+  // scripts so Tilda's t396_init / t1003_init / t1093__init fire.
+  function mountFragment(slotId, url) {
     var slot = document.getElementById(slotId);
     if (!slot) return Promise.resolve();
     return fetch(url, { credentials: 'same-origin' })
@@ -161,15 +169,6 @@
         var doc = new DOMParser().parseFromString(html, 'text/html');
         var node = doc.body.firstElementChild || doc.body.firstChild;
         if (!node) throw new Error('empty fragment ' + slotId);
-
-        // Move slot into #allrecords first, then replace slot with the node, so
-        // the chrome ends up nested inside the Tilda parent that the CSS expects.
-        var allrec = ensureAllrecords();
-        if (position === 'top') {
-          allrec.insertBefore(slot, allrec.firstChild);
-        } else {
-          allrec.appendChild(slot);
-        }
         slot.parentNode.replaceChild(node, slot);
 
         // Re-execute inline scripts (DOMParser disables them) by cloning into live <script> nodes.
@@ -282,10 +281,10 @@
     injectAllCSS();
     // 3) Tilda JS bundle (must finish before re-running inline scripts that call t396_init etc.)
     try { await loadTildaJS(); } catch (e) { console.warn('[citf chrome] tilda bundle load error', e); }
-    // 4) Mount header (top of #allrecords) + footer (bottom) in parallel
+    // 4) Mount header + footer (slots are already in document order inside #allrecords)
     await Promise.all([
-      mountFragment('citf-header-mount', '/components/header.html', 'top'),
-      mountFragment('citf-footer-mount', '/components/footer.html', 'bottom')
+      mountFragment('citf-header-mount', '/components/header.html'),
+      mountFragment('citf-footer-mount', '/components/footer.html')
     ]);
     // 5) Apply initial language again now that Tilda menu is in DOM
     setLang(initialLang());
