@@ -1,0 +1,83 @@
+/* CITF self-hosted fonts. font-display:swap = render immediately with system
+   fallback, swap to brand font when downloaded. Eliminates FOIT, prioritizes
+   the Russian Unbounded only when the page actually uses it. */
+
+/* Syne — primary Latin/EN/EL font, weights 400/500/600/700/800 */
+@font-face{
+  font-family:'Syne';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url('/fonts/Syne-400.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Syne';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  src:url('/fonts/Syne-500.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Syne';
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  src:url('/fonts/Syne-600.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Syne';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  src:url('/fonts/Syne-700.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Syne';
+  font-style:normal;
+  font-weight:800;
+  font-display:swap;
+  src:url('/fonts/Syne-800.woff2') format('woff2');
+}
+
+/* Unbounded — Russian/Cyrillic font. Heavier weights only loaded when
+   data-lang="ru" actually triggers them. */
+@font-face{
+  font-family:'Unbounded';
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  unicode-range:U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+  src:url('/fonts/Unbounded-400.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Unbounded';
+  font-style:normal;
+  font-weight:500;
+  font-display:swap;
+  unicode-range:U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+  src:url('/fonts/Unbounded-500.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Unbounded';
+  font-style:normal;
+  font-weight:600;
+  font-display:swap;
+  unicode-range:U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+  src:url('/fonts/Unbounded-600.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Unbounded';
+  font-style:normal;
+  font-weight:700;
+  font-display:swap;
+  unicode-range:U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+  src:url('/fonts/Unbounded-700.woff2') format('woff2');
+}
+@font-face{
+  font-family:'Unbounded';
+  font-style:normal;
+  font-weight:800;
+  font-display:swap;
+  unicode-range:U+0400-04FF, U+0500-052F, U+2DE0-2DFF, U+A640-A69F;
+  src:url('/fonts/Unbounded-800.woff2') format('woff2');
+}

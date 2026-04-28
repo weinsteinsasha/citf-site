@@ -103,9 +103,15 @@
 
       /* Lang pill — absolutely positioned inside Tilda's header artboard.
          Final top/left coords are set in JS to match the social-icons row exactly,
-         and recomputed on resize. Mobile (≤640) gets a smaller font. */
+         and recomputed on resize. */
       ".citf-navlangs.in-nav{position:absolute;z-index:120;background:rgba(14,14,14,0.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}" +
-      "@media(max-width:640px){.citf-navlangs.in-nav{padding:2px 3px}.citf-navlangs.in-nav button{font-size:10px;padding:4px 7px;letter-spacing:0.14em}}" +
+      /* On mobile (≤640), DON'T trust JS positioning — Tilda's artboard
+         coordinate system is unreliable on iOS Safari. Pin the pill to the
+         viewport at the top-right, just left of the MENU button. */
+      "@media(max-width:640px){" +
+        ".citf-navlangs.in-nav{position:fixed !important;top:18px !important;right:108px !important;left:auto !important;padding:2px 3px;z-index:200}" +
+        ".citf-navlangs.in-nav button{font-size:10px;padding:5px 8px;letter-spacing:0.14em}" +
+      "}" +
 
       /* floating Buy Ticket button — bottom-right, configurable per page via window.CITF_BUY */
       ".citf-buyfab{position:fixed;bottom:22px;right:22px;z-index:9998;display:inline-flex;align-items:center;gap:8px;background:#FFA806;color:#000 !important;font-family:'Syne',Arial,sans-serif;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;font-weight:800;padding:14px 22px;border-radius:999px;text-decoration:none !important;box-shadow:0 8px 28px rgba(255,168,6,0.35),0 4px 12px rgba(0,0,0,0.4);transition:transform 0.15s ease,background 0.15s ease}" +
@@ -150,8 +156,9 @@
          right. On mobile we swap the src to the standalone monogram SVG
          (see swapMobileLogo()), and shrink the slot so the layout reflows. */
       "@media(max-width:640px){" +
+        /* Logo: pin to top-left, fixed in viewport so it doesn't scroll out */
         "#rec853550221 .tn-elem[data-elem-id='1730978182370']{" +
-          "width:50px !important;max-width:50px !important;height:50px !important;left:14px !important;top:14px !important" +
+          "position:fixed !important;width:50px !important;max-width:50px !important;height:50px !important;left:14px !important;top:14px !important;z-index:121 !important" +
         "}" +
         "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom{" +
           "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
@@ -159,6 +166,16 @@
         "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom__img{" +
           "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
         "}" +
+        /* MENU button: pin to top-right, fixed in viewport always */
+        "#rec853550221 .tn-elem[data-elem-id='1730997530909']{" +
+          "position:fixed !important;top:18px !important;right:14px !important;left:auto !important;width:auto !important;z-index:121 !important" +
+        "}" +
+        /* Reserve a fixed-height "header zone" at the top of the page so the
+           hero content doesn't disappear under the floating logo + MENU. */
+        "#rec853550221{position:relative;height:78px}" +
+        "#rec853550221 .t396__artboard,#rec853550221 .t396__filter,#rec853550221 .t396__carrier{height:78px !important;min-height:78px !important;background:transparent !important}" +
+        /* Solid bar behind the floating header so content doesn't bleed through */
+        "body::before{content:'';position:fixed;top:0;left:0;right:0;height:78px;background:rgba(24,24,24,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:119;pointer-events:none}" +
       "}" +
 
       /* Make sure rec824824359 (bottom-row footer with socials, legal,
@@ -166,9 +183,15 @@
          each button text in <a class='tn-atom'> + <span class='tn-atom__button-border'></span>;
          the border span sometimes overlays the link and intercepts taps on
          iOS. Force the link to occupy the full element area and the border
-         to be non-interactive. */
-      "#rec824824359 a.tn-atom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:auto !important;z-index:2}" +
+         to be non-interactive. Min-height 44px = Apple HIG touch target. */
+      "#rec824824359 a.tn-atom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:44px !important;pointer-events:auto !important;z-index:2;padding:8px 4px}" +
       "#rec824824359 .tn-atom__button-border{pointer-events:none !important;z-index:1}" +
+      "#rec824824359 .t396__elem[data-elem-type='button']{min-height:44px !important}" +
+
+      /* Hide the running marquee ticker on narrow phones — it competes with
+         the lang pill + MENU button for height in the first 60px and looks
+         cluttered. Keep it on tablet+ where there's more room. */
+      "@media(max-width:520px){#rec1157755106{display:none !important}}" +
 
       /* Custom CITF mobile menu — overrides Tilda's broken t1093 popup. */
       ".citf-menu{position:fixed;inset:0;z-index:10000;background:rgba(10,10,10,0.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;flex-direction:column;padding:64px 28px 40px;font-family:'Syne',Arial,sans-serif}" +
@@ -253,17 +276,22 @@
   }
 
   function positionLangPill(pill) {
+    // On mobile, CSS handles the positioning — keep the pill in body and
+    // clear any JS-computed inline styles so the !important rules win.
+    if (window.innerWidth <= 640) {
+      if (pill.parentElement !== document.body) document.body.appendChild(pill);
+      pill.style.position = '';
+      pill.style.top = '';
+      pill.style.right = '';
+      pill.style.left = '';
+      return true;
+    }
     var anchor = findHeaderAnchorElem();
     if (!anchor || !anchor.parentElement) return false;
-    // If the anchor is position:fixed (e.g., the MENU "fixed-button" on
-    // mobile), pin the pill to the viewport too so it stays visible while
-    // scrolling. Otherwise keep it inside the artboard so it follows the
-    // chrome layout.
     var anchorPos = window.getComputedStyle(anchor).position;
     var aRect = anchor.getBoundingClientRect();
     var pillH = pill.offsetHeight || 28;
     if (anchorPos === 'fixed') {
-      // Detach to body so we don't inherit artboard transform.
       if (pill.parentElement !== document.body) document.body.appendChild(pill);
       pill.style.position = 'fixed';
       pill.style.top   = Math.max(0, Math.round(aRect.top + (aRect.height - pillH) / 2)) + 'px';
@@ -333,6 +361,28 @@
       '</span>';
     a.innerHTML = inner;
     document.body.appendChild(a);
+    // Hide the FAB whenever an inline primary CTA is in the viewport — no
+    // point in duplicating the same call-to-action twice on screen.
+    var inlineCtas = document.querySelectorAll('.btn-primary, .hero-ctas .btn-primary, a[href*="soldoutticketbox"], a[href*="partnership.citf.cy/quiz"]');
+    if (inlineCtas.length && 'IntersectionObserver' in window) {
+      var visibleCount = 0;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) visibleCount++; else visibleCount = Math.max(0, visibleCount - 1);
+        });
+        if (visibleCount > 0) {
+          a.style.opacity = '0';
+          a.style.pointerEvents = 'none';
+          a.style.transform = 'translateY(20px)';
+        } else {
+          a.style.opacity = '';
+          a.style.pointerEvents = '';
+          a.style.transform = '';
+        }
+      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+      inlineCtas.forEach(function (el) { io.observe(el); });
+      a.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+    }
   }
 
   // Partners are rendered by Tilda's footer bitmap (the shared Tilda chrome).
@@ -654,6 +704,36 @@
     });
   }
 
+  // Vercel Web Analytics — drop in once via the standard inline script.
+  // Documented at https://vercel.com/docs/analytics/quickstart for non-Next sites.
+  function injectAnalytics() {
+    if (document.querySelector('script[src="/_vercel/insights/script.js"]')) return;
+    var s = document.createElement('script');
+    s.defer = true;
+    s.src = '/_vercel/insights/script.js';
+    document.head.appendChild(s);
+  }
+
+  // Append UTM tags to outbound ticket-vendor / partnership links so we can
+  // attribute conversions back to the originating page in analytics.
+  function addUtmToCtas() {
+    var page = location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'home';
+    var TARGETS = ['soldoutticketbox.com', 'partnership.citf.cy', 'partnership.citf.cy/quiz'];
+    document.querySelectorAll('a[href]').forEach(function (a) {
+      var href = a.getAttribute('href');
+      if (!href) return;
+      // Only annotate full external URLs we recognize
+      if (!TARGETS.some(function (t) { return href.indexOf(t) >= 0; })) return;
+      try {
+        var u = new URL(href, location.origin);
+        if (!u.searchParams.has('utm_source')) u.searchParams.set('utm_source', 'citf.cy');
+        if (!u.searchParams.has('utm_medium')) u.searchParams.set('utm_medium', 'site');
+        if (!u.searchParams.has('utm_campaign')) u.searchParams.set('utm_campaign', page);
+        a.setAttribute('href', u.toString());
+      } catch (e) { /* ignore malformed urls */ }
+    });
+  }
+
   async function boot() {
     // 0) i18n CSS + initial language SYNCHRONOUSLY so the page never flashes
     //    all three language versions.
@@ -696,6 +776,11 @@
     bindFooterButtons();
     bindMenuButton();
     attachLangSwitcherToNav();
+    injectAnalytics();
+    addUtmToCtas();
+    // Re-run UTM tagging once the chrome HTML lands (footer has more anchors)
+    setTimeout(addUtmToCtas, 800);
+    setTimeout(addUtmToCtas, 1800);
     // 3.6) If for some reason the lang pill couldn't be attached to the nav,
     //      show the floating fallback (only after a short delay so it never
     //      flashes when chrome attaches normally).

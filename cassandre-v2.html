@@ -3,11 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CASSANDRE — Fanny Ardant · CITF 2026</title>
-<meta name="description" content="2 October 2026 · Pattihio Theatre, Limassol. A spoken opera for an actress and symphony orchestra.">
-<meta property="og:title" content="CASSANDRE — Fanny Ardant · CITF 2026">
-<meta property="og:description" content="2 October 2026 · Pattihio Theatre, Limassol. A spoken opera for an actress and symphony orchestra.">
-<meta property="og:image" content="/images/tild3663-3962-4066-a531-393833626334__cassandre_og.jpg">
+<title>Fanny Ardant in Cassandre · Pattihio Theatre, Limassol · 2 Oct 2026 · CITF</title>
+<meta name="description" content="Fanny Ardant performs Cassandre with the Commandaria Symphony Orchestra at Pattihio Theatre, Limassol — 2 October 2026, 20:00. A spoken opera for actress and orchestra. Cyprus International Theatre Festival.">
+<meta property="og:title" content="Fanny Ardant in Cassandre · Limassol · 2 Oct 2026">
+<meta property="og:description" content="Fanny Ardant + Commandaria Symphony Orchestra · Pattihio Theatre, Limassol · 2 October 2026, 20:00. From €30.">
+<meta property="og:image" content="https://citf.cy/images/ardant-og-1200x630.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://citf.cy/2026/cassandre-fanny-ardant">
+<meta property="og:site_name" content="Cyprus International Theatre Festival">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fanny Ardant in Cassandre · Limassol · 2 Oct 2026">
+<meta name="twitter:description" content="Fanny Ardant + Commandaria Symphony Orchestra · Pattihio Theatre, Limassol · 2 October 2026, 20:00. From €30.">
+<meta name="twitter:image" content="https://citf.cy/images/ardant-og-1200x630.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TheaterEvent",
+  "name": "Cassandre — Fanny Ardant",
+  "description": "A spoken opera for an actress and symphony orchestra, performed by Fanny Ardant with the Commandaria Symphony Orchestra.",
+  "startDate": "2026-10-02T20:00:00+03:00",
+  "endDate": "2026-10-02T22:00:00+03:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "location": {
+    "@type": "Place",
+    "name": "Pattihio Theatre",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Limassol",
+      "addressCountry": "CY"
+    }
+  },
+  "performer": [
+    { "@type": "Person", "name": "Fanny Ardant" },
+    { "@type": "MusicGroup", "name": "Commandaria Symphony Orchestra" }
+  ],
+  "organizer": {
+    "@type": "Organization",
+    "name": "Cyprus International Theatre Festival",
+    "url": "https://citf.cy"
+  },
+  "image": "https://citf.cy/images/ardant-og-1200x630.jpg",
+  "url": "https://citf.cy/2026/cassandre-fanny-ardant",
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.soldoutticketbox.com/easyconsole.cfm/page/select_seats_newil/block_id/1280&event_day_id=13766&lang=en",
+    "price": "30",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "validFrom": "2025-12-01T00:00:00+02:00"
+  },
+  "inLanguage": ["fr", "el", "ru"]
+}
+</script>
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://citf.cy/2026/cassandre-fanny-ardant">
 <link rel="alternate" hreflang="en" href="https://citf.cy/2026/cassandre-fanny-ardant">
@@ -15,9 +64,9 @@
 <link rel="alternate" hreflang="el" href="https://citf.cy/2026/cassandre-fanny-ardant?lang=gr">
 <link rel="icon" type="image/png" sizes="32x32" href="/images/tild3263-3138-4466-b765-656662383533__fav.png">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Unbounded:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/Syne-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Syne-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 
 <script>
   // Floating "Buy Ticket" button config (consumed by /components/chrome.js)
@@ -56,20 +105,22 @@
   html[data-lang=ru] .hero h1{font-family:var(--font-ru);font-size:clamp(32px,3.5vw,54px)}
   html[data-lang=gr] .hero h1{font-size:clamp(36px,3.8vw,64px)}
   @media(max-width:960px){
-    /* Mobile: photo as full-bleed background, text overlays with gradient (like partnership.citf.cy hero). */
-    .hero{grid-template-columns:1fr;min-height:100vh;position:relative}
-    .hero-photo{position:absolute;inset:0;height:100%;aspect-ratio:auto;min-height:0;order:0;z-index:0;background:#111;overflow:hidden}
-    /* Force the portrait taller than container so the face lifts above the
-       fold; visible crop starts roughly at the neck. (object-position alone
-       has no vertical effect once image height = container height.) */
-    .hero-photo img{position:absolute;left:50%;top:auto;bottom:0;transform:translateX(-50%);width:auto;min-width:100%;height:160%;object-fit:cover;object-position:center bottom}
-    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0) 0%,rgba(24,24,24,0.55) 42%,rgba(24,24,24,0.92) 70%,#181818 100%);pointer-events:none}
-    .hero-content-wrap{position:relative;z-index:1;padding:42vh 22px 50px;min-height:100vh;justify-content:flex-end}
-    .hero h1{font-size:clamp(36px,8vw,60px);text-shadow:0 2px 16px rgba(0,0,0,0.5);margin-bottom:18px}
+    /* Mobile: VERTICAL STACK — photo block on top (chin/neck/shoulders crop),
+       title + meta plate BELOW in document flow. No overlap = no zoom hacks. */
+    .hero{grid-template-columns:1fr;display:flex;flex-direction:column;min-height:auto;position:relative;padding-top:80px;background:#181818}
+    .hero-photo{position:relative;width:100%;height:46vh;min-height:280px;max-height:420px;flex-shrink:0;background:#111;overflow:hidden;order:0}
+    .hero-photo picture,.hero-photo picture img{width:100%;height:100%;display:block}
+    /* object-position: center 100% (bottom-aligned) shows the lower portion
+       of the portrait — chin / neck / collar / sweater. Face is cropped above. */
+    .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 100%}
+    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0) 50%,rgba(24,24,24,0.6) 85%,#181818 100%);pointer-events:none}
+    .hero-content-wrap{position:relative;z-index:1;padding:28px 22px 40px;min-height:auto;order:1}
+    .hero-content{max-width:none}
+    .hero h1{font-size:clamp(36px,8vw,60px);text-shadow:none;margin-bottom:18px}
     html[data-lang=ru] .hero h1{font-size:clamp(28px,6.4vw,46px)}
     html[data-lang=gr] .hero h1{font-size:clamp(32px,7vw,52px)}
-    .hero-sub{text-shadow:0 2px 12px rgba(0,0,0,0.55);margin-bottom:24px;font-size:clamp(15px,3.6vw,18px)}
-    .hero-meta{background:rgba(10,10,10,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:18px 18px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);gap:14px 28px;margin-bottom:24px}
+    .hero-sub{text-shadow:none;margin-bottom:22px;font-size:clamp(15px,3.6vw,18px);color:#ddd}
+    .hero-meta{background:#0e0e0e;border:1px solid rgba(255,255,255,0.08);padding:18px 18px;border-radius:14px;gap:14px 28px;margin-bottom:20px}
     .hero-meta > div{min-width:0;flex:1 1 130px}
     .hero-meta-val{font-size:15px}
   }
@@ -244,9 +295,11 @@
       </div>
 
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#tickets">
+        <a class="btn btn-primary" href="https://www.soldoutticketbox.com/easyconsole.cfm/page/select_seats_newil/block_id/1280&event_day_id=13766&lang=en" target="_blank" rel="noopener">
           <span data-en>Buy Ticket</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
-          <span class="btn-price">from €30</span>
+          <span class="btn-price" data-en>from €30</span>
+          <span class="btn-price" data-ru>от €30</span>
+          <span class="btn-price" data-gr>από €30</span>
         </a>
         <a class="btn btn-ghost" href="#story">
           <span data-en>About the show</span><span data-ru>О спектакле</span><span data-gr>Περισσότερα</span>
@@ -255,7 +308,14 @@
     </div>
   </div>
   <div class="hero-photo">
-    <img src="/images/tild3930-3139-4136-a464-666561303837___carole_bellaiche_2_.jpg" alt="Fanny Ardant by Carole Bellaïche">
+    <picture>
+      <source type="image/webp" media="(max-width:640px)" srcset="/images/ardant-carole-bellaiche-mobile.webp">
+      <source type="image/webp" media="(max-width:1280px)" srcset="/images/ardant-carole-bellaiche-tablet.webp">
+      <source type="image/webp" srcset="/images/ardant-carole-bellaiche-desktop.webp">
+      <source type="image/jpeg" media="(max-width:640px)" srcset="/images/ardant-carole-bellaiche-mobile.jpg">
+      <source type="image/jpeg" media="(max-width:1280px)" srcset="/images/ardant-carole-bellaiche-tablet.jpg">
+      <img src="/images/ardant-carole-bellaiche-desktop.jpg" alt="Fanny Ardant by Carole Bellaïche" loading="eager" fetchpriority="high" decoding="async">
+    </picture>
   </div>
 </header>
 
