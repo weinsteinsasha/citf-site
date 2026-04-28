@@ -58,15 +58,20 @@
   @media(max-width:960px){
     /* Mobile: photo as full-bleed background, text overlays with gradient (like partnership.citf.cy hero). */
     .hero{grid-template-columns:1fr;min-height:100vh;position:relative}
-    .hero-photo{position:absolute;inset:0;height:100%;aspect-ratio:auto;min-height:0;order:0;z-index:0;background:#111}
-    .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center top}
-    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0.15) 0%,rgba(24,24,24,0.45) 38%,rgba(24,24,24,0.88) 72%,#181818 100%);pointer-events:none}
-    .hero-content-wrap{position:relative;z-index:1;padding:140px 22px 60px;min-height:100vh;justify-content:flex-end}
-    .hero h1{font-size:clamp(38px,8.5vw,64px);text-shadow:0 2px 16px rgba(0,0,0,0.4)}
-    html[data-lang=ru] .hero h1{font-size:clamp(30px,7vw,52px)}
-    html[data-lang=gr] .hero h1{font-size:clamp(34px,7.5vw,56px)}
-    .hero-sub{text-shadow:0 2px 12px rgba(0,0,0,0.5)}
-    .hero-meta{background:rgba(10,10,10,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:18px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.08)}
+    .hero-photo{position:absolute;inset:0;height:100%;aspect-ratio:auto;min-height:0;order:0;z-index:0;background:#111;overflow:hidden}
+    /* Force the portrait taller than container so the face lifts above the
+       fold; visible crop starts roughly at the neck. (object-position alone
+       has no vertical effect once image height = container height.) */
+    .hero-photo img{position:absolute;left:50%;top:auto;bottom:0;transform:translateX(-50%);width:auto;min-width:100%;height:160%;object-fit:cover;object-position:center bottom}
+    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0) 0%,rgba(24,24,24,0.55) 42%,rgba(24,24,24,0.92) 70%,#181818 100%);pointer-events:none}
+    .hero-content-wrap{position:relative;z-index:1;padding:42vh 22px 50px;min-height:100vh;justify-content:flex-end}
+    .hero h1{font-size:clamp(36px,8vw,60px);text-shadow:0 2px 16px rgba(0,0,0,0.5);margin-bottom:18px}
+    html[data-lang=ru] .hero h1{font-size:clamp(28px,6.4vw,46px)}
+    html[data-lang=gr] .hero h1{font-size:clamp(32px,7vw,52px)}
+    .hero-sub{text-shadow:0 2px 12px rgba(0,0,0,0.55);margin-bottom:24px;font-size:clamp(15px,3.6vw,18px)}
+    .hero-meta{background:rgba(10,10,10,0.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:18px 18px;border-radius:14px;border:1px solid rgba(255,255,255,0.1);gap:14px 28px;margin-bottom:24px}
+    .hero-meta > div{min-width:0;flex:1 1 130px}
+    .hero-meta-val{font-size:15px}
   }
   .hero-sub{font-size:clamp(18px,2.2vw,28px);max-width:740px;line-height:1.3;color:#ddd;font-weight:400;margin-bottom:40px}
   .hero-meta{display:flex;flex-wrap:wrap;gap:18px 36px;margin-bottom:44px;padding:20px 0;border-top:1px solid rgba(255,255,255,0.12);border-bottom:1px solid rgba(255,255,255,0.12)}
@@ -220,15 +225,21 @@
       <div class="hero-meta">
         <div>
           <div class="hero-meta-label" data-en>Date</div><div class="hero-meta-label" data-ru>Дата</div><div class="hero-meta-label" data-gr>Ημερομηνία</div>
-          <div class="hero-meta-val gold">2 October 2026 · 20:00</div>
+          <div class="hero-meta-val gold" data-en>2 October 2026 · 20:00</div>
+          <div class="hero-meta-val gold" data-ru>2 октября 2026 · 20:00</div>
+          <div class="hero-meta-val gold" data-gr>2 Οκτωβρίου 2026 · 20:00</div>
         </div>
         <div>
           <div class="hero-meta-label" data-en>Venue</div><div class="hero-meta-label" data-ru>Площадка</div><div class="hero-meta-label" data-gr>Χώρος</div>
-          <div class="hero-meta-val">Pattihio Theatre, Limassol</div>
+          <div class="hero-meta-val" data-en>Pattihio Theatre, Limassol</div>
+          <div class="hero-meta-val" data-ru>Театр «Паттихио», Лимассол</div>
+          <div class="hero-meta-val" data-gr>Θέατρο Παττίχειο, Λεμεσός</div>
         </div>
         <div>
           <div class="hero-meta-label" data-en>Language</div><div class="hero-meta-label" data-ru>Язык</div><div class="hero-meta-label" data-gr>Γλώσσα</div>
-          <div class="hero-meta-val">French + GR/RU subs</div>
+          <div class="hero-meta-val" data-en>French + GR/RU subs</div>
+          <div class="hero-meta-val" data-ru>Франц. · субтитры GR/RU</div>
+          <div class="hero-meta-val" data-gr>Γαλλικά + GR/RU υπότιτλοι</div>
         </div>
       </div>
 
@@ -252,7 +263,7 @@
 <section class="pitch">
   <div class="pitch-inner">
     <span class="section-kicker" data-en>Why this matters</span>
-    <span class="section-kicker" data-ru>Почему это событие</span>
+    <span class="section-kicker" data-ru>Почему надо идти</span>
     <span class="section-kicker" data-gr>Γιατί είναι σημαντικό</span>
     <h2 class="section-title" data-en>Three reasons this night will not repeat.</h2>
     <h2 class="section-title" data-ru>Три причины, почему этот вечер не повторится.</h2>

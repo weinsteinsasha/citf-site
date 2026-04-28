@@ -136,9 +136,53 @@
          and the image to keep its natural aspect ratio at any width. */
       "#rec890778214 .t396__artboard,#rec890778214 .t396__filter,#rec890778214 .t396__carrier{height:auto !important;min-height:0 !important}" +
       "#rec890781301 .t396__artboard,#rec890781301 .t396__filter,#rec890781301 .t396__carrier{height:auto !important;min-height:0 !important}" +
-      "#rec890778214 .t396__elem,#rec890781301 .t396__elem{position:relative !important;top:auto !important;left:auto !important;width:100% !important;height:auto !important;display:block !important}" +
-      "#rec890778214 .tn-atom,#rec890781301 .tn-atom{display:block !important;width:100% !important;height:auto !important}" +
+      "#rec890778214 .t396__elem[data-elem-type='image'],#rec890781301 .t396__elem[data-elem-type='image']{position:relative !important;top:auto !important;left:auto !important;width:100% !important;height:auto !important;display:block !important}" +
+      "#rec890778214 .t396__elem[data-elem-type='image'] .tn-atom,#rec890781301 .t396__elem[data-elem-type='image'] .tn-atom{display:block !important;width:100% !important;height:auto !important}" +
       "img[imgfield='tn_img_1741704123132']{width:100% !important;height:auto !important;max-width:100% !important;display:block !important;object-fit:contain !important}" +
+      /* Hide stray Tilda placeholder text labels that bled through after we
+         flipped artboard children to position:relative (image-only). */
+      "#rec890778214 .t396__elem[data-elem-type='text'],#rec890781301 .t396__elem[data-elem-type='text']{display:none !important}" +
+      "#rec890778214 [data-elem-id='1741704284989'],#rec890781301 [data-elem-id='1741704284989']{display:none !important}" +
+
+      /* MOBILE HEADER POLISH (≤640px):
+         The default Tilda logo is a horizontal lockup (243×78) — monogram on
+         the left + "CYPRUS INTERNATIONAL THEATRE FESTIVAL" wordmark on the
+         right. On mobile we swap the src to the standalone monogram SVG
+         (see swapMobileLogo()), and shrink the slot so the layout reflows. */
+      "@media(max-width:640px){" +
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370']{" +
+          "width:50px !important;max-width:50px !important;height:50px !important;left:14px !important;top:14px !important" +
+        "}" +
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom{" +
+          "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
+        "}" +
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom__img{" +
+          "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
+        "}" +
+      "}" +
+
+      /* Make sure rec824824359 (bottom-row footer with socials, legal,
+         "Become our partner", copyright) stays clickable. Tilda's t396 wraps
+         each button text in <a class='tn-atom'> + <span class='tn-atom__button-border'></span>;
+         the border span sometimes overlays the link and intercepts taps on
+         iOS. Force the link to occupy the full element area and the border
+         to be non-interactive. */
+      "#rec824824359 a.tn-atom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:auto !important;z-index:2}" +
+      "#rec824824359 .tn-atom__button-border{pointer-events:none !important;z-index:1}" +
+
+      /* Custom CITF mobile menu — overrides Tilda's broken t1093 popup. */
+      ".citf-menu{position:fixed;inset:0;z-index:10000;background:rgba(10,10,10,0.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;flex-direction:column;padding:64px 28px 40px;font-family:'Syne',Arial,sans-serif}" +
+      "html[data-lang=ru] .citf-menu{font-family:'Unbounded','Syne',Arial,sans-serif}" +
+      ".citf-menu.open{display:flex}" +
+      ".citf-menu__close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}" +
+      ".citf-menu__close:hover{border-color:#FFA806;color:#FFA806}" +
+      ".citf-menu nav{margin-top:12px;display:flex;flex-direction:column;gap:6px}" +
+      ".citf-menu nav a{display:block;padding:14px 4px;color:#eee;font-size:18px;font-weight:700;letter-spacing:0.04em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.08)}" +
+      ".citf-menu nav a:hover,.citf-menu nav a:active{color:#FFA806}" +
+      ".citf-menu__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;padding:18px 26px;border-radius:999px;background:#FFA806;color:#000;font-size:13px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none}" +
+      ".citf-menu__socials{margin-top:auto;padding-top:24px;display:flex;gap:18px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#888}" +
+      ".citf-menu__socials a{color:#888;text-decoration:none}" +
+      ".citf-menu__socials a:hover{color:#FFA806}" +
       "";
     document.head.appendChild(s);
   }
@@ -211,14 +255,27 @@
   function positionLangPill(pill) {
     var anchor = findHeaderAnchorElem();
     if (!anchor || !anchor.parentElement) return false;
+    // If the anchor is position:fixed (e.g., the MENU "fixed-button" on
+    // mobile), pin the pill to the viewport too so it stays visible while
+    // scrolling. Otherwise keep it inside the artboard so it follows the
+    // chrome layout.
+    var anchorPos = window.getComputedStyle(anchor).position;
+    var aRect = anchor.getBoundingClientRect();
+    var pillH = pill.offsetHeight || 28;
+    if (anchorPos === 'fixed') {
+      // Detach to body so we don't inherit artboard transform.
+      if (pill.parentElement !== document.body) document.body.appendChild(pill);
+      pill.style.position = 'fixed';
+      pill.style.top   = Math.max(0, Math.round(aRect.top + (aRect.height - pillH) / 2)) + 'px';
+      pill.style.right = Math.max(0, Math.round(window.innerWidth - aRect.left + 12)) + 'px';
+      pill.style.left  = 'auto';
+      return true;
+    }
+    // Default: position inside the same artboard as the anchor (desktop)
     var artboard = anchor.parentElement;
     if (artboard !== pill.parentElement) artboard.appendChild(pill);
-    // Tilda's t396 scales element coords via CSS calc(var(--zoom)), so
-    // offsetLeft/offsetTop are pre-zoom and don't match what's painted.
-    // getBoundingClientRect gives the real on-screen position post-zoom.
-    var aRect  = anchor.getBoundingClientRect();
+    pill.style.position = 'absolute';
     var abRect = artboard.getBoundingClientRect();
-    var pillH  = pill.offsetHeight || 28;
     var topPx   = aRect.top  - abRect.top + (aRect.height - pillH) / 2;
     var rightPx = abRect.right - aRect.left + 16; // 16-px gap to anchor's left edge
     pill.style.top   = Math.max(0, Math.round(topPx))   + 'px';
@@ -237,9 +294,11 @@
     }
     var floating = document.querySelector('.citf-navlangs.floating');
     if (floating) floating.remove();
-    // Try to pin to FB now and after each Tilda re-layout
+    // Tilda's t396_init applies the right breakpoint position to MENU/FB
+    // some time after our boot — keep trying until the anchor becomes
+    // visible (up to ~12s, then fall back to a slow retry).
     var attempts = 0, iv = setInterval(function () {
-      if (positionLangPill(pill) || ++attempts > 12) clearInterval(iv);
+      if (positionLangPill(pill) || ++attempts > 60) clearInterval(iv);
     }, 200);
     setLang(initialLang());
   }
@@ -280,6 +339,118 @@
   // Files /images/partners/<name>.png are extracted individual logos kept
   // for future use; they are not currently rendered.
   function injectPartnersBlock() { /* no-op — Tilda bitmap is the source of truth */ }
+
+  // Swap the wide CITF logo for the monogram-only SVG on mobile (≤640px).
+  // The wide logo is a horizontal lockup with the wordmark on the right;
+  // it doesn't fit alongside the MENU button + lang pill on small phones.
+  function swapMobileLogo() {
+    var FULL = '/images/tild3738-6662-4535-a334-316536636261__svg_1730978181783.svg';
+    var MONO = '/images/citf-monogram.svg';
+    function apply() {
+      var imgs = document.querySelectorAll(
+        "img[imgfield='tn_img_1730978182370'], #rec853550221 [data-elem-id='1730978182370'] img"
+      );
+      var isMobile = window.innerWidth <= 640;
+      var target = isMobile ? MONO : FULL;
+      imgs.forEach(function (img) {
+        if (img.getAttribute('src') !== target) img.setAttribute('src', target);
+        if (img.getAttribute('data-original') !== target) img.setAttribute('data-original', target);
+      });
+    }
+    apply();
+    window.addEventListener('resize', apply);
+    // Re-apply after Tilda bundles run (they may overwrite src from data-original)
+    setTimeout(apply, 600);
+    setTimeout(apply, 1500);
+  }
+
+  // Build a clean custom mobile menu and override Tilda's broken t1093 popup.
+  // Tilda's popup-1.0.min.js sometimes shows an empty modal on our exported
+  // pages because the popup-rec-id source content isn't being cloned. We
+  // intercept the MENU click and show our own modal with the same links.
+  var CITF_NAV = [
+    { href: '/',                        en: 'Home',          ru: 'Главная',          gr: 'Αρχική' },
+    { href: '/2026/cassandre',          en: 'Cassandre',     ru: 'Кассандра',        gr: 'Κασσάνδρα' },
+    { href: '/2026/cocktail-with-fanny-ardant', en: 'Cocktail with Fanny Ardant', ru: 'Коктейль с Фанни Ардан', gr: 'Κοκτέιλ με Φανί Αρντάν' },
+    { href: '/the-festival-pass',       en: 'The Festival Pass', ru: 'Festival Pass', gr: 'Festival Pass' },
+    { href: '/about',                   en: 'About',         ru: 'О фестивале',      gr: 'Σχετικά' },
+    { href: 'https://partnership.citf.cy', en: 'Become a partner', ru: 'Стать партнёром', gr: 'Γίνετε συνεργάτης' }
+  ];
+  function buildCitfMenu() {
+    if (document.getElementById('citf-mobile-menu')) return;
+    var modal = document.createElement('div');
+    modal.id = 'citf-mobile-menu';
+    modal.className = 'citf-menu';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    var navHtml = CITF_NAV.map(function (item) {
+      return '<a href="' + item.href + '">' +
+        '<span data-en>' + item.en + '</span>' +
+        '<span data-ru>' + item.ru + '</span>' +
+        '<span data-gr>' + item.gr + '</span>' +
+        '</a>';
+    }).join('');
+    modal.innerHTML =
+      '<button type="button" class="citf-menu__close" aria-label="Close">×</button>' +
+      '<nav>' + navHtml + '</nav>' +
+      '<div class="citf-menu__socials">' +
+        '<a href="https://instagram.com/citf.cy" target="_blank" rel="noopener">Instagram</a>' +
+        '<a href="https://facebook.com/citf.cy" target="_blank" rel="noopener">Facebook</a>' +
+        '<a href="https://youtube.com/@citf.cy" target="_blank" rel="noopener">YouTube</a>' +
+      '</div>';
+    document.body.appendChild(modal);
+    modal.querySelector('.citf-menu__close').addEventListener('click', closeCitfMenu);
+    modal.addEventListener('click', function (ev) {
+      if (ev.target === modal) closeCitfMenu();
+    });
+  }
+  function openCitfMenu() {
+    buildCitfMenu();
+    var m = document.getElementById('citf-mobile-menu');
+    if (m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+  }
+  function closeCitfMenu() {
+    var m = document.getElementById('citf-mobile-menu');
+    if (m) { m.classList.remove('open'); document.body.style.overflow = ''; }
+  }
+  function bindMenuButton() {
+    document.addEventListener('click', function (ev) {
+      var a = ev.target.closest('a[href="#mobilemenu"]');
+      if (!a) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      openCitfMenu();
+    }, true);
+    // ESC closes
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape') closeCitfMenu();
+    });
+  }
+
+  // Hard-bind the Tilda footer-row "Become our partner" link, which on iOS
+  // sometimes loses its tap because Tilda's button-border overlay sits on top
+  // of the <a>. We also handle the case where the rec's t396_doResize is
+  // patched out (rec824824359 is in our skip-list to silence noise) — the
+  // <a class='tn-atom'> inside still has the right href, so we just bind a
+  // capture-phase click that follows it.
+  function bindFooterButtons() {
+    var rec = document.getElementById('rec824824359');
+    if (!rec) return;
+    if (rec.__citfBound) return;
+    rec.__citfBound = true;
+    rec.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('.t396__elem[data-elem-type="button"]');
+      if (!btn) return;
+      var a = btn.querySelector('a.tn-atom[href]');
+      if (!a) return;
+      var href = a.getAttribute('href');
+      if (!href || href.indexOf('#') === 0) return;
+      // If the click already landed on the <a>, let the browser handle it.
+      if (ev.target === a || a.contains(ev.target)) return;
+      ev.preventDefault();
+      window.open(href, a.getAttribute('target') || '_self');
+    }, true);
+  }
 
   // The bottom-footer rec (824824359) is missing some field data in our Tilda
   // export, so its t396_doResize crashes on every animation frame. Tilda
@@ -521,6 +692,9 @@
     // 3.5) Inject our adaptive partners block between page content and footer,
     //      and move the lang pill into the nav (right next to the social icons).
     injectPartnersBlock();
+    swapMobileLogo();
+    bindFooterButtons();
+    bindMenuButton();
     attachLangSwitcherToNav();
     // 3.6) If for some reason the lang pill couldn't be attached to the nav,
     //      show the floating fallback (only after a short delay so it never
@@ -546,6 +720,15 @@
       .catch(function (e) { console.warn('[citf chrome] tilda bundle load error', e); });
 
     window.addEventListener('resize', function () { reinitTildaBlocks(); repinLangPill(); });
+    // The MENU button is position:fixed on mobile, so it doesn't actually
+    // change position on scroll — but our pill might not have been pinned
+    // yet when the page first loaded. Re-pin on first scroll just in case.
+    var pinnedOnScroll = false;
+    window.addEventListener('scroll', function () {
+      if (pinnedOnScroll) return;
+      pinnedOnScroll = true;
+      repinLangPill();
+    }, { passive: true });
     if (document.readyState === 'complete') {
       setTimeout(function(){ reinitTildaBlocks(); repinLangPill(); }, 200);
     } else {
