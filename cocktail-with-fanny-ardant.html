@@ -116,13 +116,13 @@
     /* Mobile: VERTICAL STACK — photo block on top (fixed height showing the
        chin/neck/shoulders region of the portrait), title + meta plate stack
        BELOW in the document flow. No overlap → no zoom-in tricks needed. */
-    .hero{grid-template-columns:1fr;display:flex;flex-direction:column;min-height:auto;position:relative;padding-top:80px;background:#181818}
-    .hero-photo{position:relative;width:100%;height:46vh;min-height:280px;max-height:420px;flex-shrink:0;background:#111;overflow:hidden;order:0}
+    .hero{grid-template-columns:1fr;display:flex;flex-direction:column;min-height:auto;position:relative;padding-top:0;background:#181818}
+    .hero-photo{position:relative;width:100%;height:54vh;min-height:340px;max-height:520px;flex-shrink:0;background:#111;overflow:hidden;order:0}
     .hero-photo picture,.hero-photo picture img{width:100%;height:100%;display:block}
-    /* object-position: center 100% (bottom-aligned) shows the lower portion
-       of the portrait — chin / neck / collar / sweater. Face is cropped above. */
-    .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 100%}
-    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0) 50%,rgba(24,24,24,0.6) 85%,#181818 100%);pointer-events:none}
+    /* object-position: center 22% — anchor near the top so Ardant's FACE
+       (eyes, smile) is the focal point. Body/arms taper into the gradient. */
+    .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(24,24,24,0) 60%,rgba(24,24,24,0.55) 88%,#181818 100%);pointer-events:none}
     .hero-content-wrap{position:relative;z-index:1;padding:28px 22px 40px;min-height:auto;order:1}
     .hero-content{max-width:none}
     .hero-kicker{margin-bottom:14px;font-size:10px}
@@ -164,6 +164,7 @@
   html[data-lang=ru] [data-en],html[data-lang=ru] [data-gr],
   html[data-lang=gr] [data-en],html[data-lang=gr] [data-ru]{display:none !important}
 </style>
+  <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 

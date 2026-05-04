@@ -109,7 +109,7 @@
          coordinate system is unreliable on iOS Safari. Pin the pill to the
          viewport at the top-right, just left of the MENU button. */
       "@media(max-width:640px){" +
-        ".citf-navlangs.in-nav{position:fixed !important;top:18px !important;right:108px !important;left:auto !important;padding:2px 3px;z-index:200}" +
+        ".citf-navlangs.in-nav{position:fixed !important;top:18px !important;right:128px !important;left:auto !important;padding:2px 3px;z-index:200}" +
         ".citf-navlangs.in-nav button{font-size:10px;padding:5px 8px;letter-spacing:0.14em}" +
       "}" +
 
@@ -120,6 +120,12 @@
       ".citf-buyfab small{display:block;font-size:9px;letter-spacing:0.14em;color:rgba(0,0,0,0.6);font-weight:600;margin-top:2px;text-transform:none}" +
       ".citf-buyfab-inner{display:flex;flex-direction:column;align-items:flex-start}" +
       "@media(max-width:520px){.citf-buyfab{bottom:14px;right:14px;padding:12px 16px;font-size:11px;letter-spacing:0.12em}}" +
+      /* Reserve space at page bottom so the FAB doesn't cover footer links
+         (Instagram / Facebook / Terms / Privacy etc.). #rec824824359 is the
+         shared site footer; the generic body padding is a safety net. */
+      "body.citf-has-buyfab{padding-bottom:90px}" +
+      "body.citf-has-buyfab #rec824824359{padding-bottom:90px !important}" +
+      "@media(max-width:640px){body.citf-has-buyfab #rec824824359{padding-bottom:110px !important}}" +
 
       /* Hide the desktop menu links + decorative elements at viewports
          <1200px. Tilda's design keeps SHOWS & EVENT / ABOUT / THE FESTIVAL
@@ -151,61 +157,55 @@
       "#rec890778214 [data-elem-id='1741704284989'],#rec890781301 [data-elem-id='1741704284989']{display:none !important}" +
 
       /* MOBILE HEADER POLISH (≤640px):
-         The default Tilda logo is a horizontal lockup (243×78) — monogram on
-         the left + "CYPRUS INTERNATIONAL THEATRE FESTIVAL" wordmark on the
-         right. On mobile we swap the src to the standalone monogram SVG
-         (see swapMobileLogo()), and shrink the slot so the layout reflows. */
+         Header rec stays in document flow (sticky at top, NOT fixed-overlay)
+         so the hero photo begins IMMEDIATELY after it — no overlap, no
+         "огромная плашка" covering the face. Logo + MENU button stay
+         positioned inside the rec via Tilda's own absolute layout — we just
+         shrink the logo slot for the standalone monogram SVG. */
       "@media(max-width:640px){" +
-        /* Logo: pin to top-left, fixed in viewport so it doesn't scroll out */
+        /* Sticky header — scrolls with the page until the top, then sticks */
+        "#rec853550221{position:sticky !important;top:0;z-index:100;background:#181818}" +
+        /* Logo: positioned inside the rec by Tilda; force the monogram size */
         "#rec853550221 .tn-elem[data-elem-id='1730978182370']{" +
-          "position:fixed !important;width:50px !important;max-width:50px !important;height:50px !important;left:14px !important;top:14px !important;z-index:121 !important" +
+          "width:50px !important;max-width:50px !important;height:50px !important" +
         "}" +
-        "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom{" +
-          "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
-        "}" +
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom," +
         "#rec853550221 .tn-elem[data-elem-id='1730978182370'] .tn-atom__img{" +
           "width:50px !important;max-width:50px !important;height:50px !important;display:block !important" +
         "}" +
-        /* MENU button: pin to top-right, fixed in viewport always */
-        "#rec853550221 .tn-elem[data-elem-id='1730997530909']{" +
-          "position:fixed !important;top:18px !important;right:14px !important;left:auto !important;width:auto !important;z-index:121 !important" +
-        "}" +
-        /* Reserve a fixed-height "header zone" at the top of the page so the
-           hero content doesn't disappear under the floating logo + MENU. */
-        "#rec853550221{position:relative;height:78px}" +
-        "#rec853550221 .t396__artboard,#rec853550221 .t396__filter,#rec853550221 .t396__carrier{height:78px !important;min-height:78px !important;background:transparent !important}" +
-        /* Solid bar behind the floating header so content doesn't bleed through */
-        "body::before{content:'';position:fixed;top:0;left:0;right:0;height:78px;background:rgba(24,24,24,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:119;pointer-events:none}" +
+        /* Logo cursor pointer — JS adds the click handler to navigate home */
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370']{cursor:pointer}" +
       "}" +
 
       /* Make sure rec824824359 (bottom-row footer with socials, legal,
          "Become our partner", copyright) stays clickable. Tilda's t396 wraps
          each button text in <a class='tn-atom'> + <span class='tn-atom__button-border'></span>;
          the border span sometimes overlays the link and intercepts taps on
-         iOS. Force the link to occupy the full element area and the border
-         to be non-interactive. Min-height 44px = Apple HIG touch target. */
-      "#rec824824359 a.tn-atom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:44px !important;pointer-events:auto !important;z-index:2;padding:8px 4px}" +
+         iOS. Make the link fill its parent's natural box (NOT extend beyond
+         it — extending caused INSTAGRAM/LEGAL NOTICE to visually cover the
+         top half of FACEBOOK/TERMS-AND-CONDITIONS). Tap target is enlarged
+         via padding instead of min-height, so neighbour buttons don't
+         overlap. */
+      "#rec824824359 a.tn-atom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;width:100%;height:100%;pointer-events:auto !important;z-index:2}" +
       "#rec824824359 .tn-atom__button-border{pointer-events:none !important;z-index:1}" +
-      "#rec824824359 .t396__elem[data-elem-type='button']{min-height:44px !important}" +
 
       /* Hide the running marquee ticker on narrow phones — it competes with
          the lang pill + MENU button for height in the first 60px and looks
          cluttered. Keep it on tablet+ where there's more room. */
       "@media(max-width:520px){#rec1157755106{display:none !important}}" +
 
-      /* Custom CITF mobile menu — overrides Tilda's broken t1093 popup. */
-      ".citf-menu{position:fixed;inset:0;z-index:10000;background:rgba(10,10,10,0.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:none;flex-direction:column;padding:64px 28px 40px;font-family:'Syne',Arial,sans-serif}" +
-      "html[data-lang=ru] .citf-menu{font-family:'Unbounded','Syne',Arial,sans-serif}" +
-      ".citf-menu.open{display:flex}" +
-      ".citf-menu__close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:transparent;color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}" +
-      ".citf-menu__close:hover{border-color:#FFA806;color:#FFA806}" +
-      ".citf-menu nav{margin-top:12px;display:flex;flex-direction:column;gap:6px}" +
-      ".citf-menu nav a{display:block;padding:14px 4px;color:#eee;font-size:18px;font-weight:700;letter-spacing:0.04em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.08)}" +
-      ".citf-menu nav a:hover,.citf-menu nav a:active{color:#FFA806}" +
-      ".citf-menu__cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:24px;padding:18px 26px;border-radius:999px;background:#FFA806;color:#000;font-size:13px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;text-decoration:none}" +
-      ".citf-menu__socials{margin-top:auto;padding-top:24px;display:flex;gap:18px;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#888}" +
-      ".citf-menu__socials a{color:#888;text-decoration:none}" +
-      ".citf-menu__socials a:hover{color:#FFA806}" +
+      /* MOBILE MENU POPUP — make scrollable so 8 nav items + socials never
+         get cut off at viewport bottom. Tilda's t1093 popup container has
+         fixed height equal to viewport; rec841567060 artboard inside has its
+         own fixed pixel height. On phones with a tall menu, content overflows
+         beneath the viewport. Fix: enable vertical scroll on the popup
+         container, keep Tilda's absolute layout intact. */
+      "@media(max-width:640px){" +
+        ".t1093 .t-popup{overflow-y:auto !important;-webkit-overflow-scrolling:touch !important}" +
+        ".t1093 .t-popup__container{height:auto !important;min-height:100vh !important;padding-bottom:80px !important}" +
+        ".t1093 .t-popup #rec841567060{padding-bottom:40px !important}" +
+      "}" +
+
       "";
     document.head.appendChild(s);
   }
@@ -361,6 +361,7 @@
       '</span>';
     a.innerHTML = inner;
     document.body.appendChild(a);
+    document.body.classList.add('citf-has-buyfab');
     // Hide the FAB whenever an inline primary CTA is in the viewport — no
     // point in duplicating the same call-to-action twice on screen.
     var inlineCtas = document.querySelectorAll('.btn-primary, .hero-ctas .btn-primary, a[href*="soldoutticketbox"], a[href*="partnership.citf.cy/quiz"]');
@@ -414,67 +415,73 @@
     setTimeout(apply, 1500);
   }
 
-  // Build a clean custom mobile menu and override Tilda's broken t1093 popup.
-  // Tilda's popup-1.0.min.js sometimes shows an empty modal on our exported
-  // pages because the popup-rec-id source content isn't being cloned. We
-  // intercept the MENU click and show our own modal with the same links.
-  var CITF_NAV = [
-    { href: '/',                        en: 'Home',          ru: 'Главная',          gr: 'Αρχική' },
-    { href: '/2026/cassandre',          en: 'Cassandre',     ru: 'Кассандра',        gr: 'Κασσάνδρα' },
-    { href: '/2026/cocktail-with-fanny-ardant', en: 'Cocktail with Fanny Ardant', ru: 'Коктейль с Фанни Ардан', gr: 'Κοκτέιλ με Φανί Αρντάν' },
-    { href: '/the-festival-pass',       en: 'The Festival Pass', ru: 'Festival Pass', gr: 'Festival Pass' },
-    { href: '/about',                   en: 'About',         ru: 'О фестивале',      gr: 'Σχετικά' },
-    { href: 'https://partnership.citf.cy', en: 'Become a partner', ru: 'Стать партнёром', gr: 'Γίνετε συνεργάτης' }
-  ];
-  function buildCitfMenu() {
-    if (document.getElementById('citf-mobile-menu')) return;
-    var modal = document.createElement('div');
-    modal.id = 'citf-mobile-menu';
-    modal.className = 'citf-menu';
-    modal.setAttribute('role', 'dialog');
-    modal.setAttribute('aria-modal', 'true');
-    var navHtml = CITF_NAV.map(function (item) {
-      return '<a href="' + item.href + '">' +
-        '<span data-en>' + item.en + '</span>' +
-        '<span data-ru>' + item.ru + '</span>' +
-        '<span data-gr>' + item.gr + '</span>' +
-        '</a>';
-    }).join('');
-    modal.innerHTML =
-      '<button type="button" class="citf-menu__close" aria-label="Close">×</button>' +
-      '<nav>' + navHtml + '</nav>' +
-      '<div class="citf-menu__socials">' +
-        '<a href="https://instagram.com/citf.cy" target="_blank" rel="noopener">Instagram</a>' +
-        '<a href="https://facebook.com/citf.cy" target="_blank" rel="noopener">Facebook</a>' +
-        '<a href="https://youtube.com/@citf.cy" target="_blank" rel="noopener">YouTube</a>' +
-      '</div>';
-    document.body.appendChild(modal);
-    modal.querySelector('.citf-menu__close').addEventListener('click', closeCitfMenu);
-    modal.addEventListener('click', function (ev) {
-      if (ev.target === modal) closeCitfMenu();
-    });
-  }
-  function openCitfMenu() {
-    buildCitfMenu();
-    var m = document.getElementById('citf-mobile-menu');
-    if (m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  }
-  function closeCitfMenu() {
-    var m = document.getElementById('citf-mobile-menu');
-    if (m) { m.classList.remove('open'); document.body.style.overflow = ''; }
-  }
-  function bindMenuButton() {
+  // Mobile menu fallback — Tilda's t1093 popup script sometimes doesn't bind
+  // click handlers properly on our injected chrome (load-order race condition).
+  // We capture the click on <a href="#mobilemenu"> ourselves and manually call
+  // Tilda's t_popup__showPopup API on the matching popup element.
+  function bindMobileMenuFallback() {
     document.addEventListener('click', function (ev) {
       var a = ev.target.closest('a[href="#mobilemenu"]');
       if (!a) return;
+      var popup = document.querySelector('.t-popup[data-tooltip-hook="#mobilemenu"]');
+      if (!popup) return;
       ev.preventDefault();
       ev.stopPropagation();
-      openCitfMenu();
-    }, true);
-    // ESC closes
+      // Try Tilda's public API first
+      if (typeof window.t_popup__showPopup === 'function') {
+        try { window.t_popup__showPopup(popup); return; } catch (e) {}
+      }
+      // CSS-class fallback (works without Tilda script)
+      popup.classList.add('t-popup_show');
+      popup.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      // Bind close on bg click + close button
+      var bg = popup.querySelector('.t-popup__bg');
+      var closeBtn = popup.querySelector('.t-popup__close, .t-popup__close-wrapper');
+      function close() {
+        popup.classList.remove('t-popup_show');
+        popup.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+      if (bg && !bg.__citfBound) { bg.__citfBound = true; bg.addEventListener('click', close); }
+      if (closeBtn && !closeBtn.__citfBound) { closeBtn.__citfBound = true; closeBtn.addEventListener('click', close); }
+    }, true); // capture phase to fire before Tilda
+    // ESC key closes
     document.addEventListener('keydown', function (ev) {
-      if (ev.key === 'Escape') closeCitfMenu();
+      if (ev.key !== 'Escape') return;
+      var popup = document.querySelector('.t-popup[data-tooltip-hook="#mobilemenu"]');
+      if (popup && popup.classList.contains('t-popup_show')) {
+        popup.classList.remove('t-popup_show');
+        popup.style.display = 'none';
+        document.body.style.overflow = '';
+      }
     });
+  }
+
+  // Make the CITF monogram logo clickable to navigate to "/" (home). The Tilda
+  // export wraps the logo in a div without a real <a>; tapping it does nothing.
+  function bindLogoToHome() {
+    function apply() {
+      var slots = document.querySelectorAll(
+        "#rec853550221 .tn-elem[data-elem-id='1730978182370']"
+      );
+      slots.forEach(function (slot) {
+        if (slot.__citfLogoBound) return;
+        slot.__citfLogoBound = true;
+        slot.style.cursor = 'pointer';
+        slot.addEventListener('click', function (ev) {
+          // Don't hijack the click if it landed on a real <a> already
+          var hit = ev.target.closest('a[href]');
+          if (hit && hit !== slot) return;
+          ev.preventDefault();
+          ev.stopPropagation();
+          location.href = '/';
+        }, true);
+      });
+    }
+    apply();
+    setTimeout(apply, 600);
+    setTimeout(apply, 1500);
   }
 
   // Hard-bind the Tilda footer-row "Become our partner" link, which on iOS
@@ -774,7 +781,8 @@
     injectPartnersBlock();
     swapMobileLogo();
     bindFooterButtons();
-    bindMenuButton();
+    bindLogoToHome();
+    bindMobileMenuFallback();
     attachLangSwitcherToNav();
     injectAnalytics();
     addUtmToCtas();
