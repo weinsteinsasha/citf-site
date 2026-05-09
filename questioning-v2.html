@@ -589,6 +589,15 @@
 </section>
 
 <!-- TESTIMONIALS VIDEO -->
+<style>
+  .yt-lite{position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111;cursor:pointer}
+  .yt-lite img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity 0.2s}
+  .yt-lite:hover img{opacity:0.85}
+  .yt-lite .yt-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;background:rgba(0,0,0,0.72);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+  .yt-lite:hover .yt-play{background:#FFA806}
+  .yt-lite .yt-play svg{width:28px;height:28px;fill:#fff;margin-left:4px}
+  .yt-lite iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+</style>
 <section class="wrap" style="padding-top:80px;padding-bottom:80px">
   <span class="section-kicker" data-en>Voices from the show</span>
   <span class="section-kicker" data-ru>Голоса после спектакля</span>
@@ -599,46 +608,39 @@
 
   <!-- EN testimonials -->
   <div data-en style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px">
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/_Hzvv5AWtag?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/tT1cX_UOjkw?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/5Ioc2oHgA88?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
+    <div class="yt-lite" data-ytid="_Hzvv5AWtag"><img src="https://img.youtube.com/vi/_Hzvv5AWtag/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="tT1cX_UOjkw"><img src="https://img.youtube.com/vi/tT1cX_UOjkw/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="5Ioc2oHgA88"><img src="https://img.youtube.com/vi/5Ioc2oHgA88/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
   </div>
 
   <!-- RU testimonials -->
   <div data-ru style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px">
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/gp-jnd0V56w?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/0pvEshLVT0s?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/wmuQB3m7nyg?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/HyKyEG1x0x0?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
+    <div class="yt-lite" data-ytid="gp-jnd0V56w"><img src="https://img.youtube.com/vi/gp-jnd0V56w/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="0pvEshLVT0s"><img src="https://img.youtube.com/vi/0pvEshLVT0s/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="wmuQB3m7nyg"><img src="https://img.youtube.com/vi/wmuQB3m7nyg/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="HyKyEG1x0x0"><img src="https://img.youtube.com/vi/HyKyEG1x0x0/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
   </div>
 
   <!-- GR testimonials (same EN set) -->
   <div data-gr style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:32px">
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/_Hzvv5AWtag?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/tT1cX_UOjkw?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
-    <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;border-radius:12px;background:#111">
-      <iframe src="https://www.youtube-nocookie.com/embed/5Ioc2oHgA88?rel=0&modestbranding=1" style="position:absolute;top:0;left:0;width:100%;height:100%" frameborder="0" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    </div>
+    <div class="yt-lite" data-ytid="_Hzvv5AWtag"><img src="https://img.youtube.com/vi/_Hzvv5AWtag/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="tT1cX_UOjkw"><img src="https://img.youtube.com/vi/tT1cX_UOjkw/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+    <div class="yt-lite" data-ytid="5Ioc2oHgA88"><img src="https://img.youtube.com/vi/5Ioc2oHgA88/maxresdefault.jpg" alt="" loading="lazy"><div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
   </div>
 </section>
+<script>
+  document.querySelectorAll('.yt-lite').forEach(function(el){
+    el.addEventListener('click',function(){
+      var id=el.getAttribute('data-ytid');
+      var iframe=document.createElement('iframe');
+      iframe.src='https://www.youtube-nocookie.com/embed/'+id+'?rel=0&autoplay=1';
+      iframe.allow='accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture';
+      iframe.allowFullscreen=true;
+      el.innerHTML='';
+      el.appendChild(iframe);
+    });
+  });
+</script>
 
 <!-- PHOTO ACCENT 2 -->
 <div class="photo-accent">
