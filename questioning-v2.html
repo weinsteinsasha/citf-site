@@ -324,9 +324,7 @@
     .hero-meta > div{min-width:45%}
   }
 
-  /* Lang pill: bypass chrome.js JS-positioning entirely — keep it fixed */
-  .citf-navlangs{position:fixed !important;top:20px !important;right:20px !important;left:auto !important}
-  @media(max-width:640px){.citf-navlangs{top:16px !important;right:80px !important}}
+
 </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -796,5 +794,124 @@
 
 <div id="citf-footer-mount"></div>
 <script src="/components/chrome.js" defer></script>
+
+<!-- ======================================================
+     TICKET TAILOR POPUP WIDGET
+     TT widget.js reads its own <script> tag's data-url
+     and renders an iframe next to itself.
+     ====================================================== -->
+<style>
+#tt-modal{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(10,10,10,0.88);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  overflow-y:auto;padding:60px 20px 40px;box-sizing:border-box;
+  align-items:flex-start;justify-content:center;
+}
+#tt-modal.open{display:flex}
+#tt-modal-box{
+  position:relative;width:100%;max-width:660px;
+  background:#fff;border-radius:18px;overflow:hidden;min-height:180px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.5);
+}
+#tt-modal-close{
+  position:absolute;top:12px;right:12px;z-index:3;
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:rgba(0,0,0,0.08);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,transform .15s;
+}
+#tt-modal-close:hover{background:rgba(0,0,0,0.18);transform:scale(1.05)}
+#tt-modal-close svg{width:16px;height:16px;stroke:#333;stroke-width:2.5;fill:none}
+#tt-widget-wrap{min-height:180px}
+/* TT widget renders an iframe — let it fill the box */
+#tt-widget-wrap iframe{display:block;width:100%}
+/* Loading spinner shown until TT iframe appears */
+#tt-spinner{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;padding:60px 20px;color:#888;font-family:sans-serif;font-size:13px;letter-spacing:.04em;
+}
+#tt-spinner::before{
+  content:'';width:30px;height:30px;
+  border:3px solid #eee;border-top-color:#FFA806;
+  border-radius:50%;animation:tt-spin .8s linear infinite;
+}
+@keyframes tt-spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+  #tt-modal{padding:30px 8px 30px}
+  #tt-modal-box{border-radius:12px}
+}
+</style>
+
+<div id="tt-modal" role="dialog" aria-modal="true" aria-label="Buy Tickets">
+  <div id="tt-modal-box">
+    <button id="tt-modal-close" aria-label="Close">
+      <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div id="tt-widget-wrap">
+      <div id="tt-spinner">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var modal    = document.getElementById('tt-modal');
+  var closeBtn = document.getElementById('tt-modal-close');
+  var wrap     = document.getElementById('tt-widget-wrap');
+  var spinner  = document.getElementById('tt-spinner');
+  var loaded   = false;
+  var TT_URL   = 'https://www.tickettailor.com/events/cyprusinternationaltheatrefestival/2128089';
+
+  function openModal(){
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    if(!loaded){
+      loaded = true;
+      /* TT widget pattern: the <script src="widget.js" class="tt-widget" data-url="...">
+         element IS the widget — widget.js reads its own script tag's attributes
+         and renders an iframe immediately after itself. */
+      var s = document.createElement('script');
+      s.src = 'https://cdn.tickettailor.com/js/widgets/min/widget.js';
+      s.className = 'tt-widget';
+      s.setAttribute('data-url', TT_URL);
+      s.setAttribute('data-orgs', 'cyprusinternationaltheatrefestival');
+      s.setAttribute('data-css', '1');
+      s.setAttribute('data-lang', document.documentElement.lang || 'en');
+      wrap.appendChild(s);
+
+      /* Hide spinner once TT iframe appears (MutationObserver) */
+      var obs = new MutationObserver(function(){
+        if(wrap.querySelector('iframe')){
+          spinner.style.display = 'none';
+          obs.disconnect();
+        }
+      });
+      obs.observe(wrap, {childList:true, subtree:true});
+      /* Fallback: hide spinner after 5s regardless */
+      setTimeout(function(){ spinner.style.display = 'none'; }, 5000);
+    }
+  }
+
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+  /* Intercept ALL links pointing to tickets.citf.cy or tickettailor.com */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a');
+    if(a && a.href && (a.href.indexOf('tickets.citf.cy') > -1 || a.href.indexOf('tickettailor.com') > -1)){
+      e.preventDefault();
+      openModal();
+    }
+  }, true);
+})();
+</script>
 </body>
 </html>
