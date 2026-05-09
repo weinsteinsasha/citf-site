@@ -323,6 +323,10 @@
     .practical-grid{grid-template-columns:1fr}
     .hero-meta > div{min-width:45%}
   }
+
+  /* Lang pill: bypass chrome.js JS-positioning entirely — keep it fixed */
+  .citf-navlangs{position:fixed !important;top:20px !important;right:20px !important;left:auto !important}
+  @media(max-width:640px){.citf-navlangs{top:16px !important;right:80px !important}}
 </style>
   <script defer src="/_vercel/insights/script.js"></script>
 </head>
