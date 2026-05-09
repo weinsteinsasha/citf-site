@@ -336,15 +336,7 @@
     },
     {
       "source": "/2026/questioning-magic-garden",
-      "destination": "/page102399276.html"
-    },
-    {
-      "source": "/2026/questioning-magic-garden-ru",
-      "destination": "/page115788416.html"
-    },
-    {
-      "source": "/2026/questioning-magic-garden-gr",
-      "destination": "/page115795426.html"
+      "destination": "/questioning-v2.html"
     },
     {
       "source": "/2026/questioning-for-companies",
@@ -408,6 +400,16 @@
     }
   ],
   "redirects": [
+    {
+      "source": "/2026/questioning-magic-garden-ru",
+      "destination": "/2026/questioning-magic-garden?lang=ru",
+      "permanent": true
+    },
+    {
+      "source": "/2026/questioning-magic-garden-gr",
+      "destination": "/2026/questioning-magic-garden?lang=gr",
+      "permanent": true
+    },
     {
       "source": "/2026/cassandre-fanny-ardant-ru",
       "destination": "/2026/cassandre-fanny-ardant?lang=ru",
