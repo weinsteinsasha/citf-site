@@ -797,8 +797,8 @@
 
 <!-- ======================================================
      TICKET TAILOR POPUP WIDGET
-     TT widget.js reads its own <script> tag's data-url
-     and renders an iframe next to itself.
+     Loads the TT native checkout widget (general event page)
+     which shows the native Date → Tickets → Details → Review flow.
      ====================================================== -->
 <style>
 #tt-modal{
@@ -814,7 +814,6 @@
   background:#fff;border-radius:18px;overflow:visible;min-height:180px;
   box-shadow:0 24px 80px rgba(0,0,0,0.5);
 }
-/* inner clip keeps border-radius visible without cutting iframe height */
 #tt-widget-wrap{
   min-height:180px;border-radius:18px;overflow:hidden;
 }
@@ -827,8 +826,7 @@
 }
 #tt-modal-close:hover{background:#f0f0f0;transform:scale(1.05)}
 #tt-modal-close svg{width:16px;height:16px;stroke:#333;stroke-width:2.5;fill:none}
-/* TT widget renders an iframe — let it fill the box and auto-resize */
-#tt-widget-wrap iframe{display:block;width:100%;min-height:400px}
+#tt-widget-wrap iframe{display:block;width:100%;min-height:500px}
 /* Loading spinner shown until TT iframe appears */
 #tt-spinner{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -852,127 +850,43 @@
       <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
     </button>
 
-    <!-- Step 1: session picker -->
-    <div id="tt-session-pick">
-      <div id="tt-session-head">
-        <div id="tt-session-title" data-en>Choose your session — 6 June 2026</div>
-        <div id="tt-session-title" data-ru>Выберите сеанс — 6 июня 2026</div>
-        <div id="tt-session-title" data-gr>Επιλέξτε συνεδρία — 6 Ιουνίου 2026</div>
-        <div id="tt-session-venue">Cyprus Theatre Museum · Limassol</div>
-      </div>
-      <div id="tt-session-list">
-        <button class="tt-session-btn" data-url="https://www.tickettailor.com/checkout/view-event/id/8236384/chk/4f2c/">
-          <span class="tt-s-time">13:00</span>
-          <span class="tt-s-lang" data-en>English</span><span class="tt-s-lang" data-ru>Английский</span><span class="tt-s-lang" data-gr>Αγγλικά</span>
-          <span class="tt-s-arrow">→</span>
-        </button>
-        <button class="tt-session-btn" data-url="https://www.tickettailor.com/checkout/view-event/id/8236385/chk/59d6/">
-          <span class="tt-s-time">16:00</span>
-          <span class="tt-s-lang" data-en>Russian</span><span class="tt-s-lang" data-ru>Русский</span><span class="tt-s-lang" data-gr>Ρωσικά</span>
-          <span class="tt-s-arrow">→</span>
-        </button>
-        <button class="tt-session-btn" data-url="https://www.tickettailor.com/checkout/view-event/id/8236386/chk/8046/">
-          <span class="tt-s-time">19:00</span>
-          <span class="tt-s-lang" data-en>Russian</span><span class="tt-s-lang" data-ru>Русский</span><span class="tt-s-lang" data-gr>Ρωσικά</span>
-          <span class="tt-s-arrow">→</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Step 2: TT checkout widget -->
-    <div id="tt-widget-wrap" style="display:none">
-      <button id="tt-back-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        <span data-en>Back</span><span data-ru>Назад</span><span data-gr>Πίσω</span>
-      </button>
+    <div id="tt-widget-wrap">
       <div id="tt-spinner">Loading…</div>
     </div>
   </div>
 </div>
 
-<style>
-#tt-session-pick{padding:32px 28px 28px}
-#tt-session-head{margin-bottom:24px}
-#tt-session-title{font-family:var(--font-en);font-size:18px;font-weight:700;color:#111;margin-bottom:6px}
-[data-lang="ru"] #tt-session-title{font-family:var(--font-ru)}
-#tt-session-venue{font-size:13px;color:#888;letter-spacing:.03em}
-#tt-session-list{display:flex;flex-direction:column;gap:10px}
-.tt-session-btn{
-  display:flex;align-items:center;gap:14px;
-  width:100%;padding:16px 20px;
-  background:#f7f7f7;border:1.5px solid #eee;border-radius:12px;
-  cursor:pointer;text-align:left;transition:border-color .15s,background .15s;
-}
-.tt-session-btn:hover{background:#fff7e6;border-color:#FFA806}
-.tt-s-time{font-size:22px;font-weight:800;color:#111;font-family:var(--font-en);min-width:60px}
-.tt-s-lang{font-size:14px;color:#555;flex:1}
-.tt-s-arrow{font-size:18px;color:#FFA806;font-weight:700}
-#tt-back-btn{
-  display:flex;align-items:center;gap:8px;
-  background:none;border:0;cursor:pointer;
-  padding:14px 20px;font-size:13px;color:#555;
-  border-bottom:1px solid #eee;width:100%;
-  transition:color .15s;
-}
-#tt-back-btn:hover{color:#111}
-#tt-back-btn svg{width:16px;height:16px}
-@media(max-width:640px){
-  #tt-session-pick{padding:24px 18px 20px}
-  .tt-s-time{font-size:18px}
-}
-</style>
-
 <script>
 (function(){
-  var modal     = document.getElementById('tt-modal');
-  var closeBtn  = document.getElementById('tt-modal-close');
-  var picker    = document.getElementById('tt-session-pick');
-  var wrap      = document.getElementById('tt-widget-wrap');
-  var spinner   = document.getElementById('tt-spinner');
-  var backBtn   = document.getElementById('tt-back-btn');
-  var widgetLoaded = false;
+  var modal    = document.getElementById('tt-modal');
+  var closeBtn = document.getElementById('tt-modal-close');
+  var wrap     = document.getElementById('tt-widget-wrap');
+  var spinner  = document.getElementById('tt-spinner');
+  var loaded   = false;
 
   function openModal(){
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    showPicker();
-  }
-
-  function showPicker(){
-    picker.style.display = '';
-    wrap.style.display = 'none';
-  }
-
-  function loadSession(url){
-    picker.style.display = 'none';
-    wrap.style.display = '';
-    spinner.style.display = '';
-
-    /* Remove any previous widget */
-    var old = wrap.querySelector('div.tt-widget');
-    if(old) old.remove();
-    widgetLoaded = false;
-
-    /* Inject TT widget for this specific session checkout */
-    var container = document.createElement('div');
-    container.className = 'tt-widget';
-    var s = document.createElement('script');
-    s.src = 'https://cdn.tickettailor.com/js/widgets/min/widget.js';
-    s.setAttribute('data-url', url);
-    s.setAttribute('data-orgs', 'cyprusinternationaltheatrefestival');
-    s.setAttribute('data-css', '1');
-    container.appendChild(s);
-    wrap.appendChild(container);
-
-    /* Hide spinner when iframe appears */
-    var obs = new MutationObserver(function(){
-      if(wrap.querySelector('iframe')){
-        spinner.style.display = 'none';
-        obs.disconnect();
-      }
-    });
-    obs.observe(wrap, {childList:true, subtree:true});
-    setTimeout(function(){ spinner.style.display = 'none'; }, 6000);
+    if(!loaded){
+      loaded = true;
+      var container = document.createElement('div');
+      container.className = 'tt-widget';
+      var s = document.createElement('script');
+      s.src = 'https://cdn.tickettailor.com/js/widgets/min/widget.js';
+      s.setAttribute('data-url', 'https://www.tickettailor.com/events/cyprusinternationaltheatrefestival/2128089');
+      s.setAttribute('data-orgs', 'cyprusinternationaltheatrefestival');
+      s.setAttribute('data-css', '1');
+      container.appendChild(s);
+      wrap.appendChild(container);
+      var obs = new MutationObserver(function(){
+        if(wrap.querySelector('iframe')){
+          spinner.style.display = 'none';
+          obs.disconnect();
+        }
+      });
+      obs.observe(wrap, {childList:true, subtree:true});
+      setTimeout(function(){ spinner.style.display = 'none'; }, 8000);
+    }
   }
 
   function closeModal(){
@@ -980,19 +894,11 @@
     document.body.style.overflow = '';
   }
 
-  /* Session buttons */
-  document.querySelectorAll('.tt-session-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      loadSession(btn.getAttribute('data-url'));
-    });
-  });
-
-  backBtn.addEventListener('click', showPicker);
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
 
-  /* Intercept ALL ticket links */
+  /* Intercept ALL ticket links and Buy Tickets buttons */
   document.addEventListener('click', function(e){
     var a = e.target.closest('a');
     if(a && a.href && (a.href.indexOf('tickets.citf.cy') > -1 || a.href.indexOf('tickettailor.com') > -1)){
