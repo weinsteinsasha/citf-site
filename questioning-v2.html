@@ -869,17 +869,17 @@
 
     if(!loaded){
       loaded = true;
-      /* TT widget pattern: the <script src="widget.js" class="tt-widget" data-url="...">
-         element IS the widget — widget.js reads its own script tag's attributes
-         and renders an iframe immediately after itself. */
+      /* TT widget.js init() checks: element.parentNode.className === 'tt-widget'
+         So the <script src="widget.js"> must be INSIDE a <div class="tt-widget"> */
+      var container = document.createElement('div');
+      container.className = 'tt-widget';
       var s = document.createElement('script');
       s.src = 'https://cdn.tickettailor.com/js/widgets/min/widget.js';
-      s.className = 'tt-widget';
       s.setAttribute('data-url', TT_URL);
       s.setAttribute('data-orgs', 'cyprusinternationaltheatrefestival');
       s.setAttribute('data-css', '1');
-      s.setAttribute('data-lang', document.documentElement.lang || 'en');
-      wrap.appendChild(s);
+      container.appendChild(s);
+      wrap.appendChild(container);
 
       /* Hide spinner once TT iframe appears (MutationObserver) */
       var obs = new MutationObserver(function(){
