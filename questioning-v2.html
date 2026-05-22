@@ -334,6 +334,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </style>
   <script defer src="/_vercel/insights/script.js"></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2139857233252014');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2139857233252014&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->
@@ -805,5 +818,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="citf-footer-mount"></div>
 <script src="/components/chrome.js" defer></script>
+<!-- UTM passthrough + Buy click tracking -->
+<script>
+(function(){
+  // Capture UTM / click-id params from incoming URL
+  var params = new URLSearchParams(window.location.search);
+  var tracking = {};
+  ['utm_source','utm_medium','utm_campaign','utm_content','utm_term',
+   'fbclid','gclid','msclkid','ttclid','wbraid','gbraid'].forEach(function(k){
+    var v = params.get(k); if (v) tracking[k] = v;
+  });
+
+  // Persist to sessionStorage so navigation within site keeps attribution
+  try {
+    if (Object.keys(tracking).length) {
+      sessionStorage.setItem('citf_attribution', JSON.stringify(tracking));
+    } else {
+      var stored = sessionStorage.getItem('citf_attribution');
+      if (stored) tracking = JSON.parse(stored);
+    }
+  } catch(e) {}
+
+  // Append attribution params to every Ticket Tailor link + fire checkout events
+  function decorate() {
+    document.querySelectorAll('a[href*="tickets.citf.cy"]').forEach(function(a){
+      if (a.dataset.citfDecorated) return;
+      a.dataset.citfDecorated = '1';
+      try {
+        var u = new URL(a.href, window.location.origin);
+        Object.keys(tracking).forEach(function(k){
+          if (!u.searchParams.has(k)) u.searchParams.set(k, tracking[k]);
+        });
+        a.href = u.toString();
+      } catch(e) {}
+      a.addEventListener('click', function(){
+        if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'begin_checkout', {
+            source: tracking.utm_source || 'direct',
+            medium: tracking.utm_medium || '',
+            campaign: tracking.utm_campaign || ''
+          });
+        }
+      });
+    });
+  }
+  if (document.readyState !== 'loading') decorate();
+  else document.addEventListener('DOMContentLoaded', decorate);
+  // Re-decorate when async components mount their TT links
+  setTimeout(decorate, 1500);
+  setTimeout(decorate, 4000);
+})();
+</script>
 </body>
 </html>
