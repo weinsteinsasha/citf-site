@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WZR9KC5B');</script>
+<!-- End Google Tag Manager -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Thank you for your purchase · WHO ARE YOU? · CITF</title>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18149335096"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VKWVTMEHD4');
+  gtag('config', 'AW-18149335096');
+
+  // --- Parse TT redirect params: ?order=XXX&value=YYY&currency=EUR&utm_source=...
+  var p = new URLSearchParams(window.location.search);
+  var orderId = p.get('order') || p.get('order_id') || p.get('reference') || '';
+  var rawValue = p.get('value') || p.get('total') || p.get('amount') || '0';
+  var value = parseFloat(rawValue) || 0;
+  var currency = (p.get('currency') || 'EUR').toUpperCase();
+
+  // Restore attribution from sessionStorage (set on landing page)
+  var attribution = {};
+  try {
+    var stored = sessionStorage.getItem('citf_attribution');
+    if (stored) attribution = JSON.parse(stored);
+  } catch(e) {}
+
+  // --- Google Ads PURCHASE conversion (with real value)
+  gtag('event', 'conversion', {
+    send_to: 'AW-18149335096/W3SLCMHBvrEcELjAo85D',
+    value: value,
+    currency: currency,
+    transaction_id: orderId
+  });
+
+  // --- GA4 purchase event
+  gtag('event', 'purchase', {
+    transaction_id: orderId,
+    value: value,
+    currency: currency,
+    source: attribution.utm_source || 'direct',
+    medium: attribution.utm_medium || '',
+    campaign: attribution.utm_campaign || ''
+  });
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2139857233252014');
+fbq('track', 'PageView');
+// Fire Purchase pixel event with dynamic value (server-side CAPI also fires
+// via TT webhook → /opt/capi-bridge → Meta; double-firing is deduped by event_id)
+fbq('track', 'Purchase', {
+  value: parseFloat(new URLSearchParams(window.location.search).get('value')||0),
+  currency: (new URLSearchParams(window.location.search).get('currency')||'EUR').toUpperCase(),
+  content_ids: [new URLSearchParams(window.location.search).get('order')||''],
+  content_type: 'product'
+});
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2139857233252014&ev=Purchase&noscript=1"/></noscript>
+
+<style>
+:root {
+  --bg: #181818;
+  --fg: #EEEEEE;
+  --accent: #FFA806;
+  --muted: #737373;
+}
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.box {
+  max-width: 560px;
+  text-align: center;
+}
+.tick {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44px;
+  font-weight: 700;
+}
+h1 {
+  font-size: 32px;
+  margin: 0 0 16px;
+  font-weight: 700;
+}
+p { margin: 0 0 16px; color: #ccc; line-height: 1.6; }
+.order {
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: #222;
+  border-radius: 12px;
+  font-size: 14px;
+}
+.order strong { color: var(--accent); }
+.cta {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 14px 28px;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 11px;
+}
+.cta:hover { filter: brightness(1.1); }
+.muted { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WZR9KC5B"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<main class="box">
+  <div class="tick" aria-hidden="true">✓</div>
+  <h1>Thank you for your purchase!</h1>
+  <p>See you on <strong>6 June 2026</strong> at the Cyprus Theatre Museum, Limassol.</p>
+  <p class="muted">A confirmation email with your tickets has been sent to you.</p>
+
+  <div class="order" id="orderBox" style="display:none">
+    Order: <strong id="orderRef"></strong><br>
+    Total: <strong id="orderTotal"></strong>
+  </div>
+
+  <a href="/2026/questioning-magic-garden" class="cta">Back to event page</a>
+  <p class="muted" style="margin-top:32px">
+    Questions? Email <a href="mailto:info@citf.cy" style="color:var(--accent)">info@citf.cy</a>
+  </p>
+</main>
+
+<script>
+  (function(){
+    var p = new URLSearchParams(window.location.search);
+    var orderId = p.get('order') || p.get('order_id') || p.get('reference') || '';
+    var value = parseFloat(p.get('value') || p.get('total') || p.get('amount') || '0') || 0;
+    var currency = (p.get('currency') || 'EUR').toUpperCase();
+    if (orderId || value) {
+      document.getElementById('orderBox').style.display = 'block';
+      document.getElementById('orderRef').textContent = orderId || '—';
+      document.getElementById('orderTotal').textContent = value
+        ? value.toFixed(2) + ' ' + currency
+        : '—';
+    }
+  })();
+</script>
+</body>
+</html>

@@ -23,13 +23,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta name="twitter:title" content="WHO ARE YOU? QUESTIONING · 6 June 2026">
 <meta name="twitter:description" content="Immersive theatre by Magic Garden · Cyprus Theatre Museum, Limassol · 3 sessions">
 <meta name="twitter:image" content="https://citf.cy/images/tild3135-6136-4863-a638-623966633237__questioning_og.jpg">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VKWVTMEHD4"></script>
+<!-- Google tag (gtag.js) — GA + Google Ads conversion tracking -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-18149335096"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-VKWVTMEHD4');
+  gtag('config', 'AW-18149335096');
 </script>
 <script type="application/ld+json">
 [
@@ -858,6 +859,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             source: tracking.utm_source || 'direct',
             medium: tracking.utm_medium || '',
             campaign: tracking.utm_campaign || ''
+          });
+          // Google Ads conversion (counts InitiateCheckout as micro-conversion
+          // until actual Purchase fires on /thank-you with real value).
+          // Comment this out once thank-you redirect is wired up from Ticket Tailor.
+          gtag('event', 'conversion', {
+            send_to: 'AW-18149335096/W3SLCMHBvrEcELjAo85D',
+            value: 30.0,
+            currency: 'EUR'
           });
         }
       });

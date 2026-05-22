@@ -3,6 +3,18 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/thank-you",
+      "destination": "/thank-you.html"
+    },
+    {
+      "source": "/sasha",
+      "destination": "/sasha.html"
+    },
+    {
+      "source": "/sasha/en",
+      "destination": "/sasha-en.html"
+    },
+    {
       "source": "/",
       "destination": "/page121413356.html"
     },
