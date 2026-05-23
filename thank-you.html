@@ -65,13 +65,23 @@ document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '2139857233252014');
 fbq('track', 'PageView');
 // Fire Purchase pixel event with dynamic value (server-side CAPI also fires
-// via TT webhook → /opt/capi-bridge → Meta; double-firing is deduped by event_id)
-fbq('track', 'Purchase', {
-  value: parseFloat(new URLSearchParams(window.location.search).get('value')||0),
-  currency: (new URLSearchParams(window.location.search).get('currency')||'EUR').toUpperCase(),
-  content_ids: [new URLSearchParams(window.location.search).get('order')||''],
-  content_type: 'product'
-});
+// via TT webhook → /opt/capi-bridge → Meta; double-firing is deduped by event_id).
+// The eventID MUST match the CAPI bridge format: tt_{order_id}_purchase
+(function(){
+  var qp = new URLSearchParams(window.location.search);
+  var orderRaw = (qp.get('order') || qp.get('order_id') || qp.get('reference') || '').trim();
+  var valueRaw = qp.get('value') || qp.get('total') || qp.get('amount') || '0';
+  var value = parseFloat(valueRaw) || 0;
+  var currency = (qp.get('currency') || 'EUR').toUpperCase();
+  var eid = orderRaw ? ('tt_' + orderRaw + '_purchase') : ('thank_' + Date.now());
+
+  fbq('track', 'Purchase', {
+    value: value,
+    currency: currency,
+    content_ids: [orderRaw || '2128089'],
+    content_type: 'product'
+  }, {eventID: eid});
+})();
 </script>
 <noscript><img height="1" width="1" style="display:none"
 src="https://www.facebook.com/tr?id=2139857233252014&ev=Purchase&noscript=1"/></noscript>
