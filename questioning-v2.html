@@ -819,7 +819,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div id="citf-footer-mount"></div>
 <script src="/components/chrome.js" defer></script>
-<!-- UTM passthrough + Buy click tracking -->
+<!-- UTM passthrough + Buy click tracking (v2 — adds event_id for CAPI dedup, fbp/fbc cookies, ttclid pass-through) -->
 <script>
 (function(){
   // Capture UTM / click-id params from incoming URL
@@ -840,6 +840,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
   } catch(e) {}
 
+  // Helper to generate a unique event_id (UUID-ish) so the pixel InitiateCheckout
+  // can be deduplicated against any future CAPI InitiateCheckout we send.
+  function genEventId() {
+    return 'ic_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+  }
+
   // Append attribution params to every Ticket Tailor link + fire checkout events
   function decorate() {
     document.querySelectorAll('a[href*="tickets.citf.cy"]').forEach(function(a){
@@ -853,7 +859,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         a.href = u.toString();
       } catch(e) {}
       a.addEventListener('click', function(){
-        if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+        var eid = genEventId();
+        if (typeof fbq !== 'undefined') {
+          // Pass eventID so dedup works if/when we also send InitiateCheckout via CAPI
+          fbq('track', 'InitiateCheckout', {
+            content_type: 'product',
+            content_ids: ['2128089'],
+            currency: 'EUR'
+          }, {eventID: eid});
+        }
         if (typeof gtag !== 'undefined') {
           gtag('event', 'begin_checkout', {
             source: tracking.utm_source || 'direct',
