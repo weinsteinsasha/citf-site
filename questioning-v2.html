@@ -423,7 +423,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener">
+        <a class="btn btn-primary" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="hero_primary">
           <span data-en>Buy Ticket</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
         </a>
         <a class="btn btn-ghost" href="#story">
@@ -776,7 +776,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="practical-cell highlight">
       <div class="practical-label" data-en>Tickets</div><div class="practical-label" data-ru>Билеты</div><div class="practical-label" data-gr>Εισιτήρια</div>
-      <div class="practical-val"><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-en>Book your session →</a><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-ru>Выбрать сеанс →</a><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-gr>Κλείστε θέση →</a></div>
+      <div class="practical-val"><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-cta="practical_inline" data-en>Book your session →</a><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-cta="practical_inline" data-ru>Выбрать сеанс →</a><a href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" data-cta="practical_inline" data-gr>Κλείστε θέση →</a></div>
     </div>
   </div>
 </section>
@@ -791,7 +791,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p data-ru>13:00 английский · 16:00 русский · 19:00 русский<br>Музей театра Кипра, Лимассол</p>
   <p data-gr>13:00 Αγγλικά · 16:00 Ρωσικά · 19:00 Ρωσικά<br>Μουσείο Θεάτρου Κύπρου, Λεμεσός</p>
 
-  <a class="btn" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener">
+  <a class="btn" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="footer_final">
     <span data-en>Buy Ticket</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
   </a>
 
@@ -860,6 +860,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       } catch(e) {}
       a.addEventListener('click', function(){
         var eid = genEventId();
+        var ctaLabel = a.dataset.cta || 'unknown';
         if (typeof fbq !== 'undefined') {
           // Pass eventID so dedup works if/when we also send InitiateCheckout via CAPI
           fbq('track', 'InitiateCheckout', {
@@ -869,10 +870,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           }, {eventID: eid});
         }
         if (typeof gtag !== 'undefined') {
+          // Per-button click event (which CTA was clicked)
+          gtag('event', 'cta_click', {
+            cta_label: ctaLabel,
+            cta_destination: 'ticket_tailor',
+            source: tracking.utm_source || 'direct',
+            campaign: tracking.utm_campaign || ''
+          });
           gtag('event', 'begin_checkout', {
             source: tracking.utm_source || 'direct',
             medium: tracking.utm_medium || '',
-            campaign: tracking.utm_campaign || ''
+            campaign: tracking.utm_campaign || '',
+            cta_label: ctaLabel
           });
           // Google Ads conversion (counts InitiateCheckout as micro-conversion
           // until actual Purchase fires on /thank-you with real value).
@@ -883,6 +892,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             currency: 'EUR'
           });
         }
+        // Microsoft Clarity custom event (no-op if Clarity not loaded yet)
+        if (typeof clarity !== 'undefined') {
+          clarity('event', 'buy_click_' + ctaLabel);
+        }
       });
     });
   }
@@ -891,6 +904,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Re-decorate when async components mount their TT links
   setTimeout(decorate, 1500);
   setTimeout(decorate, 4000);
+
+  // --- Scroll depth tracking (25/50/75/100%) ---
+  var scrollMarks = {25: false, 50: false, 75: false, 100: false};
+  function checkScroll() {
+    var h = document.documentElement;
+    var scrolled = (h.scrollTop || document.body.scrollTop);
+    var max = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
+    var pct = max > 0 ? Math.round((scrolled / max) * 100) : 0;
+    [25, 50, 75, 100].forEach(function(m){
+      if (pct >= m && !scrollMarks[m]) {
+        scrollMarks[m] = true;
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'scroll_depth', {
+            depth_percent: m,
+            campaign: tracking.utm_campaign || 'direct'
+          });
+        }
+      }
+    });
+  }
+  window.addEventListener('scroll', function(){
+    if (window._scrollTO) return;
+    window._scrollTO = setTimeout(function(){ checkScroll(); window._scrollTO = null; }, 250);
+  });
+
+  // --- Time-on-page milestones (10s, 30s, 60s) ---
+  [10, 30, 60].forEach(function(sec){
+    setTimeout(function(){
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'engagement_time', {
+          time_seconds: sec,
+          campaign: tracking.utm_campaign || 'direct'
+        });
+      }
+    }, sec * 1000);
+  });
 })();
 </script>
 </body>
