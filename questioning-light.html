@@ -156,6 +156,25 @@
   html[data-lang=ru] [data-en], html[data-lang=ru] [data-gr]{display:none !important}
   html[data-lang=gr] [data-en], html[data-lang=gr] [data-ru]{display:none !important}
 
+  /* VIDEO REVIEWS — horizontal scroll on mobile, lazy-loaded iframes */
+  .video-reviews{padding:60px 0 70px;background:#0a0a0a;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a}
+  .video-reviews .reviews-kicker{display:block;text-align:center;margin-bottom:14px}
+  .video-reviews h2{text-align:center;font-size:clamp(22px,2.6vw,32px);font-weight:700;letter-spacing:-0.015em;margin:0 24px 32px;color:#eee}
+  .video-row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:4px 24px 24px;scrollbar-width:none}
+  .video-row::-webkit-scrollbar{display:none}
+  .yt-lite{flex:0 0 72%;max-width:260px;scroll-snap-align:center;position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;cursor:pointer;background:#111;border:1px solid #222;display:block}
+  .yt-lite img{width:100%;height:100%;object-fit:cover;display:block}
+  .yt-lite .yt-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.45) 100%);transition:background 0.2s}
+  .yt-lite:hover .yt-play{background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,rgba(0,0,0,0.6) 100%)}
+  .yt-lite .yt-play svg{width:58px;height:58px;fill:#fff;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.6))}
+  .yt-lite iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+  .video-hint{display:block;text-align:center;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-top:6px;padding:0 24px}
+  @media(min-width:900px){
+    .video-row{justify-content:center;flex-wrap:nowrap;max-width:1280px;margin:0 auto;padding:4px 24px 16px}
+    .yt-lite{flex:0 0 220px;max-width:220px}
+    .video-hint{display:none}
+  }
+
   @media(max-width:600px){
     .hero{min-height:88vh}
     .hero-content{padding:40px 20px 60px}
@@ -272,6 +291,42 @@
   </div>
 </section>
 
+<!-- VIDEO TESTIMONIALS — horizontal scroll, lazy-loaded -->
+<section class="video-reviews">
+  <span class="reviews-kicker" data-en>Video testimonials</span>
+  <span class="reviews-kicker" data-ru>Видео-отзывы</span>
+  <span class="reviews-kicker" data-gr>Βίντεο μαρτυρίες</span>
+  <h2 data-en>Hear it from participants.</h2>
+  <h2 data-ru>Послушайте участников.</h2>
+  <h2 data-gr>Ακούστε από τους συμμετέχοντες.</h2>
+
+  <div class="video-row">
+    <div class="yt-lite" data-ytid="_Hzvv5AWtag">
+      <img src="https://img.youtube.com/vi/_Hzvv5AWtag/hqdefault.jpg" alt="Participant testimonial" loading="lazy">
+      <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    <div class="yt-lite" data-ytid="tT1cX_UOjkw">
+      <img src="https://img.youtube.com/vi/tT1cX_UOjkw/hqdefault.jpg" alt="Participant testimonial" loading="lazy">
+      <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    <div class="yt-lite" data-ytid="gp-jnd0V56w">
+      <img src="https://img.youtube.com/vi/gp-jnd0V56w/hqdefault.jpg" alt="Participant testimonial" loading="lazy">
+      <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    <div class="yt-lite" data-ytid="0pvEshLVT0s">
+      <img src="https://img.youtube.com/vi/0pvEshLVT0s/hqdefault.jpg" alt="Participant testimonial" loading="lazy">
+      <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+    <div class="yt-lite" data-ytid="wmuQB3m7nyg">
+      <img src="https://img.youtube.com/vi/wmuQB3m7nyg/hqdefault.jpg" alt="Participant testimonial" loading="lazy">
+      <div class="yt-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+    </div>
+  </div>
+  <span class="video-hint" data-en>← Swipe →</span>
+  <span class="video-hint" data-ru>← Свайпай →</span>
+  <span class="video-hint" data-gr>← Σύρετε →</span>
+</section>
+
 <!-- SESSIONS -->
 <section class="sessions">
   <h2 data-en>Three sessions, one day.</h2>
@@ -362,6 +417,21 @@
       if (a.dataset.langCode === lang) a.classList.add('active');
     });
   })();
+</script>
+
+<!-- yt-lite: lazy-load YouTube iframe on click -->
+<script>
+  document.querySelectorAll('.yt-lite').forEach(function(el){
+    el.addEventListener('click', function(){
+      var id = el.getAttribute('data-ytid');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?rel=0&autoplay=1&modestbranding=1';
+      iframe.allow = 'accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture;web-share';
+      iframe.allowFullscreen = true;
+      el.innerHTML = '';
+      el.appendChild(iframe);
+    });
+  });
 </script>
 
 <!-- noscript Meta Pixel -->
