@@ -68,23 +68,23 @@
   .lang-switch a:hover{color:#fff}
   .lang-switch a.active:hover{color:#000}
 
-  /* HERO */
-  .hero{position:relative;min-height:100vh;display:flex;align-items:flex-end;background:#0a0a0a;overflow:hidden}
-  .hero-bg{position:absolute;inset:0;z-index:0}
-  .hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-  .hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,10,0.35) 0%,rgba(10,10,10,0.55) 50%,rgba(10,10,10,0.92) 100%)}
-  .hero-content{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:48px 24px 80px;width:100%;text-align:center}
-  .hero-kicker{display:inline-block;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:700;border:1px solid rgba(255,168,6,0.4);padding:6px 14px;border-radius:999px}
-  .hero h1{font-family:var(--font-en);font-weight:800;font-size:clamp(40px,7vw,86px);line-height:0.95;letter-spacing:-0.035em;margin:0 auto 18px;max-width:880px}
-  html[data-lang=ru] .hero h1{font-family:var(--font-ru);font-size:clamp(32px,5.5vw,68px)}
-  html[data-lang=gr] .hero h1{font-size:clamp(36px,6vw,76px)}
-  .hero h1 .gold{color:var(--gold);display:block;font-size:0.55em;margin-top:8px;letter-spacing:-0.02em}
+  /* HERO PHOTO — clean standalone, no text overlay */
+  .hero-photo{position:relative;width:100%;height:clamp(280px,52vh,560px);overflow:hidden;background:#0a0a0a}
+  .hero-photo img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
+
+  /* HERO TEXT — separate section on solid bg, below photo */
+  .hero-content{background:#0a0a0a;padding:56px 24px 64px;text-align:center;position:relative}
+  .hero-content-inner{max-width:880px;margin:0 auto}
+  .hero-kicker{display:inline-block;font-size:11px;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:22px;font-weight:700;border:1px solid rgba(255,168,6,0.4);padding:6px 14px;border-radius:999px}
+  .hero-content h1{font-family:var(--font-en);font-weight:800;font-size:clamp(40px,7vw,86px);line-height:0.95;letter-spacing:-0.035em;margin:0 auto 18px;max-width:880px;color:#fff}
+  html[data-lang=ru] .hero-content h1{font-family:var(--font-ru);font-size:clamp(32px,5.5vw,68px)}
+  html[data-lang=gr] .hero-content h1{font-size:clamp(36px,6vw,76px)}
+  .hero-content h1 .gold{color:var(--gold);display:block;font-size:0.55em;margin-top:8px;letter-spacing:-0.02em}
   .hero-sub{font-size:clamp(16px,2vw,22px);line-height:1.35;color:#ddd;margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto}
   .hero-meta{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;margin-bottom:36px;font-size:14px;color:#bbb;font-weight:500}
   .hero-meta b{color:var(--gold);font-weight:700}
   .hero-cta{display:inline-flex;align-items:center;gap:14px;background:var(--gold);color:#000;padding:20px 40px;border-radius:999px;font-weight:800;font-size:15px;letter-spacing:0.15em;text-transform:uppercase;transition:transform 0.15s,background 0.15s;box-shadow:0 12px 40px rgba(255,168,6,0.3)}
   .hero-cta:hover{transform:translateY(-2px);background:#ffbd38}
-  .hero-cta .price{background:#000;color:var(--gold);padding:4px 10px;border-radius:999px;font-size:13px;letter-spacing:-0.005em}
   .hero-mini{margin-top:18px;font-size:12px;color:#aaa;letter-spacing:0.08em}
 
   /* WHAT IS IT — 3 bullet lines, no cards */
@@ -137,8 +137,9 @@
     box-shadow:0 -10px 30px rgba(0,0,0,0.6);
   }
   .sticky-cta-info{display:flex;flex-direction:column;line-height:1.15;min-width:0}
-  .sticky-cta-price{font-family:var(--font-en);font-weight:800;font-size:22px;color:var(--gold);letter-spacing:-0.02em}
-  .sticky-cta-meta{font-size:11px;color:#bbb;letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;font-weight:600}
+  .sticky-cta-title{font-family:var(--font-en);font-weight:800;font-size:15px;color:#fff;letter-spacing:-0.01em}
+  html[data-lang=ru] .sticky-cta-title{font-family:var(--font-ru);font-size:14px}
+  .sticky-cta-meta{font-size:11px;color:#bbb;letter-spacing:0.08em;text-transform:uppercase;margin-top:3px;font-weight:600}
   .sticky-cta-btn{flex-shrink:0;white-space:nowrap;background:var(--gold);color:#000;padding:13px 22px;border-radius:999px;font-weight:800;font-size:12px;letter-spacing:0.15em;text-transform:uppercase}
   @media(max-width:900px){
     .sticky-cta{display:flex}
@@ -165,20 +166,22 @@
 </head>
 <body>
 
-<!-- HERO -->
-<header class="hero">
+<!-- HERO PHOTO — standalone, no text overlay -->
+<div class="hero-photo">
   <div class="lang-switch">
     <a href="?lang=en" class="lang-link" data-lang-code="en">EN</a>
     <a href="?lang=ru" class="lang-link" data-lang-code="ru">RU</a>
     <a href="?lang=gr" class="lang-link" data-lang-code="gr">GR</a>
   </div>
-  <div class="hero-bg">
-    <picture>
-      <source type="image/webp" srcset="/images/questioning_hero.webp">
-      <img src="/images/questioning_hero.jpg" alt="WHO ARE YOU? QUESTIONING — immersive theatre" width="1400" height="1867" loading="eager" fetchpriority="high" decoding="async">
-    </picture>
-  </div>
-  <div class="hero-content">
+  <picture>
+    <source type="image/webp" srcset="/images/questioning_hero.webp">
+    <img src="/images/questioning_hero.jpg" alt="WHO ARE YOU? QUESTIONING — immersive theatre" width="1400" height="1867" loading="eager" fetchpriority="high" decoding="async">
+  </picture>
+</div>
+
+<!-- HERO TEXT — below photo -->
+<header class="hero-content">
+  <div class="hero-content-inner">
     <span class="hero-kicker" data-en>Immersive Theatre · Magic Garden</span>
     <span class="hero-kicker" data-ru>Иммерсивный театр · Magic Garden</span>
     <span class="hero-kicker" data-gr>Immersive θέατρο · Magic Garden</span>
@@ -203,7 +206,6 @@
 
     <a class="hero-cta" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="hero">
       <span data-en>Get tickets</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
-      <span class="price">€42.75</span>
     </a>
     <div class="hero-mini" data-en>3 sessions · EN · RU · RU</div>
     <div class="hero-mini" data-ru>3 сеанса · EN · RU · RU</div>
@@ -321,7 +323,6 @@
 
   <a class="hero-cta" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="final">
     <span data-en>Get tickets</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε εισιτήριο</span>
-    <span class="price">€42.75</span>
   </a>
   <div class="final-cta-tiny" data-en>Secure checkout · CITF</div>
   <div class="final-cta-tiny" data-ru>Безопасная оплата · CITF</div>
@@ -331,13 +332,15 @@
 <!-- STICKY MOBILE CTA -->
 <a class="sticky-cta" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="sticky_mobile">
   <div class="sticky-cta-info">
-    <div class="sticky-cta-price">€42.75</div>
+    <div class="sticky-cta-title" data-en>WHO ARE YOU?</div>
+    <div class="sticky-cta-title" data-ru>КТО ТЫ?</div>
+    <div class="sticky-cta-title" data-gr>ΠΟΙΟΣ ΕΙΣΑΙ;</div>
     <div class="sticky-cta-meta" data-en>6 June · Limassol</div>
     <div class="sticky-cta-meta" data-ru>6 июня · Лимассол</div>
     <div class="sticky-cta-meta" data-gr>6 Ιουν · Λεμεσός</div>
   </div>
   <div class="sticky-cta-btn">
-    <span data-en>Buy now</span><span data-ru>Купить</span><span data-gr>Αγοράστε</span>
+    <span data-en>Get tickets</span><span data-ru>Купить билет</span><span data-gr>Αγοράστε</span>
   </div>
 </a>
 
