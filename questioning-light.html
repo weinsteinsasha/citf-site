@@ -95,6 +95,18 @@
   .what-bullets li{padding:18px 22px;background:var(--card);border-radius:14px;border-left:3px solid var(--gold);font-size:16px;line-height:1.5;color:#ddd}
   .what-bullets li b{color:var(--gold)}
 
+  /* ABOUT THE WORK — curator note */
+  .about-work{padding:70px 24px 80px;background:#181818;border-top:1px solid #1a1a1a;border-bottom:1px solid #1a1a1a}
+  .about-inner{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:42px}
+  .about-block h3{font-family:var(--font-en);font-weight:700;font-size:clamp(18px,2vw,22px);letter-spacing:-0.01em;color:var(--gold);margin:0 0 14px;padding-bottom:10px;border-bottom:1px solid rgba(255,168,6,0.25)}
+  html[data-lang=ru] .about-block h3{font-family:var(--font-ru)}
+  .about-block p{font-size:16px;line-height:1.65;color:#d2d2d2;margin:0;letter-spacing:0.005em}
+  @media(max-width:600px){
+    .about-work{padding:54px 22px 60px}
+    .about-inner{gap:34px}
+    .about-block p{font-size:15px;line-height:1.6}
+  }
+
   /* REVIEWS */
   .reviews{padding:70px 24px;background:#0d0d0d;border-top:1px solid #222;border-bottom:1px solid #222}
   .reviews-inner{max-width:1080px;margin:0 auto}
@@ -251,6 +263,40 @@
     <li data-ru><b>50 минут, потом — открытый разговор.</b> Структурированный, направляемый, насыщенный. После — оставайтесь сколько нужно.</li>
     <li data-gr><b>50 λεπτά, μετά ανοιχτή συζήτηση.</b> Δομημένα, καθοδηγούμενα, έντονα. Μετά — μείνετε όσο χρειάζεστε.</li>
   </ul>
+</section>
+
+<!-- ABOUT THE WORK — curator note: Magic Garden background -->
+<section class="about-work">
+  <div class="about-inner">
+
+    <div class="about-block">
+      <h3 data-en>About the work</h3>
+      <h3 data-ru>О работе</h3>
+      <h3 data-gr>Σχετικά με το έργο</h3>
+      <p data-en>WHO ARE YOU? — the signature work of the Berlin- and Basel-based collective Magic Garden — is a "pure performance practice." Its only instrument is a structured set of written questions, exchanged between two participants sitting opposite each other. Each pair becomes the work. There is no script, no actor, no fourth wall. The questions do the dramaturgy.</p>
+      <p data-ru>WHO ARE YOU? — главная работа берлинско-базельского коллектива Magic Garden — это «чистая перформанс-практика». Единственный инструмент — структурированный набор письменных вопросов, которыми обмениваются два сидящих напротив друг друга участника. Каждая пара становится работой. Нет сценария, нет актёра, нет четвёртой стены. Драматургию делают сами вопросы.</p>
+      <p data-gr>WHO ARE YOU? — το σημαντικότερο έργο της συλλογικότητας Magic Garden με έδρα το Βερολίνο και τη Βασιλεία — είναι μια «καθαρή performance-πρακτική». Το μοναδικό της εργαλείο: ένα δομημένο σύνολο γραπτών ερωτήσεων, που ανταλλάσσονται ανάμεσα σε δύο συμμετέχοντες που κάθονται ο ένας απέναντι στον άλλο. Κάθε ζευγάρι γίνεται το ίδιο το έργο. Δεν υπάρχει σενάριο, ηθοποιός, ούτε τέταρτος τοίχος. Τη δραματουργία την κάνουν οι ίδιες οι ερωτήσεις.</p>
+    </div>
+
+    <div class="about-block">
+      <h3 data-en>The collective</h3>
+      <h3 data-ru>Коллектив</h3>
+      <h3 data-gr>Η συλλογικότητα</h3>
+      <p data-en>Magic Garden has been working since 2011. Current members: Corinne Maier and Tina Müller. Their practice circles around the assumptions we constantly make about other people without noticing — and what surfaces when those assumptions are brought to light. WHO ARE YOU? has been presented at Moscow's Gogol Center, at Skorokhod in St. Petersburg, in Krasnoyarsk, in Bern, and selected for Festival Les Lunes Bleues in Béziers (2026).</p>
+      <p data-ru>Magic Garden работает с 2011 года. Нынешний состав: Corinne Maier и Tina Müller. Их практика — про предположения, которые мы постоянно делаем о других, не замечая этого, и про то, что вскрывается, когда эти предположения обнажаются. WHO ARE YOU? шёл в Гоголь-центре в Москве, на площадке Скороход в Санкт-Петербурге, в Красноярске, Берне, был отобран на Festival Les Lunes Bleues в Безье (2026).</p>
+      <p data-gr>Το Magic Garden δραστηριοποιείται από το 2011. Τα τρέχοντα μέλη: Corinne Maier και Tina Müller. Η πρακτική τους περιστρέφεται γύρω από τις υποθέσεις που κάνουμε διαρκώς για τους άλλους χωρίς να το συνειδητοποιούμε — και γύρω από αυτό που αναδύεται όταν αυτές οι υποθέσεις αποκαλύπτονται. Το WHO ARE YOU? έχει παρουσιαστεί στο Gogol Center της Μόσχας, στο Skorokhod της Αγίας Πετρούπολης, στο Κρασνογιάρσκ, στη Βέρνη, και έχει επιλεγεί για το Festival Les Lunes Bleues στο Béziers (2026).</p>
+    </div>
+
+    <div class="about-block">
+      <h3 data-en>Cyprus, 6 June 2026</h3>
+      <h3 data-ru>Кипр, 6 июня 2026</h3>
+      <h3 data-gr>Κύπρος, 6 Ιουνίου 2026</h3>
+      <p data-en>CITF brings WHO ARE YOU? to Cyprus for the first time. In each city the work is held by a team prepared by Magic Garden. In Limassol the piece will run in three sessions on 6 June: 13:00 in English, 16:00 and 19:00 in Russian, at the Cyprus Theatre Museum.</p>
+      <p data-ru>CITF впервые привозит WHO ARE YOU? на Кипр. Работа в каждом городе ведётся подготовленной Magic Garden командой. В Лимассоле спектакль пройдёт в три сеанса 6 июня: 13:00 на английском, 16:00 и 19:00 на русском, в Музее театра Кипра.</p>
+      <p data-gr>Το CITF φέρνει για πρώτη φορά το WHO ARE YOU? στην Κύπρο. Σε κάθε πόλη το έργο διεξάγεται από μια ομάδα που έχει εκπαιδεύσει το Magic Garden. Στη Λεμεσό η παράσταση θα δοθεί σε τρεις σεάνς στις 6 Ιουνίου: 13:00 στα αγγλικά, 16:00 και 19:00 στα ρωσικά, στο Μουσείο Θεάτρου Κύπρου.</p>
+    </div>
+
+  </div>
 </section>
 
 <!-- REVIEWS -->
