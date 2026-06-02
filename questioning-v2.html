@@ -358,25 +358,6 @@ window.addEventListener('load', function(){
     .hero-meta > div{min-width:45%}
   }
 
-  /* === STICKY MOBILE CTA (v3-test) === */
-  .sticky-cta{
-    position:fixed;left:0;right:0;bottom:0;z-index:9000;
-    display:none;
-    align-items:center;justify-content:space-between;gap:14px;
-    background:rgba(13,13,13,0.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-    border-top:1px solid rgba(255,168,6,0.25);
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom)) 16px;
-    box-shadow:0 -10px 30px rgba(0,0,0,0.5);
-  }
-  .sticky-cta-info{display:flex;flex-direction:column;line-height:1.15;min-width:0}
-  .sticky-cta-price{font-family:var(--font-en);font-weight:800;font-size:22px;color:var(--gold);letter-spacing:-0.02em}
-  .sticky-cta-meta{font-size:11px;color:#bbb;letter-spacing:0.08em;text-transform:uppercase;margin-top:2px;font-weight:600}
-  .sticky-cta-btn{padding:14px 22px !important;font-size:12px !important;flex-shrink:0;white-space:nowrap}
-  @media(max-width:960px){
-    .sticky-cta{display:flex}
-    body{padding-bottom:80px}  /* prevent content hidden under sticky bar */
-  }
-
 </style>
   <script defer src="/_vercel/insights/script.js"></script>
 <!-- Meta Pixel Code — DEFERRED (loads after first paint) -->
@@ -491,19 +472,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </picture>
   </div>
 </header>
-
-<!-- STICKY MOBILE CTA (v3-test) -->
-<div class="sticky-cta">
-  <div class="sticky-cta-info">
-    <div class="sticky-cta-price">€42.75</div>
-    <div class="sticky-cta-meta" data-en>6 June · Limassol</div>
-    <div class="sticky-cta-meta" data-ru>6 июня · Лимассол</div>
-    <div class="sticky-cta-meta" data-gr>6 Ιουν · Λεμεσός</div>
-  </div>
-  <a class="btn btn-primary sticky-cta-btn" href="https://tickets.citf.cy/events/cyprusinternationaltheatrefestival/2128089" target="_blank" rel="noopener" data-cta="sticky_mobile">
-    <span data-en>Buy now</span><span data-ru>Купить</span><span data-gr>Αγοράστε</span>
-  </a>
-</div>
 
 <!-- PITCH -->
 <section class="pitch">
