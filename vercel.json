@@ -7,6 +7,10 @@
       "destination": "/thank-you.html"
     },
     {
+      "source": "/what-we-do",
+      "destination": "/what-we-do.html"
+    },
+    {
       "source": "/sasha",
       "destination": "/sasha.html"
     },
