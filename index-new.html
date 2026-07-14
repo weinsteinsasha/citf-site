@@ -110,11 +110,12 @@ header.site-header {
   display: flex; align-items: center; gap: 32px;
 }
 .nav {
-  display: flex; gap: 24px; align-items: center;
+  display: flex; gap: 18px; align-items: center;
 }
 .nav a {
-  font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 500;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 .nav a:hover { color: var(--accent); }
 .lang-switch {
@@ -363,12 +364,14 @@ footer.site-footer {
   </button>
   <div class="nav-wrapper" id="navWrapper">
     <nav class="nav">
+      <a href="/"><span data-lang-en>Shows & Event</span><span data-lang-ru>Показы и события</span><span data-lang-gr>Παραστάσεις</span></a>
       <a href="/about"><span data-lang-en>About</span><span data-lang-ru>О нас</span><span data-lang-gr>Σχετικά</span></a>
+      <a href="/the-festival-pass"><span data-lang-en>The Festival Pass</span><span data-lang-ru>Абонемент</span><span data-lang-gr>Festival Pass</span></a>
+      <a href="/gallery"><span data-lang-en>Gallery</span><span data-lang-ru>Галерея</span><span data-lang-gr>Γκαλερί</span></a>
+      <a href="/friends-club"><span data-lang-en>Friends Club</span><span data-lang-ru>Клуб друзей</span><span data-lang-gr>Λέσχη Φίλων</span></a>
+      <a href="/contact"><span data-lang-en>Contact</span><span data-lang-ru>Контакты</span><span data-lang-gr>Επικοινωνία</span></a>
       <a href="/press"><span data-lang-en>Press</span><span data-lang-ru>Пресса</span><span data-lang-gr>Τύπος</span></a>
       <a href="/journal"><span data-lang-en>Journal</span><span data-lang-ru>Журнал</span><span data-lang-gr>Ημερολόγιο</span></a>
-      <a href="/friends-club"><span data-lang-en>Friends</span><span data-lang-ru>Друзья</span><span data-lang-gr>Φίλοι</span></a>
-      <a href="/support"><span data-lang-en>Support</span><span data-lang-ru>Поддержать</span><span data-lang-gr>Υποστήριξη</span></a>
-      <a href="/contact"><span data-lang-en>Contact</span><span data-lang-ru>Контакты</span><span data-lang-gr>Επικοινωνία</span></a>
     </nav>
     <div class="lang-switch">
       <a href="?lang=en" data-lang-switch="en">EN</a>
