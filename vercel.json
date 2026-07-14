@@ -16,7 +16,7 @@
     },
     {
       "source": "/",
-      "destination": "/page121413356.html"
+      "destination": "/index-new.html"
     },
     {
       "source": "/2026/cassandre-preview",
@@ -425,6 +425,10 @@
     {
       "source": "/gr/about",
       "destination": "/page105403556.html"
+    },
+    {
+      "source": "/old-home",
+      "destination": "/page121413356.html"
     }
   ],
   "redirects": [
